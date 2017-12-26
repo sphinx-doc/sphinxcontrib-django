@@ -161,7 +161,8 @@ def _add_form_fields(obj, lines):
     lines.append("")
     for name, field in obj.declared_fields.items():
         field_type = "{}.{}".format(field.__class__.__module__, field.__class__.__name__)
-        lines.append(f"* ``{name}``: {field.label} (:class:`~{field_type}`)")
+        tpl = "* ``{name}``: {field.label} (:class:`~{field_type}`)"
+        lines.append(tpl.format(name=name, field=field, field_type=field_typr))
 
 
 def _improve_attribute_docs(obj, name, lines):
@@ -227,7 +228,8 @@ def _improve_attribute_docs(obj, name, lines):
         # Somehow the 'objects' manager doesn't pass through the docstrings.
         module, cls_name, field_name = name.rsplit('.', 2)
         lines.append("Django manager to access the ORM")
-        lines.append(f"Use ``{cls_name}.objects.all()`` to fetch all objects.")
+        tpl = "Use ``{cls_name}.objects.all()`` to fetch all objects."
+        lines.append(tpl.format(cls_name=cls_name))
 
 
 def _improve_method_docs(obj, name, lines):
