@@ -22,7 +22,7 @@ Usage:
 
     pip install sphinxcontrib-django
 
-Add to the Sphinx config file (:file:`conf.py`):
+Add to the Sphinx config file (``conf.py``):
 
 .. code-block:: python
 
@@ -33,7 +33,7 @@ Add to the Sphinx config file (:file:`conf.py`):
 
 Autodoc works by importing your code on the fly, and extracting the data from
 the Python classes. Thus, the project should be able to import Django models.
-Typically the following needs to be added to :file:`conf.py`:
+Typically the following needs to be added to ``conf.py``:
 
 .. code-block:: python
 
@@ -55,7 +55,7 @@ Recommendations:
 ~~~~~~~~~~~~~~~~
 
 When your project uses Celery, include `celery.contrib.sphinx`_ too.
-This adds an ``autotask::`` directive, and ``:task:\`app.tasks.my_task\```*role.
+This adds an ``autotask::`` directive, and ``:task:\`app.tasks.my_task\``` role.
 
 Other great extensions are:
 
