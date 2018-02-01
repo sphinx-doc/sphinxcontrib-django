@@ -12,7 +12,7 @@ Based on:
 """
 import re
 
-from django import forms
+from django import forms, get_version
 from django.db import models
 from django.db.models.fields.files import FileDescriptor
 from django.db.models.query_utils import DeferredAttribute
@@ -28,6 +28,26 @@ _FIELD_DESCRIPTORS = (FileDescriptor,)
 RE_GET_FOO_DISPLAY = re.compile('\.get_(?P<field>[a-zA-Z0-9_]+)_display$')
 RE_GET_NEXT_BY = re.compile('\.get_next_by_(?P<field>[a-zA-Z0-9_]+)$')
 RE_GET_PREVIOUS_BY = re.compile('\.get_previous_by_(?P<field>[a-zA-Z0-9_]+)$')
+
+
+IS_DJANGO2 = get_version()[0] == '2'
+
+
+def get_field_type(field):
+    # Add type
+    if isinstance(field, models.ForeignKey):
+        if IS_DJANGO2:
+            to = field.remote_field
+            to_name = to.name
+        else:
+            to = field.rel.to
+            to_name = to.__name__
+        return u':type %s: %s to :class:`~%s.%s`' % (field.name,
+                                                     type(field).__name__,
+                                                     to.__module__,
+                                                     to_name)
+    else:
+        return u':type %s: %s' % (field.name, type(field).__name__)
 
 
 # Support for some common third party fields
@@ -138,13 +158,7 @@ def _add_model_fields_as_params(app, obj, lines):
         else:
             lines.append(u':param %s: %s' % (field.name, verbose_name))
 
-        # Add type
-        if isinstance(field, models.ForeignKey):
-            to = field.remote_field
-            lines.append(u':type %s: %s to :class:`~%s.%s`' % (
-            field.name, type(field).__name__, to.__module__, to.name))
-        else:
-            lines.append(u':type %s: %s' % (field.name, type(field).__name__))
+        lines.append(get_field_type(field))
 
     if 'sphinx.ext.inheritance_diagram' in app.extensions and \
             'sphinx.ext.graphviz' in app.extensions and \
