@@ -140,9 +140,9 @@ def _add_model_fields_as_params(app, obj, lines):
 
         # Add type
         if isinstance(field, models.ForeignKey):
-            to = field.rel.to
+            to = field.remote_field
             lines.append(u':type %s: %s to :class:`~%s.%s`' % (
-            field.name, type(field).__name__, to.__module__, to.__name__))
+            field.name, type(field).__name__, to.__module__, to.name))
         else:
             lines.append(u':type %s: %s' % (field.name, type(field).__name__))
 
