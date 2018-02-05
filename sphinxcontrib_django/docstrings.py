@@ -141,7 +141,7 @@ def _add_model_fields_as_params(app, obj, lines):
         # Add type
         if isinstance(field, models.ForeignKey):
             to = field.rel.to
-            if instance(to, str):
+            if isinstance(to, str):
                 lines.append(u':type %s: %s to :class:`~%s`' % (
                 field.name, type(field).__name__, to))
             else:
