@@ -55,7 +55,7 @@ Recommendations:
 ~~~~~~~~~~~~~~~~
 
 When your project uses Celery, include `celery.contrib.sphinx`_ too.
-This adds an ``autotask::`` directive, and ``:task:\`app.tasks.my_task\``` role.
+This adds an ``autotask::`` directive, and ``:task:`app.tasks.my_task``` role.
 
 Other great extensions are:
 
