@@ -141,7 +141,7 @@ def _add_model_fields_as_params(app, obj, lines):
             lines.append(u':param %s: %s' % (field.name, verbose_name))
 
         # Add type
-        lines.append(_get_field_Type(field))
+        lines.append(_get_field_type(field))
 
     if 'sphinx.ext.inheritance_diagram' in app.extensions and \
             'sphinx.ext.graphviz' in app.extensions and \
