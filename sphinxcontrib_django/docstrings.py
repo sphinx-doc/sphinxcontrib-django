@@ -12,6 +12,8 @@ Based on:
 """
 import re
 
+import django
+from django.apps import apps
 from django import forms
 from django.db import models
 from django.db.models.fields.files import FileDescriptor
@@ -139,16 +141,7 @@ def _add_model_fields_as_params(app, obj, lines):
             lines.append(u':param %s: %s' % (field.name, verbose_name))
 
         # Add type
-        if isinstance(field, models.ForeignKey):
-            to = field.rel.to
-            if isinstance(to, str):
-                lines.append(u':type %s: %s to :class:`~%s`' % (
-                field.name, type(field).__name__, to))
-            else:
-                lines.append(u':type %s: %s to :class:`~%s.%s`' % (
-                field.name, type(field).__name__, to.__module__, to.__name__))
-        else:
-            lines.append(u':type %s: %s' % (field.name, type(field).__name__))
+        lines.append(_get_field_Type(field))
 
     if 'sphinx.ext.inheritance_diagram' in app.extensions and \
             'sphinx.ext.graphviz' in app.extensions and \
@@ -167,6 +160,29 @@ def _add_form_fields(obj, lines):
         field_type = "{}.{}".format(field.__class__.__module__, field.__class__.__name__)
         tpl = "* ``{name}``: {field.label} (:class:`~{field_type}`)"
         lines.append(tpl.format(name=name, field=field, field_type=field_type))
+
+
+def _get_field_type(field):
+    if isinstance(field, models.ForeignKey):
+        if django.VERSION >= (2, 0):
+            to = field.remote_field.model
+        else:
+            to = field.rel.to
+            if isinstance(to, str):
+                to = _resolve_model(field, to)
+
+        return u':type %s: %s to :class:`~%s.%s`' % (
+            field.name, type(field).__name__, to.__module__, to.__name__)
+    else:
+        return u':type %s: %s' % (field.name, type(field).__name__)
+
+
+def _resolve_model(field, to):
+    if '.' in to:
+        return apps.get_model(to)
+    else:
+        # Not sure if this is needed too:
+        return apps.get_model(field.model._meta.app_label, to)
 
 
 def _improve_attribute_docs(obj, name, lines):
