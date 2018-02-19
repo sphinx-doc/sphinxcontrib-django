@@ -37,7 +37,7 @@ setup(
     packages=find_packages(exclude=('example*',)),
     include_package_data=True,
 
-    #test_suite = 'runtests',
+    test_suite = 'runtests',
 
     zip_safe=False,
     classifiers=[

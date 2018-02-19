@@ -15,7 +15,7 @@ matrix:
 before_install:
 - pip install codecov
 install:
-- pip install $DJANGO -e .
+- pip install $DJANGO Sphinx -e .
 script:
 - coverage run --rcfile=.coveragerc runtests.py
 after_success:
