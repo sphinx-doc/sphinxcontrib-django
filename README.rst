@@ -1,3 +1,12 @@
+.. image:: https://img.shields.io/travis/edoburu/sphinxcontrib-django/master.svg?branch=master
+    :target: http://travis-ci.org/edoburu/sphinxcontrib-django
+.. image:: https://img.shields.io/pypi/v/sphinxcontrib-django.svg
+    :target: https://pypi.python.org/pypi/sphinxcontrib-django/
+.. image:: https://img.shields.io/pypi/l/sphinxcontrib-django.svg
+    :target: https://pypi.python.org/pypi/sphinxcontrib-django/
+.. image:: https://img.shields.io/codecov/c/github/edoburu/sphinxcontrib-django/master.svg
+    :target: https://codecov.io/github/edoburu/sphinxcontrib-django?branch=master
+
 sphinxcontrib-django
 ====================
 
