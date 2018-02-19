@@ -166,7 +166,7 @@ def _add_form_fields(obj, lines):
     for name, field in obj.declared_fields.items():
         field_type = "{}.{}".format(field.__class__.__module__, field.__class__.__name__)
         tpl = "* ``{name}``: {field.label} (:class:`~{field_type}`)"
-        lines.append(tpl.format(name=name, field=field, field_type=field_typr))
+        lines.append(tpl.format(name=name, field=field, field_type=field_type))
 
 
 def _improve_attribute_docs(obj, name, lines):
