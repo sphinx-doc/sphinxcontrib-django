@@ -1,5 +1,6 @@
 import os
 
+from django import forms
 from django.contrib.auth.models import User
 from django.db import models
 from django.test import SimpleTestCase
@@ -17,6 +18,15 @@ class SimpleModel(models.Model):
     user = models.ForeignKey(User, related_name='+', on_delete=models.CASCADE)
     user2 = models.ForeignKey('User2', related_name='+', on_delete=models.CASCADE)
     user3 = models.ForeignKey('auth.User', related_name='+', on_delete=models.CASCADE)
+
+
+class SimpleForm(forms.ModelForm):
+    test1 = forms.CharField(label="Test1")
+    test2 = forms.CharField()
+
+    class Meta:
+        model = SimpleModel
+        fields = ('user', 'user2', 'user3')
 
 
 class TestDocStrings(SimpleTestCase):
@@ -55,4 +65,18 @@ class TestDocStrings(SimpleTestCase):
             ':type user2: ForeignKey to :class:`~sphinxcontrib_django.tests.test_docstrings.User2`',
             ':param user3: User3',
             ':type user3: ForeignKey to :class:`~django.contrib.auth.models.User`',
+        ])
+
+    def test_add_form_fields(self):
+        """Form fields should be mentioned."""
+        lines = []
+        docstrings._add_form_fields(SimpleForm, lines)
+        self.assertEqual(lines, [
+            '**Form fields:**',
+            '',
+            '* ``user``: User (:class:`~django.forms.models.ModelChoiceField`)',
+            '* ``user2``: User2 (:class:`~django.forms.models.ModelChoiceField`)',
+            '* ``user3``: User3 (:class:`~django.forms.models.ModelChoiceField`)',
+            '* ``test1``: Test1 (:class:`~django.forms.fields.CharField`)',
+            '* ``test2``: Test2 (:class:`~django.forms.fields.CharField`)',
         ])

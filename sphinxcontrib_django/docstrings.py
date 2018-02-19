@@ -156,10 +156,15 @@ def _add_form_fields(obj, lines):
     """
     lines.append("**Form fields:**")
     lines.append("")
-    for name, field in obj.declared_fields.items():
+    for name, field in obj.base_fields.items():
         field_type = "{}.{}".format(field.__class__.__module__, field.__class__.__name__)
-        tpl = "* ``{name}``: {field.label} (:class:`~{field_type}`)"
-        lines.append(tpl.format(name=name, field=field, field_type=field_type))
+        tpl = "* ``{name}``: {label} (:class:`~{field_type}`)"
+        lines.append(tpl.format(
+            name=name,
+            field=field,
+            label=field.label or name.replace('_', ' ').title(),
+            field_type=field_type
+        ))
 
 
 def _get_field_type(field):
