@@ -1,19 +1,27 @@
 Changelog
 =========
 
-version 0.2.1 (2018-01-02)
+Version 0.3 (2018-02-19)
+------------------------
+
+* Fixed Django 2.0 support
+* Fixed missing form fields
+* Fixed handling of ``ForeignKey('modelname')``
+
+
+Version 0.2.1 (2018-01-02)
 ------------------------
 
 * Fixed bad packaging of 0.2
 
 
-version 0.2 (2018-01-02)
+Version 0.2 (2018-01-02)
 ------------------------
 
 * Support more Python versions (removed f-strings)
 
 
-Version 0.1 (2017-12-07)
+version 0.1 (2017-12-07)
 ------------------------
 
 * Initial version
