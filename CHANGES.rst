@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 0.3.1 (2018-03-11)
+--------------------------
+
+* Fixed Python 2 issue with ``list.clear()``.
+
+
 Version 0.3 (2018-02-19)
 ------------------------
 

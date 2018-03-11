@@ -2,7 +2,7 @@ import sys
 
 import django
 
-__version__ = "0.3"
+__version__ = "0.3.1"
 
 
 def setup(app):

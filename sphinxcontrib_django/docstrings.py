@@ -209,13 +209,13 @@ def _improve_attribute_docs(obj, name, lines):
         model = import_string(cls_path)
         field = model._meta.get_field(obj.field_name)
 
-        lines.clear()
+        del lines[:]  # lines.clear() is Python 3 only
         lines.append("**Model field:** {label}".format(
             label=field.verbose_name
         ))
     elif isinstance(obj, _FIELD_DESCRIPTORS):
         # These
-        lines.clear()
+        del lines[:]
         lines.append("**Model field:** {label}".format(
             label=obj.field.verbose_name
         ))
@@ -228,7 +228,7 @@ def _improve_attribute_docs(obj, name, lines):
         # Display a reasonable output for forward descriptors.
         related_model = obj.field.remote_field.model
         cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
-        lines.clear()
+        del lines[:]
         lines.append("**Model field:** {label}, "
                      "accesses the :class:`~{cls_path}` model.".format(
                          label=obj.field.verbose_name, cls_path=cls_path
@@ -236,7 +236,7 @@ def _improve_attribute_docs(obj, name, lines):
     elif isinstance(obj, related_descriptors.ReverseOneToOneDescriptor):
         related_model = obj.related.related_model
         cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
-        lines.clear()
+        del lines[:]
         lines.append("**Model field:** {label}, "
                      "accesses the :class:`~{cls_path}` model.".format(
                          label=obj.related.field.verbose_name, cls_path=cls_path
@@ -244,7 +244,7 @@ def _improve_attribute_docs(obj, name, lines):
     elif isinstance(obj, related_descriptors.ReverseManyToOneDescriptor):
         related_model = obj.rel.related_model
         cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
-        lines.clear()
+        del lines[:]
         lines.append("**Model field:** {label}, "
                      "accesses the M2M :class:`~{cls_path}` model.".format(
                          label=obj.field.verbose_name, cls_path=cls_path
