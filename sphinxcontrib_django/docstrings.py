@@ -235,7 +235,10 @@ def _improve_attribute_docs(obj, name, lines):
                      ))
     elif isinstance(obj, related_descriptors.ReverseOneToOneDescriptor):
         related_model = obj.related.related_model
-        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
+        if isinstance(related_model, str):
+            cls_path = related_model
+        else:
+            cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
         del lines[:]
         lines.append("**Model field:** {label}, "
                      "accesses the :class:`~{cls_path}` model.".format(
