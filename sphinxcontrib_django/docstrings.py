@@ -171,6 +171,8 @@ def _get_field_type(field):
     if isinstance(field, models.ForeignKey):
         if django.VERSION >= (2, 0):
             to = field.remote_field.model
+            if isinstance(to, str):
+                to = _resolve_model(field, to)
         else:
             to = field.rel.to
             if isinstance(to, str):
