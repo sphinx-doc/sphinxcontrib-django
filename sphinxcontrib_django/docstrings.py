@@ -171,6 +171,8 @@ def _get_field_type(field):
     if isinstance(field, models.ForeignKey):
         if django.VERSION >= (2, 0):
             to = field.remote_field.model
+            if isinstance(to, str):
+                to = _resolve_model(field, to)
         else:
             to = field.rel.to
             if isinstance(to, str):
@@ -227,7 +229,10 @@ def _improve_attribute_docs(obj, name, lines):
     elif isinstance(obj, related_descriptors.ForwardManyToOneDescriptor):
         # Display a reasonable output for forward descriptors.
         related_model = obj.field.remote_field.model
-        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
+        if isinstance(related_model, str):
+            cls_path = related_model
+        else:
+            cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
         del lines[:]
         lines.append("**Model field:** {label}, "
                      "accesses the :class:`~{cls_path}` model.".format(
@@ -235,7 +240,10 @@ def _improve_attribute_docs(obj, name, lines):
                      ))
     elif isinstance(obj, related_descriptors.ReverseOneToOneDescriptor):
         related_model = obj.related.related_model
-        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
+        if isinstance(related_model, str):
+            cls_path = related_model
+        else:
+            cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
         del lines[:]
         lines.append("**Model field:** {label}, "
                      "accesses the :class:`~{cls_path}` model.".format(
@@ -243,7 +251,10 @@ def _improve_attribute_docs(obj, name, lines):
                      ))
     elif isinstance(obj, related_descriptors.ReverseManyToOneDescriptor):
         related_model = obj.rel.related_model
-        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
+        if isinstance(related_model, str):
+            cls_path = related_model
+        else:
+            cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
         del lines[:]
         lines.append("**Model field:** {label}, "
                      "accesses the M2M :class:`~{cls_path}` model.".format(
