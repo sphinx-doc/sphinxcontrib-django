@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 0.4 (2018-07-26)
+------------------------
+
+* Fixed Django 2.0 behavior when foreignkeys are strings.
+
+
 Version 0.3.1 (2018-03-11)
 --------------------------
 
