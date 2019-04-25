@@ -126,6 +126,8 @@ def _add_model_fields_as_params(app, obj, lines):
     :type app: sphinx.application.Sphinx
     :type lines: list
     """
+    references = dict()
+
     for field in obj._meta.get_fields():
         try:
             help_text = strip_tags(force_text(field.help_text))
@@ -141,12 +143,18 @@ def _add_model_fields_as_params(app, obj, lines):
             lines.append(u':param %s: %s' % (field.name, verbose_name))
 
         # Add type
-        lines.append(_get_field_type(field))
+        field, field_refs = _get_field_type(field)
+        lines.append(field)
+        if field_refs:
+            references.update(field_refs)
 
     if 'sphinx.ext.inheritance_diagram' in app.extensions and \
             'sphinx.ext.graphviz' in app.extensions and \
             not any('inheritance-diagram::' in line for line in lines):
         lines.append('.. inheritance-diagram::')
+
+    for name in references:
+        lines.append(u'.. _%s: %s' % (name, references[name]))
 
 
 def _add_form_fields(obj, lines):
@@ -179,9 +187,17 @@ def _get_field_type(field):
                 to = _resolve_model(field, to)
 
         return u':type %s: %s to :class:`~%s.%s`' % (
-            field.name, type(field).__name__, to.__module__, to.__name__)
+            field.name, type(field).__name__, to.__module__, to.__name__), None
     else:
-        return u':type %s: %s' % (field.name, type(field).__name__)
+        klass = type(field)
+        if klass.__module__.startswith('django.db.models'):
+            return u':type %s: `%s`_' % (field.name, klass.__name__), {
+                klass.__name__: 'https://docs.djangoproject.com/en/%s/ref/models/fields/#django.db.models.%s' % (
+                    ".".join(map(str, django.VERSION[0:2])),
+                    klass.__name__,
+                )
+            }
+        return u':type %s: %s' % (field.name, klass.__name__), None
 
 
 def _resolve_model(field, to):
