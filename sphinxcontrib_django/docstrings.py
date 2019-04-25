@@ -126,7 +126,16 @@ def _add_model_fields_as_params(app, obj, lines):
     :type app: sphinx.application.Sphinx
     :type lines: list
     """
+    offset = len(':param ')
+    predefined_params = [
+        line[offset:line.find(':', offset)]
+        for line in lines
+        if line.startswith(':param ') and ':' in line[offset:]
+    ]
+
     for field in obj._meta.get_fields():
+        if field.name in predefined_params:
+            continue
         try:
             help_text = strip_tags(force_text(field.help_text))
             verbose_name = force_text(field.verbose_name).capitalize()
