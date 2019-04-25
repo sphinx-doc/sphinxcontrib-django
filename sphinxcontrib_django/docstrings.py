@@ -136,6 +136,10 @@ def _add_model_fields_as_params(app, obj, lines):
 
         # Add parameter
         if help_text:
+            if verbose_name:
+                if not verbose_name.strip().endswith('.'):
+                    verbose_name += '.'
+                help_text = verbose_name + ' ' + help_text
             lines.append(u':param %s: %s' % (field.name, help_text))
         else:
             lines.append(u':param %s: %s' % (field.name, verbose_name))
