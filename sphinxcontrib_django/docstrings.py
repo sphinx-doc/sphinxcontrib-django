@@ -126,16 +126,20 @@ def _add_model_fields_as_params(app, obj, lines):
     :type app: sphinx.application.Sphinx
     :type lines: list
     """
-    offset = len(':param ')
+    param_offset = len(':param ')
+    type_offset = len(':type ')
     predefined_params = [
-        line[offset:line.find(':', offset)]
+        line[param_offset:line.find(':', param_offset)]
         for line in lines
-        if line.startswith(':param ') and ':' in line[offset:]
+        if line.startswith(':param ') and ':' in line[param_offset:]
+    ]
+    predefined_types = [
+        line[type_offset:line.find(':', type_offset)]
+        for line in lines
+        if line.startswith(':type ') and ':' in line[type_offset:]
     ]
 
     for field in obj._meta.get_fields():
-        if field.name in predefined_params:
-            continue
         try:
             help_text = strip_tags(force_text(field.help_text))
             verbose_name = force_text(field.verbose_name).capitalize()
@@ -144,17 +148,19 @@ def _add_model_fields_as_params(app, obj, lines):
             continue
 
         # Add parameter
-        if help_text:
-            if verbose_name:
-                if not verbose_name.strip().endswith('.'):
-                    verbose_name += '.'
-                help_text = verbose_name + ' ' + help_text
-            lines.append(u':param %s: %s' % (field.name, help_text))
-        else:
-            lines.append(u':param %s: %s' % (field.name, verbose_name))
+        if field.name not in predefined_params:
+            if help_text:
+                if verbose_name:
+                    if not verbose_name.strip().endswith('.'):
+                        verbose_name += '.'
+                    help_text = verbose_name + ' ' + help_text
+                lines.append(u':param %s: %s' % (field.name, help_text))
+            else:
+                lines.append(u':param %s: %s' % (field.name, verbose_name))
 
         # Add type
-        lines.append(_get_field_type(field))
+        if field.name not in predefined_types:
+            lines.append(_get_field_type(field))
 
     if 'sphinx.ext.inheritance_diagram' in app.extensions and \
             'sphinx.ext.graphviz' in app.extensions and \
