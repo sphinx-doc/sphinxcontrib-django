@@ -30,6 +30,7 @@ _FIELD_DESCRIPTORS = (FileDescriptor,)
 RE_GET_FOO_DISPLAY = re.compile('\.get_(?P<field>[a-zA-Z0-9_]+)_display$')
 RE_GET_NEXT_BY = re.compile('\.get_next_by_(?P<field>[a-zA-Z0-9_]+)$')
 RE_GET_PREVIOUS_BY = re.compile('\.get_previous_by_(?P<field>[a-zA-Z0-9_]+)$')
+DJANGO_VERSION = ".".join(map(str, django.VERSION[0:2]))
 
 
 # Support for some common third party fields
@@ -153,8 +154,10 @@ def _add_model_fields_as_params(app, obj, lines):
             not any('inheritance-diagram::' in line for line in lines):
         lines.append('.. inheritance-diagram::')
 
-    for name in references:
-        lines.append(u'.. _%s: %s' % (name, references[name]))
+    if references:
+        lines.append('')
+        for name in references:
+            lines.append(u'.. _%s: %s' % (name, references[name]))
 
 
 def _add_form_fields(obj, lines):
@@ -175,6 +178,16 @@ def _add_form_fields(obj, lines):
         ))
 
 
+def _get_url_dict(klass):
+    lookup = {
+        'django.db.models': 'https://docs.djangoproject.com/en/%s/ref/models/fields/#django.db.models.' % DJANGO_VERSION
+    }
+
+    for key in lookup:
+        if klass.__module__.startswith(key):
+            return {klass.__name__: lookup[key] + klass.__name__}
+
+
 def _get_field_type(field):
     if isinstance(field, models.ForeignKey):
         if django.VERSION >= (2, 0):
@@ -186,17 +199,20 @@ def _get_field_type(field):
             if isinstance(to, str):
                 to = _resolve_model(field, to)
 
+        klass = type(field)
+        url_dict = _get_url_dict(klass)
+        if url_dict:
+            return u':type %s: `%s`_ to :class:`~%s.%s`' % (
+                field.name, klass.__name__, to.__module__, to.__name__
+            ), url_dict
         return u':type %s: %s to :class:`~%s.%s`' % (
-            field.name, type(field).__name__, to.__module__, to.__name__), None
+            field.name, klass.__name__, to.__module__, to.__name__
+        ), None
     else:
         klass = type(field)
-        if klass.__module__.startswith('django.db.models'):
-            return u':type %s: `%s`_' % (field.name, klass.__name__), {
-                klass.__name__: 'https://docs.djangoproject.com/en/%s/ref/models/fields/#django.db.models.%s' % (
-                    ".".join(map(str, django.VERSION[0:2])),
-                    klass.__name__,
-                )
-            }
+        url_dict = _get_url_dict(klass)
+        if url_dict:
+            return u':type %s: `%s`_' % (field.name, klass.__name__), url_dict
         return u':type %s: %s' % (field.name, klass.__name__), None
 
 
