@@ -188,7 +188,8 @@ def _resolve_model(field, to):
     if '.' in to:
         return apps.get_model(to)
     else:
-        # Not sure if this is needed too:
+        if to == 'self':
+            return field.model
         return apps.get_model(field.model._meta.app_label, to)
 
 
