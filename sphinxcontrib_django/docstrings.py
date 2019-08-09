@@ -27,9 +27,9 @@ from django.utils.module_loading import import_string
 from sphinxcontrib_django import config
 
 _FIELD_DESCRIPTORS = (FileDescriptor,)
-RE_GET_FOO_DISPLAY = re.compile("\.get_(?P<field>[a-zA-Z0-9_]+)_display$")
-RE_GET_NEXT_BY = re.compile("\.get_next_by_(?P<field>[a-zA-Z0-9_]+)$")
-RE_GET_PREVIOUS_BY = re.compile("\.get_previous_by_(?P<field>[a-zA-Z0-9_]+)$")
+RE_GET_FOO_DISPLAY = re.compile(r"\.get_(?P<field>[a-zA-Z0-9_]+)_display$")
+RE_GET_NEXT_BY = re.compile(r"\.get_next_by_(?P<field>[a-zA-Z0-9_]+)$")
+RE_GET_PREVIOUS_BY = re.compile(r"\.get_previous_by_(?P<field>[a-zA-Z0-9_]+)$")
 
 
 # Support for some common third party fields
@@ -43,6 +43,7 @@ except ImportError:
 
 def setup(app):
     """Allow this package to be used as Sphinx extension.
+
     This is also called from the top-level ``__init__.py``.
 
     :type app: sphinx.application.Sphinx
@@ -61,7 +62,7 @@ def setup(app):
 
 
 def autodoc_skip(app, what, name, obj, skip, options):
-    """Hook that tells autodoc to include or exclude certain fields.
+    """Hook to tell autodoc to include or exclude certain fields.
 
     Sadly, it doesn't give a reference to the parent object,
     so only the ``name`` can be used for referencing.
@@ -87,7 +88,7 @@ def autodoc_skip(app, what, name, obj, skip, options):
 
 
 def improve_model_docstring(app, what, name, obj, options, lines):
-    """Hook that improves the autodoc docstrings for Django models.
+    """Hook to improve the autodoc docstrings for Django models.
 
     :type app: sphinx.application.Sphinx
     :param what: The parent type, ``class`` or ``module``
@@ -225,6 +226,7 @@ def _resolve_model(field, to):
 
 def _improve_attribute_docs(obj, name, lines):
     """Improve the documentation of various attributes.
+
     This improves the navigation between related objects.
 
     :param obj: the instance of the object to document.

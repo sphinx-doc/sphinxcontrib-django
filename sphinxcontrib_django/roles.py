@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 
 def setup(app):
     """Allow this module to be used as Sphinx extension.
-    This is also called from the top-level ``__init__.py``.
 
+    This is also called from the top-level ``__init__.py``.
     It adds the rules to allow :django:setting:`SITE_ID` to work.
 
     :type app: sphinx.application.Sphinx

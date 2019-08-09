@@ -53,7 +53,8 @@ class TestDocStrings(SimpleTestCase):
         )
         self.assertEqual(
             docstrings._get_field_type(SimpleModel._meta.get_field("user2")),
-            ":type user2: ForeignKey to :class:`~sphinxcontrib_django.tests.test_docstrings.User2`",
+            ":type user2: ForeignKey to"
+            " :class:`~sphinxcontrib_django.tests.test_docstrings.User2`",
         )
         self.assertEqual(
             docstrings._get_field_type(SimpleModel._meta.get_field("user3")),
@@ -72,7 +73,8 @@ class TestDocStrings(SimpleTestCase):
                 ":param user: User",
                 ":type user: ForeignKey to :class:`~django.contrib.auth.models.User`",
                 ":param user2: User2",
-                ":type user2: ForeignKey to :class:`~sphinxcontrib_django.tests.test_docstrings.User2`",
+                ":type user2: ForeignKey to"
+                " :class:`~sphinxcontrib_django.tests.test_docstrings.User2`",
                 ":param user3: User3",
                 ":type user3: ForeignKey to :class:`~django.contrib.auth.models.User`",
             ],

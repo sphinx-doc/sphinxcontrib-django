@@ -2,9 +2,7 @@
 from setuptools import setup, find_packages
 from os import path
 import codecs
-import os
 import re
-import sys
 
 
 def read(*parts):

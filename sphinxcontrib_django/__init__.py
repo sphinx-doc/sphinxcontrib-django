@@ -7,6 +7,7 @@ __version__ = "0.4"
 
 def setup(app):
     """Allow this module to be used as sphinx extension.
+
     This attaches the Sphinx hooks.
 
     :type app: sphinx.application.Sphinx
