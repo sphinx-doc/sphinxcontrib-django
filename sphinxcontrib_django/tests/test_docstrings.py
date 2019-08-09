@@ -1,12 +1,11 @@
 import os
 
+import sphinxcontrib_django
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
 from django.test import SimpleTestCase
 from sphinx.application import Sphinx
-
-import sphinxcontrib_django
 from sphinxcontrib_django import docstrings
 
 

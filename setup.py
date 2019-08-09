@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-from setuptools import setup, find_packages
-from os import path
 import codecs
 import re
+from os import path
+
+from setuptools import find_packages, setup
 
 
 def read(*parts):

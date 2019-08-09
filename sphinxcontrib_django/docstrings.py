@@ -13,17 +13,16 @@ Based on:
 import re
 
 import django
-from django.apps import apps
 from django import forms
+from django.apps import apps
 from django.db import models
-from django.db.models.fields.files import FileDescriptor
-from django.db.models.query_utils import DeferredAttribute
 from django.db.models.fields import related_descriptors
+from django.db.models.fields.files import FileDescriptor
 from django.db.models.manager import ManagerDescriptor
+from django.db.models.query_utils import DeferredAttribute
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
 from django.utils.module_loading import import_string
-
 from sphinxcontrib_django import config
 
 _FIELD_DESCRIPTORS = (FileDescriptor,)
