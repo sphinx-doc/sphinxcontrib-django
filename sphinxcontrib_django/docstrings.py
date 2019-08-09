@@ -150,6 +150,10 @@ def _add_model_fields_as_params(app, obj, lines):
         # Add parameter
         if field.name not in predefined_params:
             if help_text:
+                if verbose_name:
+                    if not verbose_name.strip().endswith('.'):
+                        verbose_name += '.'
+                    help_text = "{} {}".format(verbose_name, help_text)
                 lines.append(u':param %s: %s' % (field.name, help_text))
             else:
                 lines.append(u':param %s: %s' % (field.name, verbose_name))
@@ -202,8 +206,9 @@ def _get_field_type(field):
 def _resolve_model(field, to):
     if '.' in to:
         return apps.get_model(to)
+    elif to == 'self':
+        return field.model
     else:
-        # Not sure if this is needed too:
         return apps.get_model(field.model._meta.app_label, to)
 
 
