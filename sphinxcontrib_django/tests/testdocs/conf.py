@@ -1,4 +1,1 @@
-extensions = [
-    'sphinx.ext.autodoc',
-    'sphinxcontrib_django',
-]
+extensions = ["sphinx.ext.autodoc", "sphinxcontrib_django"]
