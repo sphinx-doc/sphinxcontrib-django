@@ -187,9 +187,9 @@ def _get_field_type(field):
 def _resolve_model(field, to):
     if '.' in to:
         return apps.get_model(to)
+    elif to == 'self':
+        return field.model
     else:
-        if to == 'self':
-            return field.model
         return apps.get_model(field.model._meta.app_label, to)
 
 
