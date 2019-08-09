@@ -1,4 +1,9 @@
 """Adding extra roles for documentation writing."""
+import logging
+
+from sphinx.errors import ExtensionError
+
+logger = logging.getLogger(__name__)
 
 
 def setup(app):
@@ -9,8 +14,11 @@ def setup(app):
 
     :type app: sphinx.application.Sphinx
     """
-    app.add_crossref_type(
-        directivename="setting",
-        rolename="setting",
-        indextemplate="pair: %s; setting",
-    )
+    try:
+        app.add_crossref_type(
+            directivename="setting",
+            rolename="setting",
+            indextemplate="pair: %s; setting",
+        )
+    except ExtensionError as e:
+        logger.warning("Unable to register :django:setting:`..`: " + str(e))
