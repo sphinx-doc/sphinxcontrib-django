@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 0.5 (2019-08-09)
+------------------------
+
+* Model fields always show verbose name if present.
+* Model fields are skipped when they are already documented.
+* Support "self" in foreign keys.
+* Allow ``:setting:`` registration to fail
+* Fixed ``runtests.py`` for Django 2.2
+* Reformatted all source code with black, isort and flake8
+
+
 Version 0.4 (2018-07-26)
 ------------------------
 
