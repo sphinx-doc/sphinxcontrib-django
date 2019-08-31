@@ -27,15 +27,36 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
+from django.apps import apps
+from sphinx.domains.python import PyXRefRole
 from sphinx.errors import ExtensionError
 
 from . import __version__
 
 if TYPE_CHECKING:
+    import docutils
     import sphinx
     from sphinx.util.typing import ExtensionMetadata
 
 logger = logging.getLogger(__name__)
+
+
+class ModelRole(PyXRefRole):
+    """Expose Django models as roles for Sphinx."""
+
+    def process_link(
+        self,
+        env: sphinx.environment.BuildEnvironment,
+        refnode: docutils.nodes.Element,
+        has_explicit_title: bool,
+        title: str,
+        target: str,
+    ) -> tuple[str, str]:
+        """Get full python path to model."""
+        model = apps.get_model(target)
+        target = ".".join([model.__module__, model.__qualname__])
+
+        return super().process_link(env, refnode, has_explicit_title, title, target)
 
 
 def setup(app: sphinx.application.Sphinx) -> ExtensionMetadata:
@@ -70,6 +91,11 @@ def setup(app: sphinx.application.Sphinx) -> ExtensionMetadata:
             app.add_crossref_type(directivename=crossref_type, rolename=crossref_type)
         except ExtensionError as e:
             logger.warning("Unable to register cross-reference type: %s", e)
+
+    try:
+        app.add_role_to_domain("py", "class", ModelRole())
+    except ExtensionError as e:
+        logger.warning("Unable to register :py:model: role: %s", e)
 
     return {
         "version": __version__,
