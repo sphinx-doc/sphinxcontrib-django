@@ -241,10 +241,7 @@ def _improve_attribute_docs(obj, name, lines):
         # Get the field by importing the name.
         cls_path, field_name = name.rsplit(".", 1)
         model = import_string(cls_path)
-        if django.VERSION >= (3, 0):
-           field = model._meta.get_field(obj.field.name)
-        else:
-            field = model._meta.get_field(obj.field_name)
+        field = model._meta.get_field(field_name)
 
         del lines[:]  # lines.clear() is Python 3 only
         lines.append("**Model field:** {label}".format(label=field.verbose_name))
