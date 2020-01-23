@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.query_utils import DeferredAttribute
 from django.test import SimpleTestCase
+from django.utils.module_loading import import_string
 from sphinx.application import Sphinx
 from sphinxcontrib_django import docstrings
 
@@ -105,9 +106,10 @@ class TestDocStrings(SimpleTestCase):
         lines = []
         simple_model_path = 'sphinxcontrib_django.tests.test_docstrings.SimpleModel'
         if django.VERSION < (3, 0):
-            obj = DeferredAttribute('dummy_field', simple_model_path)
+            obj = DeferredAttribute(field_name='dummy_field', model=simple_model_path)
         else:
-            obj = DeferredAttribute(simple_model_path)
+            model = import_string(simple_model_path)
+            obj = DeferredAttribute(field=model._meta.get_field('dummy_field'))
 
         docstrings._improve_attribute_docs(obj, '{}.dummy_field'.format(simple_model_path), lines)
         self.assertEqual(
