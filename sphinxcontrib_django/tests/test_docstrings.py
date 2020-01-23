@@ -1,9 +1,11 @@
 import os
 
 import sphinxcontrib_django
+import django
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.query_utils import DeferredAttribute
 from django.test import SimpleTestCase
 from sphinx.application import Sphinx
 from sphinxcontrib_django import docstrings
@@ -17,6 +19,7 @@ class SimpleModel(models.Model):
     user = models.ForeignKey(User, related_name="+", on_delete=models.CASCADE)
     user2 = models.ForeignKey("User2", related_name="+", on_delete=models.CASCADE)
     user3 = models.ForeignKey("auth.User", related_name="+", on_delete=models.CASCADE)
+    dummy_field = models.CharField(max_length=3)
 
 
 class SimpleForm(forms.ModelForm):
@@ -76,6 +79,8 @@ class TestDocStrings(SimpleTestCase):
                 " :class:`~sphinxcontrib_django.tests.test_docstrings.User2`",
                 ":param user3: User3",
                 ":type user3: ForeignKey to :class:`~django.contrib.auth.models.User`",
+                ":param dummy_field: Dummy field",
+                ":type dummy_field: CharField",
             ],
         )
 
@@ -93,5 +98,21 @@ class TestDocStrings(SimpleTestCase):
                 "* ``user3``: User3 (:class:`~django.forms.models.ModelChoiceField`)",
                 "* ``test1``: Test1 (:class:`~django.forms.fields.CharField`)",
                 "* ``test2``: Test2 (:class:`~django.forms.fields.CharField`)",
+            ],
+        )
+
+    def test_model_fields(self):
+        lines = []
+        simple_model_path = 'sphinxcontrib_django.tests.test_docstrings.SimpleModel'
+        if django.VERSION < (3, 0):
+            obj = DeferredAttribute('dummy_field', simple_model_path)
+        else:
+            obj = DeferredAttribute(simple_model_path)
+
+        docstrings._improve_attribute_docs(obj, '{}.dummy_field'.format(simple_model_path), lines)
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** dummy field",
             ],
         )
