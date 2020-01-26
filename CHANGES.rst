@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 0.5.1 (2020-01-26)
+--------------------------
+
+* Fix deferred attribute for Django 3.0.
+
+
 Version 0.5 (2019-08-09)
 ------------------------
 
