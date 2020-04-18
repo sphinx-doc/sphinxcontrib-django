@@ -20,7 +20,7 @@ from django.db.models.fields import related_descriptors
 from django.db.models.fields.files import FileDescriptor
 from django.db.models.manager import ManagerDescriptor
 from django.db.models.query_utils import DeferredAttribute
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.html import strip_tags
 from django.utils.module_loading import import_string
 from sphinxcontrib_django import config
@@ -142,8 +142,8 @@ def _add_model_fields_as_params(app, obj, lines):
 
     for field in obj._meta.get_fields():
         try:
-            help_text = strip_tags(force_text(field.help_text))
-            verbose_name = force_text(field.verbose_name).capitalize()
+            help_text = strip_tags(force_str(field.help_text))
+            verbose_name = force_str(field.verbose_name).capitalize()
         except AttributeError:
             # e.g. ManyToOneRel
             continue

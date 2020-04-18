@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 0.6.0 (unreleased)
+--------------------------
+
+* Drop Python 2, Django 1.11 support
+
 Version 0.5.1 (2020-01-26)
 --------------------------
 
