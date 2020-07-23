@@ -67,7 +67,8 @@ class TestDocStrings(SimpleTestCase):
     def test_model_init_params(self):
         """Model __init__ gets all fields as params."""
         lines = []
-        docstrings._add_model_fields_as_params(self.app, SimpleModel, lines)
+        simple_model_path = "{}.{}".format(SimpleModel.__module__, SimpleModel.__name__)
+        docstrings.improve_model_docstring(self.app, "class", simple_model_path, SimpleModel, {}, lines)
         self.assertEqual(
             lines,
             [
@@ -88,7 +89,8 @@ class TestDocStrings(SimpleTestCase):
     def test_add_form_fields(self):
         """Form fields should be mentioned."""
         lines = []
-        docstrings._add_form_fields(SimpleForm, lines)
+        simple_form_path = "{}.{}".format(SimpleForm.__module__, SimpleForm.__name__)
+        docstrings.improve_model_docstring(self.app, "class", simple_form_path, SimpleForm, {}, lines)
         self.assertEqual(
             lines,
             [
@@ -104,14 +106,14 @@ class TestDocStrings(SimpleTestCase):
 
     def test_model_fields(self):
         lines = []
-        simple_model_path = 'sphinxcontrib_django.tests.test_docstrings.SimpleModel'
+        simple_model_path = "{}.{}".format(SimpleModel.__module__, SimpleModel.__name__)
         if django.VERSION < (3, 0):
             obj = DeferredAttribute(field_name='dummy_field', model=simple_model_path)
         else:
             model = import_string(simple_model_path)
             obj = DeferredAttribute(field=model._meta.get_field('dummy_field'))
 
-        docstrings._improve_attribute_docs(obj, '{}.dummy_field'.format(simple_model_path), lines)
+        docstrings.improve_model_docstring(self.app, "attribute", "{}.dummy_field".format(simple_model_path), obj, {}, lines)
         self.assertEqual(
             lines,
             [
