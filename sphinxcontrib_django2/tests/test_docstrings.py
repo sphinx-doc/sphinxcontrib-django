@@ -106,8 +106,10 @@ class TestDocStrings(SimpleTestCase):
     def test_model_fields(self):
         lines = []
         simple_model_path = "sphinxcontrib_django2.tests.test_docstrings.SimpleModel"
-        if django.VERSION < (3, 0):
+        if django.VERSION < (2, 1):
             obj = DeferredAttribute(field_name="dummy_field", model=simple_model_path)
+        elif django.VERSION < (3, 0):
+            obj = DeferredAttribute(field_name="dummy_field")
         else:
             model = import_string(simple_model_path)
             obj = DeferredAttribute(field=model._meta.get_field("dummy_field"))
