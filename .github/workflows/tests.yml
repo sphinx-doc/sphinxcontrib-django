@@ -1,0 +1,34 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  unittests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.6", "3.7", "3.8"]
+        django-version: ["django~=2.2.0", "django~=3.0.0", "django~=3.1.0"]
+    env:
+      OS: ubuntu-latest
+      PYTHON: ${{ matrix.python-version }}
+      DJANGO: ${{ matrix.django-version }}
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup Python
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          pip install "${{ matrix.django-version }}"
+          pip install sphinx
+          pip install codecov
+          pip install -e .
+      - name: Generate coverage report
+        run: coverage run runtests.py
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          env_vars: OS,PYTHON,DJANGO
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
