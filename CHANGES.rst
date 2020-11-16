@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 0.6 (2020-11-16)
+--------------------------
+
+* Fix deferred attribute for Django >=2.1, <3.0
+* Django: Drop support for [1.11, 2.0], add support for [2.2, 3.0, 3.1]
+* Python: Drop support for [2.7, 3.5], add support for [3.6, 3.7, 3.8]
+* Replace force_text by force_str (deprecated in Django 4.0)
+* Improved test coverage
+* Support for Django ModelFields
+
+
 Version 0.5.1 (2020-01-26)
 --------------------------
 
