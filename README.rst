@@ -1,18 +1,32 @@
-.. image:: https://img.shields.io/travis/edoburu/sphinxcontrib-django/master.svg?branch=master
-    :target: http://travis-ci.org/edoburu/sphinxcontrib-django
-.. image:: https://img.shields.io/pypi/v/sphinxcontrib-django.svg
-    :target: https://pypi.python.org/pypi/sphinxcontrib-django/
-.. image:: https://img.shields.io/pypi/l/sphinxcontrib-django.svg
-    :target: https://pypi.python.org/pypi/sphinxcontrib-django/
-.. image:: https://img.shields.io/codecov/c/github/edoburu/sphinxcontrib-django/master.svg
-    :target: https://codecov.io/github/edoburu/sphinxcontrib-django?branch=master
+.. image:: https://github.com/timoludwig/sphinxcontrib-django2/workflows/Tests/badge.svg
+    :alt: GitHub Workflow Status
+    :target: https://github.com/timoludwig/sphinxcontrib-django2/actions?query=workflow%3ATests
+.. image:: https://img.shields.io/pypi/v/sphinxcontrib-django2.svg
+    :alt: PyPi
+    :target: https://pypi.python.org/pypi/sphinxcontrib-django2/
+.. image:: https://codecov.io/gh/timoludwig/sphinxcontrib-django2/branch/develop/graph/badge.svg
+    :alt: Code coverage
+    :target: https://codecov.io/gh/timoludwig/sphinxcontrib-django2
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :alt: Black Code Style
+    :target: https://github.com/psf/black
+.. image:: https://img.shields.io/github/license/timoludwig/sphinxcontrib-django2
+    :alt: GitHub license
+    :target: https://github.com/timoludwig/sphinxcontrib-django2/blob/develop/LICENSE
 
-sphinxcontrib-django
-====================
+sphinxcontrib-django2
+=====================
 
 Improvements for the output of Sphinx's autodoc for Django classes.
 
-This adds the following improvements:
+This is a fork of `sphinxcontrib-django`_, which seems to be no longer maintained.
+In comparison to the upstream repository, this provides the following:
+
+* Support for current versions of Python and Django
+* Support for ModelForms
+* Better test coverage
+
+The original repository already implemented the following features:
 
 * Properly show which fields a model has.
 * Properly show which fields a form has.
@@ -21,6 +35,7 @@ This adds the following improvements:
 * Hide irrelevant runtime information like ``declared_fieldsets``, ``fieldsets`` and ``Meta`` from classes.
 * A ``:django:setting:`` role to allow linking to Django documentation. (e.g. *:django:setting:`SITE_ID`*)
 
+.. _sphinxcontrib-django: https://github.com/edoburu/sphinxcontrib-django
 
 Installation
 ------------
@@ -29,7 +44,7 @@ Usage:
 
 .. code-block:: bash
 
-    pip install sphinxcontrib-django
+    pip install sphinxcontrib-django2
 
 Add to the Sphinx config file (``conf.py``):
 
@@ -37,7 +52,7 @@ Add to the Sphinx config file (``conf.py``):
 
     extensions = [
         'sphinx.ext.autodoc',
-        'sphinxcontrib_django',
+        'sphinxcontrib_django2',
     ]
 
 Autodoc works by importing your code on the fly, and extracting the data from
@@ -60,30 +75,22 @@ To support the ``:django:setting:`` role, configure Intersphinx:
     }
 
 
-Recommendations:
-~~~~~~~~~~~~~~~~
+Contributing
+------------
 
-When your project uses Celery, include `celery.contrib.sphinx`_ too.
-This adds an ``autotask::`` directive, and ``:task:`app.tasks.my_task``` role.
+Pull requests are always welcome!
 
-Other great extensions are:
+You can install all requirements of the development setup with `Pipenv`_:
 
-* sphinx-autodoc-annotation_: Converts Python 3 annotations to docstrings.
-* ``sphinx.ext.graphviz``: Allows to create diagrams with ease.
+.. code-block:: bash
 
-An example configuration may look like:
+    pipenv install --dev
+    pipenv run pre-commit install
 
-.. code-block:: python
+Then, run the tests with:
 
-    extensions = [
-        'sphinx.ext.autodoc',         # The autodoc core
-        'sphinx.ext.graphviz',        # Support creating charts!
+.. code-block:: bash
 
-        'celery.contrib.sphinx',      # Celery improvements!
-        'sphinx_autodoc_annotation',  # Parses Python 3 annotations
-        'sphinxcontrib_django',       # this module
-    ]
+    pipenv run coverage run runtests.py
 
-
-.. _sphinx-autodoc-annotation: https://github.com/nicolashainaux/sphinx-autodoc-annotation
-.. _celery.contrib.sphinx: http://docs.celeryproject.org/en/latest/reference/celery.contrib.sphinx.html
+.. _Pipenv: https://pipenv.pypa.io/
