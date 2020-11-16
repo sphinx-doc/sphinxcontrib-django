@@ -20,15 +20,15 @@ def find_version(*parts):
 
 
 setup(
-    name="sphinxcontrib-django",
-    version=find_version("sphinxcontrib_django", "__init__.py"),
+    name="sphinxcontrib-django2",
+    version=find_version("sphinxcontrib_django2", "__init__.py"),
     license="Apache 2.0",
     description="Improve the Sphinx autodoc for Django classes.",
     long_description=read("README.rst"),
-    author="Diederik van der Boor",
-    author_email="opensource@edoburu.nl",
-    url="https://github.com/edoburu/sphinxcontrib-django",
-    download_url="https://github.com/edoburu/sphinxcontrib-django/zipball/master",
+    author="Timo Ludwig",
+    author_email="ti.ludwig@web.de",
+    url="https://github.com/timoludwig/sphinxcontrib-django2",
+    download_url="https://github.com/timoludwig/sphinxcontrib-django2/zipball/main",
     packages=find_packages(exclude=("example*",)),
     include_package_data=True,
     test_suite="runtests",

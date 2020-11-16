@@ -12,13 +12,13 @@ def setup(app):
 
     :type app: sphinx.application.Sphinx
     """
-    import sphinxcontrib_django.docstrings
-    import sphinxcontrib_django.roles
+    import sphinxcontrib_django2.docstrings
+    import sphinxcontrib_django2.roles
 
     # Setup both modules at once. They can also be separately imported to
     # use only fragments of this package.
-    sphinxcontrib_django.docstrings.setup(app)
-    sphinxcontrib_django.roles.setup(app)
+    sphinxcontrib_django2.docstrings.setup(app)
+    sphinxcontrib_django2.roles.setup(app)
 
 
 #: Example Intersphinx mapping, linking to project versions

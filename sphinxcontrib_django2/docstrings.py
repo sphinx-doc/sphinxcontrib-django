@@ -23,7 +23,8 @@ from django.db.models.query_utils import DeferredAttribute
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
 from django.utils.module_loading import import_string
-from sphinxcontrib_django import config
+
+from sphinxcontrib_django2 import config
 
 _FIELD_DESCRIPTORS = (FileDescriptor,)
 RE_GET_FOO_DISPLAY = re.compile(r"\.get_(?P<field>[a-zA-Z0-9_]+)_display$")

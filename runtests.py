@@ -35,7 +35,7 @@ if not settings.configured:
             "django.contrib.sites",
             "django.contrib.admin",
             "django.contrib.sessions",
-            "sphinxcontrib_django",  # only needed for test runner
+            "sphinxcontrib_django2",  # only needed for test runner
         ),
         MIDDLEWARE=(
             "django.middleware.common.CommonMiddleware",
@@ -68,7 +68,7 @@ if not settings.configured:
     )
 
 
-DEFAULT_TEST_APPS = ["sphinxcontrib_django"]
+DEFAULT_TEST_APPS = ["sphinxcontrib_django2"]
 
 
 def runtests():
