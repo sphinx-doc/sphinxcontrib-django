@@ -12,7 +12,10 @@
 .DS_Store
 .tox/
 build/
+coverage.xml
 dist/
 docs/_build/
 htmlcov/
+Pipfile.lock
+pyproject.toml
 __pycache__/
