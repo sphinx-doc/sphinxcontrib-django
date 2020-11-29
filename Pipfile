@@ -12,3 +12,4 @@ sphinxcontrib-django = {editable = true, path = "."}
 django = "*"
 sphinx = "*"
 psycopg2-binary = "*"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}

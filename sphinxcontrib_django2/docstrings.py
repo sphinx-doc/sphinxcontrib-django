@@ -12,7 +12,6 @@ Based on:
 """
 import re
 
-import django
 from django import forms
 from django.apps import apps
 from django.db import models
@@ -197,14 +196,9 @@ def _add_form_fields(obj, lines):
 
 def _get_field_type(field):
     if isinstance(field, models.ForeignKey):
-        if django.VERSION >= (2, 0):
-            to = field.remote_field.model
-            if isinstance(to, str):
-                to = _resolve_model(field, to)
-        else:
-            to = field.rel.to
-            if isinstance(to, str):
-                to = _resolve_model(field, to)
+        to = field.remote_field.model
+        if isinstance(to, str):
+            to = _resolve_model(field, to)
 
         return u":type %s: %s to :class:`~%s.%s`" % (
             field.name,

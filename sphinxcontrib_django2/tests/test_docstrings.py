@@ -9,6 +9,14 @@ from django.test import SimpleTestCase
 from django.utils.module_loading import import_string
 from sphinx.application import Sphinx
 
+try:
+    from phonenumber_field.modelfields import PhoneNumberField
+
+    PHONENUMBER = True
+except ModuleNotFoundError:
+    # In case phonenumber is not used, pass
+    PHONENUMBER = False
+
 import sphinxcontrib_django2
 from sphinxcontrib_django2 import docstrings
 
@@ -18,15 +26,52 @@ class User2(models.Model):
 
 
 class SimpleModel(models.Model):
-    user = models.ForeignKey(User, related_name="+", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User,
+        related_name="+",
+        on_delete=models.CASCADE,
+        help_text="This should help you",
+        verbose_name="Very verbose name of user field",
+    )
     user2 = models.ForeignKey("User2", related_name="+", on_delete=models.CASCADE)
     user3 = models.ForeignKey("auth.User", related_name="+", on_delete=models.CASCADE)
     dummy_field = models.CharField(max_length=3)
 
+    # Mock get_..._display methods of Django models
+    def get_dummy_field_display(self):
+        """pass"""
+
+    def get_next_by_dummy_field(self):
+        """pass"""
+
+    def get_previous_by_dummy_field(self):
+        """pass"""
+
+
+class FileModel(models.Model):
+    file = models.FileField()
+
+
+if PHONENUMBER:
+
+    class PhoneNumberModel(models.Model):
+        phone_number = PhoneNumberField()
+
+
+class SimpleModel2(models.Model):
+    simple_model = models.ForeignKey(
+        SimpleModel, related_name="simple_model2", on_delete=models.CASCADE
+    )
+    file = models.OneToOneField(
+        FileModel,
+        related_name="simple_model2",
+        on_delete=models.CASCADE,
+    )
+
 
 class SimpleForm(forms.ModelForm):
     test1 = forms.CharField(label="Test1")
-    test2 = forms.CharField()
+    test2 = forms.CharField(help_text="Test2")
 
     class Meta:
         model = SimpleModel
@@ -68,16 +113,16 @@ class TestDocStrings(SimpleTestCase):
     def test_model_init_params(self):
         """Model __init__ gets all fields as params."""
         lines = []
-        simple_model_path = "{}.{}".format(SimpleModel.__module__, SimpleModel.__name__)
+        name = "{}.{}".format(SimpleModel.__module__, SimpleModel.__name__)
         docstrings.improve_model_docstring(
-            self.app, "class", simple_model_path, SimpleModel, {}, lines
+            self.app, "class", name, SimpleModel, {}, lines
         )
         self.assertEqual(
             lines,
             [
                 ":param id: Id",
                 ":type id: AutoField",
-                ":param user: User",
+                ":param user: Very verbose name of user field. This should help you",
                 ":type user: ForeignKey to :class:`~django.contrib.auth.models.User`",
                 ":param user2: User2",
                 ":type user2: ForeignKey to"
@@ -92,16 +137,17 @@ class TestDocStrings(SimpleTestCase):
     def test_add_form_fields(self):
         """Form fields should be mentioned."""
         lines = []
-        simple_form_path = "{}.{}".format(SimpleForm.__module__, SimpleForm.__name__)
+        name = "{}.{}".format(SimpleForm.__module__, SimpleForm.__name__)
         docstrings.improve_model_docstring(
-            self.app, "class", simple_form_path, SimpleForm, {}, lines
+            self.app, "class", name, SimpleForm, {}, lines
         )
         self.assertEqual(
             lines,
             [
                 "**Form fields:**",
                 "",
-                "* ``user``: User (:class:`~django.forms.ModelChoiceField`)",
+                "* ``user``: Very verbose name of user field"
+                " (:class:`~django.forms.ModelChoiceField`)",
                 "* ``user2``: User2 (:class:`~django.forms.ModelChoiceField`)",
                 "* ``user3``: User3 (:class:`~django.forms.ModelChoiceField`)",
                 "* ``test1``: Test1 (:class:`~django.forms.CharField`)",
@@ -109,12 +155,10 @@ class TestDocStrings(SimpleTestCase):
             ],
         )
 
-    def test_model_fields(self):
+    def test_deferred_model_fields(self):
         lines = []
         simple_model_path = "{}.{}".format(SimpleModel.__module__, SimpleModel.__name__)
-        if django.VERSION < (2, 1):
-            obj = DeferredAttribute(field_name="dummy_field", model=simple_model_path)
-        elif django.VERSION < (3, 0):
+        if django.VERSION < (3, 0):
             obj = DeferredAttribute(field_name="dummy_field")
         else:
             model = import_string(simple_model_path)
@@ -134,3 +178,237 @@ class TestDocStrings(SimpleTestCase):
                 "**Model field:** dummy field",
             ],
         )
+
+    def test_foreignkey_model_fields(self):
+        lines = []
+        name = "{}.{}.user".format(SimpleModel.__module__, SimpleModel.__name__)
+        obj = SimpleModel.user
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** Very verbose name of user field, accesses the "
+                ":class:`~django.contrib.auth.models.User` model.",
+            ],
+        )
+
+    def test_reverse_foreignkey_model_fields(self):
+        lines = []
+        name = "{}.{}.simple_model2".format(
+            SimpleModel.__module__, SimpleModel.__name__
+        )
+        obj = SimpleModel.simple_model2
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** simple model, accesses the M2M "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel2` model.",
+            ],
+        )
+
+    def test_onetoone_model_fields(self):
+        lines = []
+        name = "{}.{}.file".format(SimpleModel2.__module__, SimpleModel2.__name__)
+        obj = SimpleModel2.file
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** file, accesses the "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.FileModel` model.",
+            ],
+        )
+
+    def test_reverse_onetoone_model_fields(self):
+        lines = []
+        name = "{}.{}.simple_model2".format(FileModel.__module__, FileModel.__name__)
+        obj = FileModel.simple_model2
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** file, accesses the "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel2` model.",
+            ],
+        )
+
+    def test_file_field(self):
+        lines = []
+        name = "{}.{}.file".format(FileModel.__module__, FileModel.__name__)
+        obj = FileModel.file
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** file",
+                "**Return type:** :class:`~django.db.models.fields.files.FieldFile`",
+            ],
+        )
+
+    if PHONENUMBER:
+
+        def test_phonenumber_field(self):
+            lines = []
+            name = "{}.{}.phone_number".format(
+                PhoneNumberModel.__module__, PhoneNumberModel.__name__
+            )
+            obj = PhoneNumberModel.phone_number
+
+            docstrings.improve_model_docstring(
+                self.app,
+                "attribute",
+                name,
+                obj,
+                {},
+                lines,
+            )
+            self.assertEqual(
+                lines,
+                [
+                    "**Model field:** phone number",
+                    "**Return type:** :class:`~phonenumber_field.phonenumber.PhoneNumber`",
+                ],
+            )
+
+    def test_attribute_none(self):
+        lines = []
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            "None",
+            None,
+            {},
+            lines,
+        )
+        self.assertEqual(lines, [])
+
+    def test_model_method_display(self):
+        lines = []
+        name = "{}.{}.get_dummy_field_display".format(
+            SimpleModel.__module__, SimpleModel.__name__
+        )
+        obj = SimpleModel.get_dummy_field_display
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "method",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Autogenerated:** Shows the label of the :attr:`dummy_field`",
+            ],
+        )
+
+    def test_model_method_get_next_by(self):
+        lines = []
+        name = "{}.{}.get_next_by_dummy_field".format(
+            SimpleModel.__module__, SimpleModel.__name__
+        )
+        obj = SimpleModel.get_next_by_dummy_field
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "method",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Autogenerated:** Finds next instance based on :attr:`dummy_field`.",
+            ],
+        )
+
+    def test_model_method_get_previous_by(self):
+        lines = []
+        name = "{}.{}.get_previous_by_dummy_field".format(
+            SimpleModel.__module__, SimpleModel.__name__
+        )
+        obj = SimpleModel.get_previous_by_dummy_field
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "method",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Autogenerated:** Finds previous instance based on :attr:`dummy_field`.",
+            ],
+        )
+
+    def test_skip_member(self):
+        obj = SimpleModel
+        for skip in [True, False]:
+            skipped = docstrings.autodoc_skip(
+                self.app, "class", obj.__name__, obj, skip, {}
+            )
+            self.assertEqual(skipped, skip)
+
+    def test_skip_member_exclude(self):
+        obj = SimpleForm.Meta
+        for skip in [True, False]:
+            skipped = docstrings.autodoc_skip(
+                self.app, "class", obj.__name__, obj, skip, {}
+            )
+            self.assertTrue(skipped)
+
+    def test_skip_member_include(self):
+        obj = SimpleForm.__init__
+        for skip in [True, False]:
+            skipped = docstrings.autodoc_skip(
+                self.app, "class", obj.__name__, obj, skip, {}
+            )
+            self.assertFalse(skipped)
