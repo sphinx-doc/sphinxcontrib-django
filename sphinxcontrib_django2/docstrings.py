@@ -51,6 +51,7 @@ def setup(app):
     from .patches import patch_django_for_autodoc
 
     # When running, make sure Django doesn't execute querysets
+    # Fix module paths for intersphinx mappings
     patch_django_for_autodoc()
 
     # Generate docstrings for Django model fields

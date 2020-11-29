@@ -101,11 +101,11 @@ class TestDocStrings(SimpleTestCase):
             [
                 "**Form fields:**",
                 "",
-                "* ``user``: User (:class:`~django.forms.models.ModelChoiceField`)",
-                "* ``user2``: User2 (:class:`~django.forms.models.ModelChoiceField`)",
-                "* ``user3``: User3 (:class:`~django.forms.models.ModelChoiceField`)",
-                "* ``test1``: Test1 (:class:`~django.forms.fields.CharField`)",
-                "* ``test2``: Test2 (:class:`~django.forms.fields.CharField`)",
+                "* ``user``: User (:class:`~django.forms.ModelChoiceField`)",
+                "* ``user2``: User2 (:class:`~django.forms.ModelChoiceField`)",
+                "* ``user3``: User3 (:class:`~django.forms.ModelChoiceField`)",
+                "* ``test1``: Test1 (:class:`~django.forms.CharField`)",
+                "* ``test2``: Test2 (:class:`~django.forms.CharField`)",
             ],
         )
 

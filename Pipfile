@@ -11,3 +11,4 @@ pre-commit = "*"
 sphinxcontrib-django = {editable = true, path = "."}
 django = "*"
 sphinx = "*"
+psycopg2-binary = "*"
