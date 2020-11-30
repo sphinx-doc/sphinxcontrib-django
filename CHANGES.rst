@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 0.7 (2020-11-30)
+------------------------
+
+* Fix Intersphinx mappings to Django classes
+* 100% test coverage
+
+
 Version 0.6 (2020-11-16)
 --------------------------
 

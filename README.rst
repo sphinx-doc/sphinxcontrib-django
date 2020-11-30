@@ -24,7 +24,8 @@ In comparison to the upstream repository, this provides the following:
 
 * Support for current versions of Python and Django
 * Support for ModelForms
-* Better test coverage
+* Support Intersphinx mappings to Django classes
+* 100% test coverage
 
 The original repository already implemented the following features:
 
