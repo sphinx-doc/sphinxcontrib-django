@@ -21,35 +21,73 @@ import sphinxcontrib_django2
 from sphinxcontrib_django2 import docstrings
 
 
-class User2(models.Model):
+class SimpleModelManager(models.Manager):
     pass
-
-
-class SimpleModel(models.Model):
-    user = models.ForeignKey(
-        User,
-        related_name="+",
-        on_delete=models.CASCADE,
-        help_text="This should help you",
-        verbose_name="Very verbose name of user field",
-    )
-    user2 = models.ForeignKey("User2", related_name="+", on_delete=models.CASCADE)
-    user3 = models.ForeignKey("auth.User", related_name="+", on_delete=models.CASCADE)
-    dummy_field = models.CharField(max_length=3)
-
-    # Mock get_..._display methods of Django models
-    def get_dummy_field_display(self):
-        """pass"""
-
-    def get_next_by_dummy_field(self):
-        """pass"""
-
-    def get_previous_by_dummy_field(self):
-        """pass"""
 
 
 class FileModel(models.Model):
     file = models.FileField()
+
+
+class SimpleModel(models.Model):
+    # Foreign Keys
+    foreignkey_user = models.ForeignKey(
+        User, related_name="+", on_delete=models.CASCADE
+    )
+    foreignkey_user_str = models.ForeignKey(
+        "auth.User", related_name="+", on_delete=models.CASCADE
+    )
+    foreignkey_self = models.ForeignKey(
+        "self", related_name="reverse_foreignkey_self", on_delete=models.CASCADE
+    )
+
+    # One to one field
+    onetoonefield = models.OneToOneField(
+        FileModel,
+        related_name="reverse_onetoonefield",
+        on_delete=models.CASCADE,
+    )
+    onetoonefield_str = models.OneToOneField(
+        "FileModel",
+        related_name="reverse_onetoonefield_str",
+        on_delete=models.CASCADE,
+    )
+
+    # Dummy field
+    dummy_field = models.CharField(
+        max_length=3,
+        help_text="This should help you",
+        verbose_name="Very verbose name of dummy field",
+    )
+
+    # Custom model manager
+    custom_objects = SimpleModelManager()
+
+    # Mock get_..._display method of Django models
+    def get_dummy_field_display(self):
+        """pass"""
+
+    # Mock common get_next_by_ method
+    def get_next_by_dummy_field(self):
+        """pass"""
+
+    # Mock common get_previous_by_ method
+    def get_previous_by_dummy_field(self):
+        """pass"""
+
+
+class SimpleModel2(models.Model):
+    # Foreign Keys
+    foreignkey_simple_model = models.ForeignKey(
+        SimpleModel,
+        related_name="reverse_foreignkey_simple_model",
+        on_delete=models.CASCADE,
+    )
+    foreignkey_simple_model_str = models.ForeignKey(
+        "SimpleModel",
+        related_name="reverse_foreignkey_simple_model_str",
+        on_delete=models.CASCADE,
+    )
 
 
 if PHONENUMBER:
@@ -58,24 +96,18 @@ if PHONENUMBER:
         phone_number = PhoneNumberField()
 
 
-class SimpleModel2(models.Model):
-    simple_model = models.ForeignKey(
-        SimpleModel, related_name="simple_model2", on_delete=models.CASCADE
-    )
-    file = models.OneToOneField(
-        FileModel,
-        related_name="simple_model2",
-        on_delete=models.CASCADE,
-    )
-
-
 class SimpleForm(forms.ModelForm):
     test1 = forms.CharField(label="Test1")
     test2 = forms.CharField(help_text="Test2")
 
     class Meta:
         model = SimpleModel
-        fields = ("user", "user2", "user3")
+        fields = (
+            "foreignkey_user",
+            "foreignkey_user_str",
+            "foreignkey_self",
+            "dummy_field",
+        )
 
 
 class TestDocStrings(SimpleTestCase):
@@ -96,18 +128,29 @@ class TestDocStrings(SimpleTestCase):
 
     def test_foreignkey_type(self):
         """Test how the foreignkeys are rendered."""
+
+        # Fields of SimpleModel
+        field = SimpleModel._meta.get_field("foreignkey_user_str")
+        field.remote_field.model = "auth.User"
         self.assertEqual(
-            docstrings._get_field_type(SimpleModel._meta.get_field("user")),
-            ":type user: ForeignKey to :class:`~django.contrib.auth.models.User`",
+            docstrings._get_field_type(field),
+            ":type foreignkey_user_str: ForeignKey to :class:`~django.contrib.auth.models.User`",
         )
+        field = SimpleModel._meta.get_field("foreignkey_self")
+        field.remote_field.model = "self"
         self.assertEqual(
-            docstrings._get_field_type(SimpleModel._meta.get_field("user2")),
-            ":type user2: ForeignKey to"
-            " :class:`~sphinxcontrib_django2.tests.test_docstrings.User2`",
+            docstrings._get_field_type(field),
+            ":type foreignkey_self: ForeignKey to "
+            ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel`",
         )
+
+        # Fields of SimpleModel2
+        field = SimpleModel2._meta.get_field("foreignkey_simple_model_str")
+        field.remote_field.model = "SimpleModel"
         self.assertEqual(
-            docstrings._get_field_type(SimpleModel._meta.get_field("user3")),
-            ":type user3: ForeignKey to :class:`~django.contrib.auth.models.User`",
+            docstrings._get_field_type(field),
+            ":type foreignkey_simple_model_str: ForeignKey to "
+            ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel`",
         )
 
     def test_model_init_params(self):
@@ -122,14 +165,21 @@ class TestDocStrings(SimpleTestCase):
             [
                 ":param id: Id",
                 ":type id: AutoField",
-                ":param user: Very verbose name of user field. This should help you",
-                ":type user: ForeignKey to :class:`~django.contrib.auth.models.User`",
-                ":param user2: User2",
-                ":type user2: ForeignKey to"
-                " :class:`~sphinxcontrib_django2.tests.test_docstrings.User2`",
-                ":param user3: User3",
-                ":type user3: ForeignKey to :class:`~django.contrib.auth.models.User`",
-                ":param dummy_field: Dummy field",
+                ":param foreignkey_user: Foreignkey user",
+                ":type foreignkey_user: ForeignKey to :class:`~django.contrib.auth.models.User`",
+                ":param foreignkey_user_str: Foreignkey user str",
+                ":type foreignkey_user_str: ForeignKey to "
+                ":class:`~django.contrib.auth.models.User`",
+                ":param foreignkey_self: Foreignkey self",
+                ":type foreignkey_self: ForeignKey to"
+                " :class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel`",
+                ":param onetoonefield: Onetoonefield",
+                ":type onetoonefield: OneToOneField to "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.FileModel`",
+                ":param onetoonefield_str: Onetoonefield str",
+                ":type onetoonefield_str: OneToOneField to "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.FileModel`",
+                ":param dummy_field: Very verbose name of dummy field. This should help you",
                 ":type dummy_field: CharField",
             ],
         )
@@ -146,10 +196,12 @@ class TestDocStrings(SimpleTestCase):
             [
                 "**Form fields:**",
                 "",
-                "* ``user``: Very verbose name of user field"
-                " (:class:`~django.forms.ModelChoiceField`)",
-                "* ``user2``: User2 (:class:`~django.forms.ModelChoiceField`)",
-                "* ``user3``: User3 (:class:`~django.forms.ModelChoiceField`)",
+                "* ``foreignkey_user``: Foreignkey user (:class:`~django.forms.ModelChoiceField`)",
+                "* ``foreignkey_user_str``: Foreignkey user str "
+                "(:class:`~django.forms.ModelChoiceField`)",
+                "* ``foreignkey_self``: Foreignkey self (:class:`~django.forms.ModelChoiceField`)",
+                "* ``dummy_field``: Very verbose name of dummy field "
+                "(:class:`~django.forms.CharField`)",
                 "* ``test1``: Test1 (:class:`~django.forms.CharField`)",
                 "* ``test2``: Test2 (:class:`~django.forms.CharField`)",
             ],
@@ -175,14 +227,16 @@ class TestDocStrings(SimpleTestCase):
         self.assertEqual(
             lines,
             [
-                "**Model field:** dummy field",
+                "**Model field:** Very verbose name of dummy field",
             ],
         )
 
     def test_foreignkey_model_fields(self):
         lines = []
-        name = "{}.{}.user".format(SimpleModel.__module__, SimpleModel.__name__)
-        obj = SimpleModel.user
+        name = "{}.{}.foreignkey_simple_model".format(
+            SimpleModel2.__module__, SimpleModel2.__name__
+        )
+        obj = SimpleModel2.foreignkey_simple_model
 
         docstrings.improve_model_docstring(
             self.app,
@@ -195,17 +249,44 @@ class TestDocStrings(SimpleTestCase):
         self.assertEqual(
             lines,
             [
-                "**Model field:** Very verbose name of user field, accesses the "
-                ":class:`~django.contrib.auth.models.User` model.",
+                "**Model field:** foreignkey simple model, accesses the "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel` model.",
+            ],
+        )
+
+    def test_foreignkey_str_model_fields(self):
+        lines = []
+        name = "{}.{}.foreignkey_simple_model_str".format(
+            SimpleModel2.__module__, SimpleModel2.__name__
+        )
+        obj = SimpleModel2.foreignkey_simple_model_str
+        related_model = obj.field.remote_field.model
+        obj.field.remote_field.model = "{}.{}".format(
+            related_model.__module__, related_model.__name__
+        )
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** foreignkey simple model str, accesses the "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel` model.",
             ],
         )
 
     def test_reverse_foreignkey_model_fields(self):
         lines = []
-        name = "{}.{}.simple_model2".format(
+        name = "{}.{}.reverse_foreignkey_simple_model".format(
             SimpleModel.__module__, SimpleModel.__name__
         )
-        obj = SimpleModel.simple_model2
+        obj = SimpleModel.reverse_foreignkey_simple_model
 
         docstrings.improve_model_docstring(
             self.app,
@@ -218,15 +299,21 @@ class TestDocStrings(SimpleTestCase):
         self.assertEqual(
             lines,
             [
-                "**Model field:** simple model, accesses the M2M "
+                "**Model field:** foreignkey simple model, accesses the M2M "
                 ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel2` model.",
             ],
         )
 
-    def test_onetoone_model_fields(self):
+    def test_reverse_foreignkey_str_model_fields(self):
         lines = []
-        name = "{}.{}.file".format(SimpleModel2.__module__, SimpleModel2.__name__)
-        obj = SimpleModel2.file
+        name = "{}.{}.reverse_foreignkey_simple_model_str".format(
+            SimpleModel.__module__, SimpleModel.__name__
+        )
+        obj = SimpleModel.reverse_foreignkey_simple_model_str
+        related_model = obj.rel.related_model
+        obj.rel.related_model = "{}.{}".format(
+            related_model.__module__, related_model.__name__
+        )
 
         docstrings.improve_model_docstring(
             self.app,
@@ -239,15 +326,17 @@ class TestDocStrings(SimpleTestCase):
         self.assertEqual(
             lines,
             [
-                "**Model field:** file, accesses the "
-                ":class:`~sphinxcontrib_django2.tests.test_docstrings.FileModel` model.",
+                "**Model field:** foreignkey simple model str, accesses the M2M "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel2` model.",
             ],
         )
 
     def test_reverse_onetoone_model_fields(self):
         lines = []
-        name = "{}.{}.simple_model2".format(FileModel.__module__, FileModel.__name__)
-        obj = FileModel.simple_model2
+        name = "{}.{}.reverse_onetoonefield".format(
+            FileModel.__module__, FileModel.__name__
+        )
+        obj = FileModel.reverse_onetoonefield
 
         docstrings.improve_model_docstring(
             self.app,
@@ -260,8 +349,58 @@ class TestDocStrings(SimpleTestCase):
         self.assertEqual(
             lines,
             [
-                "**Model field:** file, accesses the "
-                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel2` model.",
+                "**Model field:** onetoonefield, accesses the "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel` model.",
+            ],
+        )
+
+    def test_reverse_onetoone_str_model_fields(self):
+        lines = []
+        name = "{}.{}.reverse_onetoonefield_str".format(
+            FileModel.__module__, FileModel.__name__
+        )
+        obj = FileModel.reverse_onetoonefield_str
+        related_model = obj.related.related_model
+        obj.related.related_model = "{}.{}".format(
+            related_model.__module__, related_model.__name__
+        )
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "**Model field:** onetoonefield str, accesses the "
+                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel` model.",
+            ],
+        )
+
+    def test_model_manager_fields(self):
+        lines = []
+        name = "{}.{}.custom_objects".format(
+            SimpleModel.__module__, SimpleModel.__name__
+        )
+        obj = SimpleModel.custom_objects
+
+        docstrings.improve_model_docstring(
+            self.app,
+            "attribute",
+            name,
+            obj,
+            {},
+            lines,
+        )
+        self.assertEqual(
+            lines,
+            [
+                "Django manager to access the ORM",
+                "Use ``SimpleModel.objects.all()`` to fetch all objects.",
             ],
         )
 

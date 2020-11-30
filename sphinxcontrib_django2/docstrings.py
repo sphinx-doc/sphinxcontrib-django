@@ -169,7 +169,7 @@ def _add_model_fields_as_params(app, obj, lines):
         and "sphinx.ext.graphviz" in app.extensions
         and not any("inheritance-diagram::" in line for line in lines)
     ):
-        lines.append(".. inheritance-diagram::")
+        lines.append(".. inheritance-diagram::")  # pragma: no cover
 
 
 def _add_form_fields(obj, lines):

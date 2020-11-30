@@ -7,8 +7,7 @@ jobs:
       matrix:
         python-version: ["3.6", "3.7", "3.8"]
         django-version: ["django~=2.2.0", "django~=3.0.0", "django~=3.1.0"]
-        psycopg2: [true, false]
-        django-phonenumber-field: [true, false]
+        optional-dependencies: ["optional-deps", "no-optional-deps"]
     env:
       OS: ubuntu-latest
       PYTHON: ${{ matrix.python-version }}
@@ -25,13 +24,10 @@ jobs:
           pip install sphinx
           pip install codecov
           pip install -e .
-      - name: Install optional dependency psycopg2
-        if: matrix.psycopg2
+      - name: Install optional dependencies
+        if: matrix.optional-dependencies == 'optional-deps'
         run: |
           pip install psycopg2
-      - name: Install optional dependency django-phonenumber-field
-        if: matrix.django-phonenumber-field
-        run: |
           pip install django-phonenumber-field[phonenumbers]
       - name: Generate coverage report
         run: coverage run runtests.py
