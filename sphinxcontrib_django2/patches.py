@@ -1,11 +1,9 @@
-from django import test
+from django import forms, test
 from django.db import models
-from django.forms import fields, forms
-from django.forms import models as form_models
-from django.forms import widgets
 
 try:
-    from django.contrib.postgres.forms import array, jsonb
+    from django.contrib.postgres import fields as postgres_fields
+    from django.contrib.postgres import forms as postgres_forms
 
     POSTGRES = True
 except ModuleNotFoundError:
@@ -28,12 +26,17 @@ def patch_django_for_autodoc():
 
     # Module paths which are documented in the parent module
     DJANGO_MODULE_PATHS = {
-        "django.db.models": [models.base, models.fields],
+        "django.db.models": [
+            models.base,
+            models.fields,
+            models.fields.files,
+            models.fields.related,
+        ],
         "django.forms": [
-            forms,
-            fields,
-            form_models,
-            widgets,
+            forms.forms,
+            forms.fields,
+            forms.models,
+            forms.widgets,
         ],
         "django.test": [test],
     }
@@ -41,17 +44,23 @@ def patch_django_for_autodoc():
     # Support postgres fields if used
     if POSTGRES:
         DJANGO_MODULE_PATHS["django.contrib.postgres.forms"] = [
-            array,
-            jsonb,
+            postgres_forms.array,
+            postgres_forms.jsonb,
         ]
-        array.__all__ = (
+        DJANGO_MODULE_PATHS["django.contrib.postgres.fields"] = [
+            postgres_fields.array,
+            postgres_fields.jsonb,
+        ]
+        postgres_forms.array.__all__ = (
             "SimpleArrayField",
             "SplitArrayField",
         )
-        jsonb.__all__ = ("JSONString", "JSONField")
+        postgres_forms.jsonb.__all__ = ("JSONString", "JSONField")
 
     # Add __all__ where missing
     models.base.__all__ = ("Model", "FilteredRelation")
+    models.fields.files.__all__ = ("FileField", "ImageField")
+    models.fields.related.__all__ = ("ForeignKey", "OneToOneField", "ManyToManyField")
 
     # Set the __module__ to the parent module to make sure intersphinx mappings work as expected
     for parent_module_str, django_modules in DJANGO_MODULE_PATHS.items():
