@@ -133,13 +133,13 @@ class TestDocStrings(SimpleTestCase):
         field = SimpleModel._meta.get_field("foreignkey_user_str")
         field.remote_field.model = "auth.User"
         self.assertEqual(
-            docstrings._get_field_type(field),
+            docstrings.classes._get_field_type(field),
             ":type foreignkey_user_str: ForeignKey to :class:`~django.contrib.auth.models.User`",
         )
         field = SimpleModel._meta.get_field("foreignkey_self")
         field.remote_field.model = "self"
         self.assertEqual(
-            docstrings._get_field_type(field),
+            docstrings.classes._get_field_type(field),
             ":type foreignkey_self: ForeignKey to "
             ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel`",
         )
@@ -148,7 +148,7 @@ class TestDocStrings(SimpleTestCase):
         field = SimpleModel2._meta.get_field("foreignkey_simple_model_str")
         field.remote_field.model = "SimpleModel"
         self.assertEqual(
-            docstrings._get_field_type(field),
+            docstrings.classes._get_field_type(field),
             ":type foreignkey_simple_model_str: ForeignKey to "
             ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel`",
         )
