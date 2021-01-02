@@ -26,10 +26,6 @@ def _improve_attribute_docs(obj, name, lines):
     :param name: full dotted path to the object.
     :param lines: expected documentation lines.
     """
-    if obj is None:
-        # Happens with form attributes.
-        return
-
     if isinstance(obj, DeferredAttribute):
         # This only points to a field name, not a field.
         # Get the field by importing the name.
@@ -70,10 +66,7 @@ def _improve_attribute_docs(obj, name, lines):
         )
     elif isinstance(obj, related_descriptors.ReverseOneToOneDescriptor):
         related_model = obj.related.related_model
-        if isinstance(related_model, str):
-            cls_path = related_model
-        else:
-            cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
+        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
         del lines[:]
         lines.append(
             "**Model field:** {label}, "
@@ -83,10 +76,7 @@ def _improve_attribute_docs(obj, name, lines):
         )
     elif isinstance(obj, related_descriptors.ReverseManyToOneDescriptor):
         related_model = obj.rel.related_model
-        if isinstance(related_model, str):
-            cls_path = related_model
-        else:
-            cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
+        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
         del lines[:]
         lines.append(
             "**Model field:** {label}, "

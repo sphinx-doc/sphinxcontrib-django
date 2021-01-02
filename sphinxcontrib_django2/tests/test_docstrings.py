@@ -304,33 +304,6 @@ class TestDocStrings(SimpleTestCase):
             ],
         )
 
-    def test_reverse_foreignkey_str_model_fields(self):
-        lines = []
-        name = "{}.{}.reverse_foreignkey_simple_model_str".format(
-            SimpleModel.__module__, SimpleModel.__name__
-        )
-        obj = SimpleModel.reverse_foreignkey_simple_model_str
-        related_model = obj.rel.related_model
-        obj.rel.related_model = "{}.{}".format(
-            related_model.__module__, related_model.__name__
-        )
-
-        docstrings.improve_model_docstring(
-            self.app,
-            "attribute",
-            name,
-            obj,
-            {},
-            lines,
-        )
-        self.assertEqual(
-            lines,
-            [
-                "**Model field:** foreignkey simple model str, accesses the M2M "
-                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel2` model.",
-            ],
-        )
-
     def test_reverse_onetoone_model_fields(self):
         lines = []
         name = "{}.{}.reverse_onetoonefield".format(
@@ -350,33 +323,6 @@ class TestDocStrings(SimpleTestCase):
             lines,
             [
                 "**Model field:** onetoonefield, accesses the "
-                ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel` model.",
-            ],
-        )
-
-    def test_reverse_onetoone_str_model_fields(self):
-        lines = []
-        name = "{}.{}.reverse_onetoonefield_str".format(
-            FileModel.__module__, FileModel.__name__
-        )
-        obj = FileModel.reverse_onetoonefield_str
-        related_model = obj.related.related_model
-        obj.related.related_model = "{}.{}".format(
-            related_model.__module__, related_model.__name__
-        )
-
-        docstrings.improve_model_docstring(
-            self.app,
-            "attribute",
-            name,
-            obj,
-            {},
-            lines,
-        )
-        self.assertEqual(
-            lines,
-            [
-                "**Model field:** onetoonefield str, accesses the "
                 ":class:`~sphinxcontrib_django2.tests.test_docstrings.SimpleModel` model.",
             ],
         )
