@@ -31,7 +31,6 @@ setup(
     download_url="https://github.com/timoludwig/sphinxcontrib-django2/zipball/main",
     packages=find_packages(exclude=("example*",)),
     include_package_data=True,
-    test_suite="runtests",
     zip_safe=False,
     classifiers=[
         "Development Status :: 5 - Production/Stable",

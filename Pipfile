@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 codecov = "*"
 pre-commit = "*"
+pytest = "*"
 
 [packages]
 sphinxcontrib-django = {editable = true, path = "."}

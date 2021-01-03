@@ -92,6 +92,6 @@ Then, run the tests with:
 
 .. code-block:: bash
 
-    pipenv run coverage run runtests.py
+    pipenv run coverage run
 
 .. _Pipenv: https://pipenv.pypa.io/
