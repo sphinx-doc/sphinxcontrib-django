@@ -53,7 +53,6 @@ def app_with_conflicting_extension(app_params, make_app):
     args, kwargs = app_params
     kwargs["confoverrides"] = {
         "extensions": [
-            "sphinx.ext.autodoc",
             "conflicting_sphinx_extension",
             "sphinxcontrib_django2",
         ]

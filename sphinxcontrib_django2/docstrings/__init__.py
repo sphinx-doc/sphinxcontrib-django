@@ -29,6 +29,9 @@ def setup(app):
     # Fix module paths for intersphinx mappings
     patch_django_for_autodoc()
 
+    # Load sphinx.ext.autodoc extension before registering events
+    app.setup_extension("sphinx.ext.autodoc")
+
     # Generate docstrings for Django model fields
     # Register the docstring processor with sphinx
     app.connect("autodoc-process-docstring", improve_model_docstring)

@@ -52,7 +52,6 @@ Add to the Sphinx config file (``conf.py``):
 .. code-block:: python
 
     extensions = [
-        'sphinx.ext.autodoc',
         'sphinxcontrib_django2',
     ]
 

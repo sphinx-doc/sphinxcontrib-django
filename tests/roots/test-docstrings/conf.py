@@ -11,6 +11,6 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "dummy_django_app.settings"
 django.setup()
 
 project = "sphinx dummy Test"
-extensions = ["sphinx.ext.autodoc", "sphinxcontrib_django2"]
+extensions = ["sphinxcontrib_django2"]
 
 nitpicky = True
