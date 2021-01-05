@@ -1,3 +1,6 @@
+"""
+This module contains patches for Django to improve its interaction with Sphinx.
+"""
 from django import forms, test
 from django.db import models
 
@@ -12,9 +15,12 @@ except ModuleNotFoundError:
 
 
 def patch_django_for_autodoc():
-    """Fix the appearance of some classes in autodoc.
+    """
+    Fix the appearance of some classes in autodoc.
+    E.g. the absolute path to the base model class is ``django.db.models.base.Model``, but its
+    intersphinx mapping path is ``django.db.models.Model``.
 
-    This avoids query evaluation.
+    This also avoids query evaluation.
     """
     # Fix Django's manager appearance
     models.manager.ManagerDescriptor.__get__ = (

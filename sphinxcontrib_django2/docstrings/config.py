@@ -1,8 +1,11 @@
-# Ensure that the __init__ method gets documented
-# (also see autoclass_content="both" setting),
+"""
+This module contains configuration of the members which should in-/excluded in sphinx
+(see :event:`autodoc-skip-member`)
+"""
+#: Ensure that the __init__ method gets documented (also see :confval:`autoclass_content` setting)
 INCLUDE_MEMBERS = {"__init__"}
 
-# Members to hide.
+#: Members to hide.
 EXCLUDE_MEMBERS = {
     # BaseForm
     "base_fields",

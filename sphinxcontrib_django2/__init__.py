@@ -1,36 +1,20 @@
-import sys
-
-import django
-
+"""
+This is a sphinx extension which improves the documentation of Django apps.
+"""
 __version__ = "0.7"
+
+from . import docstrings, roles
 
 
 def setup(app):
-    """Allow this module to be used as sphinx extension.
-
-    This attaches the Sphinx hooks.
-
-    :type app: sphinx.application.Sphinx
     """
-    import sphinxcontrib_django2.docstrings
-    import sphinxcontrib_django2.roles
+    Allow this module to be used as sphinx extension.
 
-    # Setup both modules at once. They can also be separately imported to
-    # use only fragments of this package.
-    sphinxcontrib_django2.docstrings.setup(app)
-    sphinxcontrib_django2.roles.setup(app)
+    Setup the two sub-extensions :mod:`~sphinxcontrib_django2.docstrings` and
+    :mod:`~sphinxcontrib_django2.roles` which can also be imported separately.
 
-
-#: Example Intersphinx mapping, linking to project versions
-python_version = ".".join(map(str, sys.version_info[0:2]))
-django_version = ".".join(map(str, django.VERSION[0:2]))
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/" + python_version, None),
-    "django": (
-        "https://docs.djangoproject.com/en/{}/".format(django_version),
-        "https://docs.djangoproject.com/en/{}/_objects/".format(django_version),
-    ),
-    "braces": ("https://django-braces.readthedocs.org/en/latest/", None),
-    "select2": ("https://django-select2.readthedocs.org/en/latest/", None),
-    "celery": ("https://celery.readthedocs.org/en/latest/", None),
-}
+    :param app: The Sphinx application object
+    :type app: ~sphinx.application.Sphinx
+    """
+    docstrings.setup(app)
+    roles.setup(app)

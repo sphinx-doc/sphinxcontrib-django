@@ -1,3 +1,6 @@
+"""
+This module contains all functions which are used to improve the documentation of attributes.
+"""
 from django.db import models
 from django.db.models.fields import related_descriptors
 from django.db.models.fields.files import FileDescriptor
@@ -5,88 +8,89 @@ from django.db.models.manager import ManagerDescriptor
 from django.db.models.query_utils import DeferredAttribute
 from django.utils.module_loading import import_string
 
-_FIELD_DESCRIPTORS = (FileDescriptor,)
+from .field_utils import get_field_type, get_field_verbose_name
 
+FIELD_DESCRIPTORS = (FileDescriptor, related_descriptors.ForwardManyToOneDescriptor)
 
 # Support for some common third party fields
 try:
     from phonenumber_field.modelfields import PhoneNumberDescriptor
 
-    _FIELD_DESCRIPTORS += (PhoneNumberDescriptor,)
+    FIELD_DESCRIPTORS += (PhoneNumberDescriptor,)
 except ImportError:
     PhoneNumberDescriptor = None
 
 
-def _improve_attribute_docs(obj, name, lines):
-    """Improve the documentation of various attributes.
+def improve_attribute_docstring(attribute, name, lines):
+    """
+    Improve the documentation of various model fields.
 
     This improves the navigation between related objects.
 
-    :param obj: the instance of the object to document.
-    :param name: full dotted path to the object.
-    :param lines: expected documentation lines.
+    :param attribute: The instance of the object to document
+    :type attribute: object
+
+    :param name: The full dotted path to the object
+    :type name: str
+
+    :param lines: The docstring lines
+    :type lines: list [ str ]
     """
-    if isinstance(obj, DeferredAttribute):
+    if isinstance(attribute, DeferredAttribute):
         # This only points to a field name, not a field.
         # Get the field by importing the name.
         cls_path, field_name = name.rsplit(".", 1)
         model = import_string(cls_path)
         field = model._meta.get_field(field_name)
-
-        del lines[:]  # lines.clear() is Python 3 only
-        lines.append("**Model field:** {label}".format(label=field.verbose_name))
-    elif isinstance(obj, _FIELD_DESCRIPTORS):
-        # These
-        del lines[:]
-        lines.append("**Model field:** {label}".format(label=obj.field.verbose_name))
-
-        if isinstance(obj, FileDescriptor):
+        lines.clear()
+        if isinstance(field, models.fields.related.RelatedField):
+            # If a deferred attribute is a related field, it is an automatically created field
+            # with the postfix "_id" and contains the reference to the id of the related model
+            # instance. These are usually undocumented, so they only are included in the docs
+            # is sphinx is invoked with the undoc-members option.
             lines.append(
-                "**Return type:** :class:`~django.db.models.fields.files.FieldFile`"
+                f"Internal field, use :class:`~{cls_path}.{field.name}` instead."
             )
-        elif PhoneNumberDescriptor is not None and isinstance(
-            obj, PhoneNumberDescriptor
-        ):
-            lines.append(
-                "**Return type:** :class:`~phonenumber_field.phonenumber.PhoneNumber`"
-            )
-    elif isinstance(obj, related_descriptors.ForwardManyToOneDescriptor):
-        # Display a reasonable output for forward descriptors.
-        related_model = obj.field.remote_field.model
-        if isinstance(related_model, str):
-            cls_path = related_model
         else:
-            cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
-        del lines[:]
-        lines.append(
-            "**Model field:** {label}, "
-            "accesses the :class:`~{cls_path}` model.".format(
-                label=obj.field.verbose_name, cls_path=cls_path
-            )
-        )
-    elif isinstance(obj, related_descriptors.ReverseOneToOneDescriptor):
-        related_model = obj.related.related_model
-        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
-        del lines[:]
-        lines.append(
-            "**Model field:** {label}, "
-            "accesses the :class:`~{cls_path}` model.".format(
-                label=obj.related.field.verbose_name, cls_path=cls_path
-            )
-        )
-    elif isinstance(obj, related_descriptors.ReverseManyToOneDescriptor):
-        related_model = obj.rel.related_model
-        cls_path = "{}.{}".format(related_model.__module__, related_model.__name__)
-        del lines[:]
-        lines.append(
-            "**Model field:** {label}, "
-            "accesses the M2M :class:`~{cls_path}` model.".format(
-                label=obj.field.verbose_name, cls_path=cls_path
-            )
-        )
-    elif isinstance(obj, (models.Manager, ManagerDescriptor)):
+            lines.extend(get_field_details(field))
+    elif isinstance(attribute, FIELD_DESCRIPTORS):
+        # Display a reasonable output for forward descriptors (foreign key and one to one fields).
+        lines.clear()
+        lines.extend(get_field_details(attribute.field))
+    elif isinstance(attribute, related_descriptors.ManyToManyDescriptor):
+        # Check this case first since ManyToManyDescriptor inherits from ReverseManyToOneDescriptor
+        lines.clear()
+        # This descriptor is used for both forward and reverse relationships
+        if attribute.reverse:
+            lines.extend(get_field_details(attribute.rel))
+        else:
+            lines.extend(get_field_details(attribute.field))
+    elif isinstance(attribute, related_descriptors.ReverseManyToOneDescriptor):
+        lines.clear()
+        lines.extend(get_field_details(attribute.rel))
+    elif isinstance(attribute, related_descriptors.ReverseOneToOneDescriptor):
+        lines.clear()
+        lines.extend(get_field_details(attribute.related))
+    elif isinstance(attribute, (models.Manager, ManagerDescriptor)):
         # Somehow the 'objects' manager doesn't pass through the docstrings.
-        module, cls_name, field_name = name.rsplit(".", 2)
+        module, model_name, field_name = name.rsplit(".", 2)
         lines.append("Django manager to access the ORM")
-        tpl = "Use ``{cls_name}.objects.all()`` to fetch all objects."
-        lines.append(tpl.format(cls_name=cls_name))
+        lines.append(f"Use ``{model_name}.objects.all()`` to fetch all objects.")
+
+
+def get_field_details(field):
+    """
+    This function returns the detail docstring of a model field.
+    It includes the field type and the verbose name of the field.
+
+    :param field: The field
+    :type field: ~django.db.models.Field
+
+    :return: The field details as list of strings
+    :rtype: list [ str ]
+    """
+    return [
+        f"Type: {get_field_type(field)}",
+        "",
+        f"{get_field_verbose_name(field)}",
+    ]

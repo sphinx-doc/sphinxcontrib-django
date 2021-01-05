@@ -20,24 +20,40 @@ def test_model_field(app, do_autodoc):
         ".. py:attribute:: SimpleModel.dummy_field",
         "   :module: dummy_django_app.models",
         "",
-        "   **Model field:** Very verbose name of dummy field",
+        "   Type: :class:`~django.db.models.CharField`",
+        "",
+        "   Very verbose name of dummy field. This should help you",
         "",
     ]
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_foreignkey(app, do_autodoc):
-    actual = do_autodoc(
-        app, "attribute", "dummy_django_app.models.SimpleModel.foreignkey"
-    )
+    actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file")
     print(actual)
     assert actual == [
         "",
-        ".. py:attribute:: SimpleModel.foreignkey",
+        ".. py:attribute:: SimpleModel.file",
         "   :module: dummy_django_app.models",
         "",
-        "   **Model field:** foreignkey, accesses the "
-        ":class:`~dummy_django_app.models.FileModel` model.",
+        "   Type: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~dummy_django_app.models.FileModel`",
+        "",
+        "   File (related name: :attr:`~dummy_django_app.models.FileModel.simple_models`)",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_foreignkey_id(app, do_autodoc):
+    actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file_id")
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: SimpleModel.file_id",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Internal field, use :class:`~dummy_django_app.models.SimpleModel.file` instead.",
         "",
     ]
 
@@ -47,15 +63,18 @@ def test_foreignkey_string(app, do_autodoc):
     actual = do_autodoc(
         app,
         "attribute",
-        "dummy_django_app.models.AbstractModel.foreignkey_string",
+        "dummy_django_app.models.AbstractModel.simple_model",
     )
     print(actual)
     assert actual == [
         "",
-        ".. py:attribute:: AbstractModel.foreignkey_string",
+        ".. py:attribute:: AbstractModel.simple_model",
         "   :module: dummy_django_app.models",
         "",
-        "   **Model field:** foreignkey string, accesses the :class:`~SimpleModel` model.",
+        "   Type: :class:`~django.db.models.ForeignKey` to :class:`~SimpleModel`",
+        "",
+        "   Simple model "
+        "(related name: :attr:`~dummy_django_app.models.SimpleModel.abstractmodel`)",
         "",
     ]
 
@@ -65,16 +84,63 @@ def test_reverse_foreignkey(app, do_autodoc):
     actual = do_autodoc(
         app,
         "attribute",
-        "dummy_django_app.models.FileModel.reverse_foreignkey",
+        "dummy_django_app.models.FileModel.simple_models",
     )
     print(actual)
     assert actual == [
         "",
-        ".. py:attribute:: FileModel.reverse_foreignkey",
+        ".. py:attribute:: FileModel.simple_models",
         "   :module: dummy_django_app.models",
         "",
-        "   **Model field:** foreignkey, accesses the M2M "
-        ":class:`~dummy_django_app.models.SimpleModel` model.",
+        "   Type: Reverse :class:`~django.db.models.ForeignKey` from "
+        ":class:`~dummy_django_app.models.SimpleModel`",
+        "",
+        "   All simple models of this file model "
+        "(related name of :attr:`~dummy_django_app.models.SimpleModel.file`)",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_manytomany_field(app, do_autodoc):
+    actual = do_autodoc(
+        app,
+        "attribute",
+        "dummy_django_app.models.SimpleModel.childrenB",
+    )
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: SimpleModel.childrenB",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: :class:`~django.db.models.ManyToManyField` to "
+        ":class:`~dummy_django_app.models.ChildModelB`",
+        "",
+        "   ChildrenB "
+        "(related name: :attr:`~dummy_django_app.models.ChildModelB.simple_models`)",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_reverse_manytomany_field(app, do_autodoc):
+    actual = do_autodoc(
+        app,
+        "attribute",
+        "dummy_django_app.models.ChildModelB.simple_models",
+    )
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: ChildModelB.simple_models",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: Reverse :class:`~django.db.models.ManyToManyField` from "
+        ":class:`~dummy_django_app.models.SimpleModel`",
+        "",
+        "   All simple models of this child model b "
+        "(related name of :attr:`~dummy_django_app.models.SimpleModel.childrenB`)",
         "",
     ]
 
@@ -82,16 +148,19 @@ def test_reverse_foreignkey(app, do_autodoc):
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_reverse_onetoone_field(app, do_autodoc):
     actual = do_autodoc(
-        app, "attribute", "dummy_django_app.models.ChildModel.reverse_onetoonefield"
+        app, "attribute", "dummy_django_app.models.ChildModelA.simple_model"
     )
     print(actual)
     assert actual == [
         "",
-        ".. py:attribute:: ChildModel.reverse_onetoonefield",
+        ".. py:attribute:: ChildModelA.simple_model",
         "   :module: dummy_django_app.models",
         "",
-        "   **Model field:** onetoonefield, accesses the "
-        ":class:`~dummy_django_app.models.SimpleModel` model.",
+        "   Type: Reverse :class:`~django.db.models.OneToOneField` from "
+        ":class:`~dummy_django_app.models.SimpleModel`",
+        "",
+        "   The simple model of this child model a "
+        "(related name of :attr:`~dummy_django_app.models.SimpleModel.childA`)",
         "",
     ]
 
@@ -118,15 +187,16 @@ def test_model_manager_fields(app, do_autodoc):
 
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_file_field(app, do_autodoc):
-    actual = do_autodoc(app, "attribute", "dummy_django_app.models.FileModel.file")
+    actual = do_autodoc(app, "attribute", "dummy_django_app.models.FileModel.upload")
     print(actual)
     assert actual == [
         "",
-        ".. py:attribute:: FileModel.file",
+        ".. py:attribute:: FileModel.upload",
         "   :module: dummy_django_app.models",
         "",
-        "   **Model field:** file",
-        "   **Return type:** :class:`~django.db.models.fields.files.FieldFile`",
+        "   Type: :class:`~django.db.models.FileField`",
+        "",
+        "   Upload",
         "",
     ]
 
@@ -144,7 +214,8 @@ if PHONENUMBER:
             ".. py:attribute:: PhoneNumberModel.phone_number",
             "   :module: dummy_django_app.models",
             "",
-            "   **Model field:** phone number",
-            "   **Return type:** :class:`~phonenumber_field.phonenumber.PhoneNumber`",
+            "   Type: :class:`~phonenumber_field.modelfields.PhoneNumberField`",
+            "",
+            "   Phone number",
             "",
         ]

@@ -14,22 +14,28 @@ class SimpleModelManager(models.Manager):
 
 
 class FileModel(models.Model):
-    file = models.FileField()
+    upload = models.FileField()
 
 
 class SimpleModel(models.Model):
     # Foreign Keys
-    foreignkey = models.ForeignKey(
+    file = models.ForeignKey(
         "FileModel",
-        related_name="reverse_foreignkey",
+        related_name="simple_models",
         on_delete=models.CASCADE,
     )
 
     # One to one field
-    onetoonefield = models.OneToOneField(
-        "ChildModel",
-        related_name="reverse_onetoonefield",
+    childA = models.OneToOneField(
+        "ChildModelA",
+        related_name="simple_model",
         on_delete=models.CASCADE,
+    )
+
+    # Many to many field
+    childrenB = models.ManyToManyField(
+        "ChildModelB",
+        related_name="simple_models",
     )
 
     # Dummy field
@@ -56,21 +62,22 @@ class SimpleModel(models.Model):
 
 
 class AbstractModel(models.Model):
-    foreignkey_string = models.ForeignKey(
+    simple_model = models.ForeignKey(
         "SimpleModel",
-        related_name="rev_f_str",
         on_delete=models.CASCADE,
     )
-    foreignkey_string_containing_dot = models.ForeignKey(
-        "auth.User", related_name="+", on_delete=models.CASCADE
-    )
-    foreignkey_string_self = models.ForeignKey("self", on_delete=models.CASCADE)
+    user = models.ForeignKey("auth.User", related_name="+", on_delete=models.CASCADE)
+    foreignkey_self = models.ForeignKey("self", on_delete=models.CASCADE)
 
     class Meta:
         abstract = True
 
 
-class ChildModel(AbstractModel):
+class ChildModelA(AbstractModel):
+    pass
+
+
+class ChildModelB(AbstractModel):
     pass
 
 

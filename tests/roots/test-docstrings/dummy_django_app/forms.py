@@ -16,6 +16,8 @@ class SimpleForm(forms.ModelForm):
     class Meta:
         model = SimpleModel
         fields = (
-            "foreignkey",
+            "file",
+            "childA",
+            "childrenB",
             "dummy_field",
         )
