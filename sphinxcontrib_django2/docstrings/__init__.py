@@ -17,6 +17,7 @@ For example:
 from .attributes import improve_attribute_docstring
 from .classes import improve_class_docstring
 from .config import EXCLUDE_MEMBERS, INCLUDE_MEMBERS
+from .data import improve_data_docstring
 from .methods import improve_method_docstring
 
 
@@ -114,6 +115,8 @@ def improve_docstring(app, what, name, obj, options, lines):
         improve_attribute_docstring(obj, name, lines)
     elif what == "method":
         improve_method_docstring(name, lines)
+    elif what == "data":
+        improve_data_docstring(obj, lines)
 
     # Return the extended docstring
     return lines

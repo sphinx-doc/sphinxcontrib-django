@@ -30,6 +30,11 @@ setup(
     url="https://github.com/timoludwig/sphinxcontrib-django2",
     download_url="https://github.com/timoludwig/sphinxcontrib-django2/zipball/main",
     packages=find_packages(exclude=("example*",)),
+    install_requires=[
+        "Django>=2.2",
+        "Sphinx>=0.5",
+        "pprintpp",
+    ],
     include_package_data=True,
     zip_safe=False,
     classifiers=[
