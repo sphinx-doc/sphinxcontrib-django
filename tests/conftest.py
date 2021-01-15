@@ -59,3 +59,18 @@ def app_with_conflicting_extension(app_params, make_app):
     }
     app_ = make_app(*args, **kwargs)
     yield app_
+
+
+@pytest.fixture(scope="function")
+def setup_app_with_different_config(app_params, make_app):
+    """
+    Simulate the setup of the sphinx app with a different config
+    """
+
+    def setup_app_with_different_config(**confoverrides):
+        args, kwargs = app_params
+        kwargs["confoverrides"] = confoverrides
+        _app = make_app(*args, **kwargs)
+        return _app
+
+    return setup_app_with_different_config

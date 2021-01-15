@@ -14,6 +14,12 @@ For example:
 * Fix the intersphinx mappings to the Django documentation
   (see :mod:`~sphinxcontrib_django2.docstrings.patches`)
 """
+import importlib
+import os
+
+import django
+from sphinx.errors import ConfigError
+
 from .attributes import improve_attribute_docstring
 from .classes import improve_class_docstring
 from .config import EXCLUDE_MEMBERS, INCLUDE_MEMBERS
@@ -30,6 +36,11 @@ def setup(app):
     It connects to the sphinx events :event:`autodoc-skip-member` and
     :event:`autodoc-process-docstring`.
 
+    Additionally, the sphinx config value ``django_settings`` is added via
+    :meth:`~sphinx.application.Sphinx.add_config_value` and
+    :meth:`~sphinxcontrib_django2.docstrings.setup_django` is called on the
+    :event:`config-inited` event.
+
     :param app: The Sphinx application object
     :type app: ~sphinx.application.Sphinx
     """
@@ -38,6 +49,13 @@ def setup(app):
     # When running, make sure Django doesn't execute querysets
     # Fix module paths for intersphinx mappings
     patch_django_for_autodoc()
+
+    # Set default to environment variable to enable backwards compatibility
+    app.add_config_value(
+        "django_settings", os.environ.get("DJANGO_SETTINGS_MODULE"), True
+    )
+    # Setup Django after config is initialized
+    app.connect("config-inited", setup_django)
 
     # Load sphinx.ext.autodoc extension before registering events
     app.setup_extension("sphinx.ext.autodoc")
@@ -48,6 +66,38 @@ def setup(app):
 
     # influence skip rules
     app.connect("autodoc-skip-member", autodoc_skip)
+
+
+def setup_django(app, config):
+    """
+    This function calls :func:`django.setup` so it doesn't have to be done in the app's
+    ``conf.py``.
+
+    Called on the :event:`config-inited` event.
+
+    :param app: The Sphinx application object
+    :type app: ~sphinx.application.Sphinx
+
+    :param config: The Sphinx configuration
+    :type config: ~sphinx.config.Config
+
+    :raises ~sphinx.errors.ConfigError: If setting ``django_settings`` is not set correctly
+    """
+    if not config.django_settings:
+        raise ConfigError(
+            "Please specify your Django settings in the configuration 'django_settings' in your "
+            "conf.py"
+        )
+    try:
+        importlib.import_module(config.django_settings)
+    except ModuleNotFoundError as e:
+        raise ConfigError(
+            "The module you specified in the configuration 'django_settings' in your conf.py "
+            "cannot be imported. Make sure the module path is correct and the source directoy is "
+            "added to sys.path."
+        ) from e
+    os.environ["DJANGO_SETTINGS_MODULE"] = config.django_settings
+    django.setup()
 
 
 def autodoc_skip(app, what, name, obj, skip, options):

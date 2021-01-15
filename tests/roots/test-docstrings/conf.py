@@ -1,16 +1,13 @@
 import os
 import sys
 
-import django
-
+# Add directory containing dummy app to sys.path
 sys.path.insert(0, os.path.abspath("."))
-
-os.environ["DJANGO_SETTINGS_MODULE"] = "dummy_django_app.settings"
-
-# Setup Django
-django.setup()
 
 project = "sphinx dummy Test"
 extensions = ["sphinxcontrib_django2"]
+
+# Configure Django settings module
+django_settings = "dummy_django_app.settings"
 
 nitpicky = True

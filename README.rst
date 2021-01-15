@@ -61,8 +61,6 @@ Add the following to your Sphinx config file ``conf.py``:
 
     # Add source directory to sys.path
     sys.path.insert(0, os.path.abspath('../src'))
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'myapp.settings'
-    django.setup()
 
     # Add sphinxcontrib_django2 to installed extensions
     extensions = [
