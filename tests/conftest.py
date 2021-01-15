@@ -46,22 +46,6 @@ def do_autodoc():
 
 
 @pytest.fixture(scope="function")
-def app_with_conflicting_extension(app_params, make_app):
-    """
-    Simulate the usage of a conflicting extension which also registers a "setting" directive
-    """
-    args, kwargs = app_params
-    kwargs["confoverrides"] = {
-        "extensions": [
-            "conflicting_sphinx_extension",
-            "sphinxcontrib_django2",
-        ]
-    }
-    app_ = make_app(*args, **kwargs)
-    yield app_
-
-
-@pytest.fixture(scope="function")
 def setup_app_with_different_config(app_params, make_app):
     """
     Simulate the setup of the sphinx app with a different config
