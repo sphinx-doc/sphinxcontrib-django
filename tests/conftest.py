@@ -22,6 +22,34 @@ def rootdir():
 
 
 @pytest.fixture(scope="function")
+def app(test_params, app_params, make_app, shared_result, requests_mock):
+    """
+    Overwrite sphinx.testing.fixtures.app to take the additional fixture requests_mock to fake
+    intersphinx requests
+    """
+    args, kwargs = app_params
+    app_ = make_app(*args, **kwargs)
+    yield app_
+
+
+@pytest.fixture(scope="function")
+def setup_app_with_different_config(app_params, make_app):
+    """
+    Simulate the setup of the sphinx app with a different config
+    Return the function instead of the final app object to make sure exceptions occur inside the
+    test and not inside the fixture
+    """
+
+    def setup_app_with_different_config(**confoverrides):
+        args, kwargs = app_params
+        kwargs["confoverrides"] = confoverrides
+        _app = make_app(*args, **kwargs)
+        return _app
+
+    return setup_app_with_different_config
+
+
+@pytest.fixture(scope="function")
 def do_autodoc():
     """
     This function simulates the autodoc functionality.
@@ -43,18 +71,3 @@ def do_autodoc():
         return bridge.result
 
     return do_autodoc
-
-
-@pytest.fixture(scope="function")
-def setup_app_with_different_config(app_params, make_app):
-    """
-    Simulate the setup of the sphinx app with a different config
-    """
-
-    def setup_app_with_different_config(**confoverrides):
-        args, kwargs = app_params
-        kwargs["confoverrides"] = confoverrides
-        _app = make_app(*args, **kwargs)
-        return _app
-
-    return setup_app_with_different_config

@@ -21,21 +21,10 @@ release = "0.7"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.intersphinx",
     "sphinx_rtd_theme",
     "sphinx_last_updated_by_git",
     "sphinxcontrib_django2.roles",
 ]
-
-# Enable cross-references to other documentations
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/", None),
-    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
-    "django": (
-        "https://docs.djangoproject.com/en/stable/",
-        "https://docs.djangoproject.com/en/stable/_objects/",
-    ),
-}
 
 # Warn about all references where the target cannot be found
 nitpicky = True

@@ -39,6 +39,12 @@ def setup(app):
     :param app: The Sphinx application object
     :type app: ~sphinx.application.Sphinx
     """
+    # Load sphinx.ext.intersphinx extension
+    app.setup_extension("sphinx.ext.intersphinx")
+
+    # Add default intersphinx mappings after config is initialized
+    app.connect("config-inited", add_default_intersphinx_mappings)
+
     # Allow intersphinx mappings to custom Django roles
     django_crossref_types = [
         "setting",
@@ -57,3 +63,28 @@ def setup(app):
             )
         except ExtensionError as e:
             logger.warning("Unable to register cross-reference type: %s", e)
+
+
+def add_default_intersphinx_mappings(app, config):
+    """
+    This function provides a default intersphinx mapping to the documentations of Python, Django
+    and Sphinx if ``intersphinx_mapping`` is not given in ``conf.py``.
+
+    Called on the :event:`config-inited` event.
+
+    :param app: The Sphinx application object
+    :type app: ~sphinx.application.Sphinx
+
+    :param config: The Sphinx configuration
+    :type config: ~sphinx.config.Config
+    """
+    DEFAULT_INTERSPHINX_MAPPING = {
+        "python": ("https://docs.python.org/", None),
+        "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+        "django": (
+            "https://docs.djangoproject.com/en/stable/",
+            "https://docs.djangoproject.com/en/stable/_objects/",
+        ),
+    }
+    if not config.intersphinx_mapping:
+        config.intersphinx_mapping = DEFAULT_INTERSPHINX_MAPPING

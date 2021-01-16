@@ -60,22 +60,15 @@ Add the following to your Sphinx config file ``conf.py``:
 .. code-block:: python
 
     # Add source directory to sys.path
-    sys.path.insert(0, os.path.abspath('../src'))
+    sys.path.insert(0, os.path.abspath("../src"))
 
     # Add sphinxcontrib_django2 to installed extensions
     extensions = [
-        'sphinxcontrib_django2',
+        "sphinxcontrib_django2",
     ]
 
     # Configure the path to the Django settings module
-    django_settings = 'myapp.settings'
-
-    # Support custom text roles
-    intersphinx_mapping = {
-        'http://docs.python.org/': None,
-        'https://docs.djangoproject.com/en/stable':
-        'https://docs.djangoproject.com/en/stable/_objects',
-    }
+    django_settings = "myapp.settings"
 
 
 Contributing

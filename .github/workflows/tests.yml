@@ -24,6 +24,7 @@ jobs:
           pip install sphinx
           pip install codecov
           pip install pytest
+          pip install requests-mock
           pip install -e .
       - name: Install optional dependencies
         if: matrix.optional-dependencies == 'optional-deps'
