@@ -20,6 +20,7 @@ import os
 import django
 from sphinx.errors import ConfigError
 
+from .. import __version__
 from .attributes import improve_attribute_docstring
 from .classes import improve_class_docstring
 from .config import EXCLUDE_MEMBERS, INCLUDE_MEMBERS
@@ -66,6 +67,12 @@ def setup(app):
 
     # influence skip rules
     app.connect("autodoc-skip-member", autodoc_skip)
+
+    return {
+        "version:": __version__,
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
 
 
 def setup_django(app, config):

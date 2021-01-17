@@ -25,6 +25,8 @@ import logging
 
 from sphinx.errors import ExtensionError
 
+from . import __version__
+
 logger = logging.getLogger(__name__)
 
 
@@ -63,6 +65,12 @@ def setup(app):
             )
         except ExtensionError as e:
             logger.warning("Unable to register cross-reference type: %s", e)
+
+    return {
+        "version:": __version__,
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
 
 
 def add_default_intersphinx_mappings(app, config):
