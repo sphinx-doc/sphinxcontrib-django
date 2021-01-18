@@ -76,17 +76,25 @@ Contributing
 
 Pull requests are always welcome!
 
-You can install all requirements of the development setup with `Pipenv`_:
+You can install all requirements of the development setup with the extras ``dev``, ``test``, ``doc`` and ``optional``:
 
 .. code-block:: bash
 
-    pipenv install --dev
-    pipenv run pre-commit install
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -e .[dev,test,doc,optional]
+    pre-commit install
 
-Then, run the tests with:
+Run the tests and generate the coverage report with:
 
 .. code-block:: bash
 
-    pipenv run coverage run
+    coverage run
+    coverage html
 
-.. _Pipenv: https://pipenv.pypa.io/
+Build the documentation with:
+
+.. code-block:: bash
+
+    cd docs
+    make html

@@ -35,6 +35,24 @@ setup(
         "Sphinx>=0.5",
         "pprintpp",
     ],
+    extras_require={
+        "dev": [
+            "pre-commit",
+        ],
+        "test": [
+            "pytest",
+            "requests-mock",
+            "codecov",
+        ],
+        "doc": [
+            "sphinx-rtd-theme",
+            "sphinx-last-updated-by-git",
+        ],
+        "optional": [
+            "psycopg2-binary",
+            "django-phonenumber-field[phonenumbers]",
+        ],
+    },
     include_package_data=True,
     zip_safe=False,
     classifiers=[
