@@ -6,6 +6,14 @@ Docstrings
    :undoc-members:
    :show-inheritance:
 
+Field Utilities
+---------------
+
+.. automodule:: sphinxcontrib_django2.docstrings.field_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Attributes
 ----------
 
@@ -18,15 +26,6 @@ Classes
 -------
 
 .. automodule:: sphinxcontrib_django2.docstrings.classes
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Config
-------
-
-.. automodule:: sphinxcontrib_django2.docstrings.config
    :members:
    :undoc-members:
    :show-inheritance:
@@ -51,6 +50,14 @@ Patches
 -------
 
 .. automodule:: sphinxcontrib_django2.docstrings.patches
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Config
+------
+
+.. automodule:: sphinxcontrib_django2.docstrings.config
    :members:
    :undoc-members:
    :show-inheritance:
