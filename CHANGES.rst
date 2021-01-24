@@ -1,6 +1,23 @@
 Changelog
 =========
 
+Version 1.0 (2021-01-23)
+------------------------
+
+* Fix more Intersphinx mappings to Django classes
+* Refactor package structure
+* Refactor tests
+* Improve docstring output
+* Improve handling of related and reverse related fields
+* Add documentation for sphinxcontrib_django2 itself
+* Improve docstrings of iterable data
+* Add config value for Django settings
+* Load autodoc and intersphinx extensions in setup()
+* Provide default intersphinx_mapping
+* Return extension metadata in setup()
+* Move dev dependencies from Pipfile to setup.py
+* Add readthedocs.io integration
+
 Version 0.7 (2020-11-30)
 ------------------------
 
