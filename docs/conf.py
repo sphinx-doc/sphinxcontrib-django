@@ -4,6 +4,8 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+from sphinxcontrib_django2 import __version__
+
 # -- Project information -----------------------------------------------------
 
 project = "sphinxcontrib-django2"
@@ -11,7 +13,7 @@ copyright = "2021"
 author = "Timo Ludwig"
 
 # The full version, including alpha/beta/rc tags
-release = "0.7"
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
