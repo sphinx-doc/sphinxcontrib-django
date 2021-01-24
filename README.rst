@@ -13,6 +13,9 @@
 .. image:: https://img.shields.io/github/license/timoludwig/sphinxcontrib-django2
     :alt: GitHub license
     :target: https://github.com/timoludwig/sphinxcontrib-django2/blob/develop/LICENSE
+.. image:: https://readthedocs.org/projects/sphinxcontrib-django2/badge/?version=latest
+    :alt: Documentation Status
+    :target: https://sphinxcontrib-django2.readthedocs.io/en/latest/?badge=latest
 
 
 sphinxcontrib-django2
