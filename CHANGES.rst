@@ -1,7 +1,13 @@
 Changelog
 =========
 
-Version 1.0 (2021-01-23)
+Version 1.0.1 (Unreleased)
+--------------------------
+
+* Fix Intersphinx mappings to AppConfig and Manager classes
+
+
+Version 1.0 (2021-01-24)
 ------------------------
 
 * Fix more Intersphinx mappings to Django classes

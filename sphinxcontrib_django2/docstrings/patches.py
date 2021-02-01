@@ -1,7 +1,7 @@
 """
 This module contains patches for Django to improve its interaction with Sphinx.
 """
-from django import forms, test
+from django import apps, forms, test
 from django.db import models
 
 try:
@@ -45,6 +45,7 @@ def patch_django_for_autodoc():
             forms.widgets,
         ],
         "django.test": [test],
+        "django.apps": [apps],
     }
 
     # Support postgres fields if used
@@ -76,3 +77,6 @@ def patch_django_for_autodoc():
                     module_class.__module__ = parent_module_str
                 except AttributeError:
                     pass
+
+    # Fix module path of model manager
+    models.manager.Manager.__module__ = "django.db.models"
