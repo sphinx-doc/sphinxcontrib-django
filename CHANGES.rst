@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 1.0.1 (Unreleased)
+Version 1.0.1 (2021-02-02)
 --------------------------
 
 * Fix Intersphinx mappings to AppConfig and Manager classes

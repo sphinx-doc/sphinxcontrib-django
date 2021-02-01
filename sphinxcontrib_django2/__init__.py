@@ -1,7 +1,7 @@
 """
 This is a sphinx extension which improves the documentation of Django apps.
 """
-__version__ = "1.0"
+__version__ = "1.0.1"
 
 from . import docstrings, roles
 
