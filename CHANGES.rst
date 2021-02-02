@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+* Add support for GenericForeignKey field of django.contrib.contenttypes
+
+
 Version 1.0.1 (2021-02-02)
 --------------------------
 

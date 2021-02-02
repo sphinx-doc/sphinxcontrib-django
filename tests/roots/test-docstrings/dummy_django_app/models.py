@@ -1,3 +1,5 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 try:
@@ -79,6 +81,18 @@ class ChildModelA(AbstractModel):
 
 class ChildModelB(AbstractModel):
     pass
+
+
+class TaggedItem(models.Model):
+    # Test model taken from:
+    # https://docs.djangoproject.com/en/stable/ref/contrib/contenttypes/#generic-relations
+    tag = models.SlugField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+
+    def __str__(self):
+        return self.tag
 
 
 if PHONENUMBER:

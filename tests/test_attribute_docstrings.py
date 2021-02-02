@@ -166,6 +166,26 @@ def test_reverse_onetoone_field(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
+def test_generic_foreign_key(app, do_autodoc):
+    actual = do_autodoc(
+        app, "attribute", "dummy_django_app.models.TaggedItem.content_object"
+    )
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: TaggedItem.content_object",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Provide a generic many-to-one relation through the ``content_type`` and",
+        "   ``object_id`` fields.",
+        "",
+        "   This class also doubles as an accessor to the related object (similar to",
+        "   ForwardManyToOneDescriptor) by adding itself as a model attribute.",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
 def test_model_manager_fields(app, do_autodoc):
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.SimpleModel.custom_objects"

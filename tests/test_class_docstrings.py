@@ -93,6 +93,36 @@ def test_file_model(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
+def test_tagged_item(app, do_autodoc):
+    actual = do_autodoc(app, "class", "dummy_django_app.models.TaggedItem")
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:class:: TaggedItem(id, tag, content_type, object_id)",
+        "   :module: dummy_django_app.models",
+        "",
+        "   :param id: Primary key: ID",
+        "   :type id: ~django.db.models.AutoField",
+        "   :param tag: Tag",
+        "   :type tag: ~django.db.models.SlugField",
+        "   :param object_id: Object id",
+        "   :type object_id: ~django.db.models.PositiveIntegerField",
+        "   :param content_object: Generic foreign key to the "
+        ":class:`~django.contrib.contenttypes.models.ContentType` specified in "
+        ":attr:`~dummy_django_app.models.TaggedItem.content_type`",
+        "   :type content_object: ~django.contrib.contenttypes.fields.GenericForeignKey",
+        "",
+        "   Relationship fields:",
+        "",
+        "   :param content_type: Content type "
+        "(related name: :attr:`~django.contrib.contenttypes.models.ContentType.taggeditem`)",
+        "   :type content_type: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~django.contrib.contenttypes.models.ContentType`",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
 def test_form(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.forms.SimpleForm")
     print(actual)

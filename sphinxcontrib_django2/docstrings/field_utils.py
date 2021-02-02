@@ -4,6 +4,7 @@ This module contains utiliy functions for fields which are used by both the
 :mod:`~sphinxcontrib_django2.docstrings.classes` modules.
 """
 from django.apps import apps
+from django.contrib import contenttypes
 from django.db import models
 from django.utils.encoding import force_str
 
@@ -82,6 +83,13 @@ def get_field_verbose_name(field):
         verbose_name += (
             f" (related name of :attr:`~{field.remote_field.model.__module__}"
             f".{field.remote_field.model.__name__}.{field.remote_field.name}`)"
+        )
+    elif isinstance(field, contenttypes.fields.GenericForeignKey):
+        # GenericForeignKey does not inherit from django.db.models.Field and has no verbose_name
+        return (
+            f"Generic foreign key to the :class:`~django.contrib.contenttypes.models.ContentType` "
+            f"specified in "
+            f":attr:`~{field.model.__module__}.{field.model.__name__}.{field.ct_field}`"
         )
     else:
         # This means the field is either a normal field or a forward related field
