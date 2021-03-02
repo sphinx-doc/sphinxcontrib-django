@@ -60,6 +60,10 @@ def patch_django_for_autodoc():
         "django.apps": [apps],
     }
 
+    # Support django.db.models.JSONField in Django >= 3.1
+    if hasattr(models.fields, "json"):
+        DJANGO_MODULE_PATHS["django.db.models"].append(models.fields.json)
+
     # Support postgres fields if used
     if POSTGRES:
         DJANGO_MODULE_PATHS["django.contrib.postgres.forms"] = [

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Support django.db.models.JSONField
+
+
 Version 1.1 (2021-03-02)
 ------------------------
 
