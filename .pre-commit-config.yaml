@@ -4,10 +4,10 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/PyCQA/isort
-    rev: master
+    rev: 5.7.0
     hooks:
       - id: isort
   - repo: https://gitlab.com/PyCQA/flake8
-    rev: master
+    rev: 3.8.4
     hooks:
       - id: flake8
