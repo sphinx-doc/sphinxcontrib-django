@@ -13,6 +13,14 @@ except ModuleNotFoundError:
     # In case postgres is not used, pass
     POSTGRES = False
 
+try:
+    from mptt.managers import TreeManager
+
+    MPTT = True
+except ModuleNotFoundError:
+    # In case postgres is not used, pass
+    MPTT = False
+
 
 def patch_django_for_autodoc():
     """
@@ -29,6 +37,10 @@ def patch_django_for_autodoc():
 
     # Stop Django from executing DB queries
     models.QuerySet.__repr__ = lambda self: self.__class__.__name__
+
+    # Fix django-mptt TreeManager in Django >=3.1
+    if MPTT:
+        TreeManager.get_queryset = models.Manager.get_queryset
 
     # Module paths which are documented in the parent module
     DJANGO_MODULE_PATHS = {

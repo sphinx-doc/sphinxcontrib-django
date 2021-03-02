@@ -50,6 +50,7 @@ setup(
         ],
         "optional": [
             "psycopg2-binary",
+            "django-mptt",
             "django-phonenumber-field[phonenumbers]",
         ],
     },
