@@ -3,7 +3,7 @@ import pytest
 
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_data(app, do_autodoc):
-    options = {"members": True}
+    options = {"members": None}
     actual = do_autodoc(app, "module", "dummy_django_app.settings", options)
     print(actual)
     assert actual == [
