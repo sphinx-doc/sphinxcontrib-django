@@ -6,6 +6,7 @@ UNRELEASED
 
 * Add support for Python 3.9
 * Add support for django-mptt with Django >=3.1
+* Append initial docstrings to attributes
 
 
 Version 1.0.2 (2021-02-02)

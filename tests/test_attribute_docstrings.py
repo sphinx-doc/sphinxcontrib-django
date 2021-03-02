@@ -197,10 +197,10 @@ def test_model_manager_fields(app, do_autodoc):
         "   :module: dummy_django_app.models",
         "   :value: <dummy_django_app.models.SimpleModelManager object>",
         "",
-        "   Custom model manager",
-        "",
         "   Django manager to access the ORM",
         "   Use ``SimpleModel.objects.all()`` to fetch all objects.",
+        "",
+        "   Custom model manager",
         "",
     ]
 

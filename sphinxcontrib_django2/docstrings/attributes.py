@@ -7,6 +7,7 @@ from django.db.models.fields.files import FileDescriptor
 from django.db.models.manager import ManagerDescriptor
 from django.db.models.query_utils import DeferredAttribute
 from django.utils.module_loading import import_string
+from sphinx.util.docstrings import prepare_docstring
 
 from .field_utils import get_field_type, get_field_verbose_name
 
@@ -36,13 +37,15 @@ def improve_attribute_docstring(attribute, name, lines):
     :param lines: The docstring lines
     :type lines: list [ str ]
     """
+    # Save initial docstring lines to append them to the modified lines
+    docstring_lines = lines.copy()
+    lines.clear()
     if isinstance(attribute, DeferredAttribute):
         # This only points to a field name, not a field.
         # Get the field by importing the name.
         cls_path, field_name = name.rsplit(".", 1)
         model = import_string(cls_path)
         field = model._meta.get_field(field_name)
-        lines.clear()
         if isinstance(field, models.fields.related.RelatedField):
             # If a deferred attribute is a related field, it is an automatically created field
             # with the postfix "_id" and contains the reference to the id of the related model
@@ -55,27 +58,37 @@ def improve_attribute_docstring(attribute, name, lines):
             lines.extend(get_field_details(field))
     elif isinstance(attribute, FIELD_DESCRIPTORS):
         # Display a reasonable output for forward descriptors (foreign key and one to one fields).
-        lines.clear()
         lines.extend(get_field_details(attribute.field))
     elif isinstance(attribute, related_descriptors.ManyToManyDescriptor):
         # Check this case first since ManyToManyDescriptor inherits from ReverseManyToOneDescriptor
-        lines.clear()
         # This descriptor is used for both forward and reverse relationships
         if attribute.reverse:
             lines.extend(get_field_details(attribute.rel))
         else:
             lines.extend(get_field_details(attribute.field))
     elif isinstance(attribute, related_descriptors.ReverseManyToOneDescriptor):
-        lines.clear()
         lines.extend(get_field_details(attribute.rel))
     elif isinstance(attribute, related_descriptors.ReverseOneToOneDescriptor):
-        lines.clear()
         lines.extend(get_field_details(attribute.related))
     elif isinstance(attribute, (models.Manager, ManagerDescriptor)):
         # Somehow the 'objects' manager doesn't pass through the docstrings.
         module, model_name, field_name = name.rsplit(".", 2)
         lines.append("Django manager to access the ORM")
         lines.append(f"Use ``{model_name}.objects.all()`` to fetch all objects.")
+    # Check if there are initial docstrings to be appended
+    if docstring_lines:
+        # Get default docstring of attribute
+        parent_docstring = type(attribute).__doc__
+        # Ignore non-string __doc__
+        if not isinstance(parent_docstring, str):
+            parent_docstring = ""
+        # Only append the initial docstring of the attribute if it's overwritten
+        if docstring_lines != prepare_docstring(parent_docstring) or not lines:
+            if lines:
+                # If lines are not empty, append a separating new line before docstring
+                lines.append("")
+            # Remove last element because it's a newline
+            lines.extend(docstring_lines[:-1])
 
 
 def get_field_details(field):
