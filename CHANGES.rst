@@ -1,8 +1,8 @@
 Changelog
 =========
 
-UNRELEASED
-----------
+Version 1.1 (2021-03-02)
+------------------------
 
 * Add support for Python 3.9
 * Add support for django-mptt with Django >=3.1
