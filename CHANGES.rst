@@ -1,8 +1,8 @@
 Changelog
 =========
 
-UNRELEASED
-----------
+Version 1.1.1 (2021-03-02)
+--------------------------
 
 * Support django.db.models.JSONField
 * List choices of choice fields
