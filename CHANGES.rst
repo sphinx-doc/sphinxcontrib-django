@@ -1,6 +1,12 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Add support for Python 3.9
+
+
 Version 1.0.2 (2021-02-02)
 --------------------------
 
