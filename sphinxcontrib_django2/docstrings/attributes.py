@@ -9,6 +9,7 @@ from django.db.models.query_utils import DeferredAttribute
 from django.utils.module_loading import import_string
 from sphinx.util.docstrings import prepare_docstring
 
+from .config import CHOICES_LIMIT
 from .field_utils import get_field_type, get_field_verbose_name
 
 FIELD_DESCRIPTORS = (FileDescriptor, related_descriptors.ForwardManyToOneDescriptor)
@@ -102,8 +103,27 @@ def get_field_details(field):
     :return: The field details as list of strings
     :rtype: list [ str ]
     """
-    return [
+    field_details = [
         f"Type: {get_field_type(field)}",
         "",
         f"{get_field_verbose_name(field)}",
     ]
+    if hasattr(field, "choices") and field.choices:
+        field_details.extend(
+            [
+                "",
+                "Choices:",
+                "",
+            ]
+        )
+        field_details.extend(
+            [f"* ``{key}``" for key, value in field.choices[:CHOICES_LIMIT]]
+        )
+        # Check if list has been truncated
+        if len(field.choices) > CHOICES_LIMIT:
+            # If only one element has been truncated, just list it as well
+            if len(field.choices) == CHOICES_LIMIT + 1:
+                field_details.append(f"* ``{field.choices[-1][0]}``")
+            else:
+                field_details.append(f"* and {len(field.choices) - CHOICES_LIMIT} more")
+    return field_details

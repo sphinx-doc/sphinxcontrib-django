@@ -21,3 +21,6 @@ EXCLUDE_MEMBERS = {
     "polymorphic_primary_key_name",
     "polymorphic_super_sub_accessors_replaced",
 }
+
+#: How many choices should be shown for model fields
+CHOICES_LIMIT = 10

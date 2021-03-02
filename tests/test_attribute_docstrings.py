@@ -221,6 +221,100 @@ def test_file_field(app, do_autodoc):
     ]
 
 
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_choice_field(app, do_autodoc):
+    actual = do_autodoc(
+        app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_below"
+    )
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: ChoiceModel.choice_limit_below",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: :class:`~django.db.models.IntegerField`",
+        "",
+        "   Choice limit below",
+        "",
+        "   Choices:",
+        "",
+        "   * ``0``",
+        "   * ``1``",
+        "   * ``2``",
+        "   * ``3``",
+        "   * ``4``",
+        "   * ``5``",
+        "   * ``6``",
+        "   * ``7``",
+        "   * ``8``",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_choice_field_limit_exact(app, do_autodoc):
+    actual = do_autodoc(
+        app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_exact"
+    )
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: ChoiceModel.choice_limit_exact",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: :class:`~django.db.models.IntegerField`",
+        "",
+        "   Choice limit exact",
+        "",
+        "   Choices:",
+        "",
+        "   * ``0``",
+        "   * ``1``",
+        "   * ``2``",
+        "   * ``3``",
+        "   * ``4``",
+        "   * ``5``",
+        "   * ``6``",
+        "   * ``7``",
+        "   * ``8``",
+        "   * ``9``",
+        "   * ``10``",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_choice_field_limit_above(app, do_autodoc):
+    actual = do_autodoc(
+        app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_above"
+    )
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: ChoiceModel.choice_limit_above",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: :class:`~django.db.models.IntegerField`",
+        "",
+        "   Choice limit above",
+        "",
+        "   Choices:",
+        "",
+        "   * ``0``",
+        "   * ``1``",
+        "   * ``2``",
+        "   * ``3``",
+        "   * ``4``",
+        "   * ``5``",
+        "   * ``6``",
+        "   * ``7``",
+        "   * ``8``",
+        "   * ``9``",
+        "   * and 2 more",
+        "",
+    ]
+
+
 if PHONENUMBER:
 
     @pytest.mark.sphinx("html", testroot="docstrings")

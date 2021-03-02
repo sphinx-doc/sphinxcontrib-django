@@ -2,6 +2,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from sphinxcontrib_django2.docstrings.config import CHOICES_LIMIT
+
 try:
     from phonenumber_field.modelfields import PhoneNumberField
 
@@ -81,6 +83,18 @@ class ChildModelA(AbstractModel):
 
 class ChildModelB(AbstractModel):
     pass
+
+
+class ChoiceModel(models.Model):
+    choice_limit_below = models.IntegerField(
+        choices=[(i, i) for i in range(CHOICES_LIMIT - 1)],
+    )
+    choice_limit_exact = models.IntegerField(
+        choices=[(i, i) for i in range(CHOICES_LIMIT + 1)],
+    )
+    choice_limit_above = models.IntegerField(
+        choices=[(i, i) for i in range(CHOICES_LIMIT + 2)],
+    )
 
 
 class TaggedItem(models.Model):
