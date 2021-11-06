@@ -38,9 +38,7 @@ def test_model_method_get_next_by(app, do_autodoc):
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_model_method_get_previous_by(app, do_autodoc):
     actual = do_autodoc(
-        app,
-        "method",
-        "dummy_django_app.models.SimpleModel.get_previous_by_dummy_field",
+        app, "method", "dummy_django_app.models.SimpleModel.get_previous_by_dummy_field"
     )
     print(actual)
     assert actual == [

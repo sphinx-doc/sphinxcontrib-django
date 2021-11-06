@@ -30,24 +30,11 @@ setup(
     url="https://github.com/timoludwig/sphinxcontrib-django2",
     download_url="https://github.com/timoludwig/sphinxcontrib-django2/zipball/main",
     packages=find_packages(exclude=("example*",)),
-    install_requires=[
-        "Django>=2.2",
-        "Sphinx>=0.5",
-        "pprintpp",
-    ],
+    install_requires=["Django>=2.2", "Sphinx>=0.5", "pprintpp"],
     extras_require={
-        "dev": [
-            "pre-commit",
-        ],
-        "test": [
-            "pytest",
-            "requests-mock",
-            "codecov",
-        ],
-        "doc": [
-            "sphinx-rtd-theme",
-            "sphinx-last-updated-by-git",
-        ],
+        "dev": ["pre-commit"],
+        "test": ["pytest", "requests-mock", "codecov"],
+        "doc": ["sphinx-rtd-theme", "sphinx-last-updated-by-git"],
         "optional": [
             "psycopg2-binary",
             "django-mptt",

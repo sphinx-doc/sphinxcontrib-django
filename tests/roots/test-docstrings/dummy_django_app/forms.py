@@ -15,9 +15,4 @@ class SimpleForm(forms.ModelForm):
 
     class Meta:
         model = SimpleModel
-        fields = (
-            "file",
-            "childA",
-            "childrenB",
-            "dummy_field",
-        )
+        fields = ("file", "childA", "childrenB", "dummy_field")

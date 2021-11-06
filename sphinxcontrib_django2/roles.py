@@ -48,21 +48,13 @@ def setup(app):
     app.connect("config-inited", add_default_intersphinx_mappings)
 
     # Allow intersphinx mappings to custom Django roles
-    django_crossref_types = [
-        "setting",
-        "templatetag",
-        "templatefilter",
-        "fieldlookup",
-    ]
+    django_crossref_types = ["setting", "templatetag", "templatefilter", "fieldlookup"]
     # Allow intersphinx mappings to custom Sphinx roles
     sphinx_crossref_types = ["event", "confval"]
 
     for crossref_type in django_crossref_types + sphinx_crossref_types:
         try:
-            app.add_crossref_type(
-                directivename=crossref_type,
-                rolename=crossref_type,
-            )
+            app.add_crossref_type(directivename=crossref_type, rolename=crossref_type)
         except ExtensionError as e:
             logger.warning("Unable to register cross-reference type: %s", e)
 

@@ -109,13 +109,7 @@ def get_field_details(field):
         f"{get_field_verbose_name(field)}",
     ]
     if hasattr(field, "choices") and field.choices:
-        field_details.extend(
-            [
-                "",
-                "Choices:",
-                "",
-            ]
-        )
+        field_details.extend(["", "Choices:", ""])
         field_details.extend(
             [f"* ``{key}``" for key, value in field.choices[:CHOICES_LIMIT]]
         )

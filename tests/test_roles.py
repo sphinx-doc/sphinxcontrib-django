@@ -5,10 +5,7 @@ import pytest
     "html",
     testroot="docstrings",
     confoverrides={
-        "extensions": [
-            "conflicting_sphinx_extension",
-            "sphinxcontrib_django2",
-        ]
+        "extensions": ["conflicting_sphinx_extension", "sphinxcontrib_django2"]
     },
 )
 def test_setup_with_conflicting_extension(app, caplog):

@@ -24,23 +24,16 @@ class FileModel(models.Model):
 class SimpleModel(models.Model):
     # Foreign Keys
     file = models.ForeignKey(
-        "FileModel",
-        related_name="simple_models",
-        on_delete=models.CASCADE,
+        "FileModel", related_name="simple_models", on_delete=models.CASCADE
     )
 
     # One to one field
     childA = models.OneToOneField(
-        "ChildModelA",
-        related_name="simple_model",
-        on_delete=models.CASCADE,
+        "ChildModelA", related_name="simple_model", on_delete=models.CASCADE
     )
 
     # Many to many field
-    childrenB = models.ManyToManyField(
-        "ChildModelB",
-        related_name="simple_models",
-    )
+    childrenB = models.ManyToManyField("ChildModelB", related_name="simple_models")
 
     # Dummy field
     dummy_field = models.CharField(
@@ -66,10 +59,7 @@ class SimpleModel(models.Model):
 
 
 class AbstractModel(models.Model):
-    simple_model = models.ForeignKey(
-        "SimpleModel",
-        on_delete=models.CASCADE,
-    )
+    simple_model = models.ForeignKey("SimpleModel", on_delete=models.CASCADE)
     user = models.ForeignKey("auth.User", related_name="+", on_delete=models.CASCADE)
     foreignkey_self = models.ForeignKey("self", on_delete=models.CASCADE)
 
@@ -87,13 +77,13 @@ class ChildModelB(AbstractModel):
 
 class ChoiceModel(models.Model):
     choice_limit_below = models.IntegerField(
-        choices=[(i, i) for i in range(CHOICES_LIMIT - 1)],
+        choices=[(i, i) for i in range(CHOICES_LIMIT - 1)]
     )
     choice_limit_exact = models.IntegerField(
-        choices=[(i, i) for i in range(CHOICES_LIMIT + 1)],
+        choices=[(i, i) for i in range(CHOICES_LIMIT + 1)]
     )
     choice_limit_above = models.IntegerField(
-        choices=[(i, i) for i in range(CHOICES_LIMIT + 2)],
+        choices=[(i, i) for i in range(CHOICES_LIMIT + 2)]
     )
 
 

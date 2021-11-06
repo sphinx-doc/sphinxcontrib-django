@@ -61,9 +61,7 @@ def test_foreignkey_id(app, do_autodoc):
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_foreignkey_string(app, do_autodoc):
     actual = do_autodoc(
-        app,
-        "attribute",
-        "dummy_django_app.models.AbstractModel.simple_model",
+        app, "attribute", "dummy_django_app.models.AbstractModel.simple_model"
     )
     print(actual)
     assert actual == [
@@ -82,9 +80,7 @@ def test_foreignkey_string(app, do_autodoc):
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_reverse_foreignkey(app, do_autodoc):
     actual = do_autodoc(
-        app,
-        "attribute",
-        "dummy_django_app.models.FileModel.simple_models",
+        app, "attribute", "dummy_django_app.models.FileModel.simple_models"
     )
     print(actual)
     assert actual == [
@@ -104,9 +100,7 @@ def test_reverse_foreignkey(app, do_autodoc):
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_manytomany_field(app, do_autodoc):
     actual = do_autodoc(
-        app,
-        "attribute",
-        "dummy_django_app.models.SimpleModel.childrenB",
+        app, "attribute", "dummy_django_app.models.SimpleModel.childrenB"
     )
     print(actual)
     assert actual == [
@@ -126,9 +120,7 @@ def test_manytomany_field(app, do_autodoc):
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_reverse_manytomany_field(app, do_autodoc):
     actual = do_autodoc(
-        app,
-        "attribute",
-        "dummy_django_app.models.ChildModelB.simple_models",
+        app, "attribute", "dummy_django_app.models.ChildModelB.simple_models"
     )
     print(actual)
     assert actual == [

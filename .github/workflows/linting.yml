@@ -6,7 +6,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - uses: psf/black@20.8b1
+      - uses: psf/black@21.10b0
+        with:
+          options: "--skip-magic-trailing-comma"
   isort:
     runs-on: ubuntu-latest
     steps:

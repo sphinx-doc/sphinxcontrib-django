@@ -50,12 +50,7 @@ def patch_django_for_autodoc():
             models.fields.files,
             models.fields.related,
         ],
-        "django.forms": [
-            forms.forms,
-            forms.fields,
-            forms.models,
-            forms.widgets,
-        ],
+        "django.forms": [forms.forms, forms.fields, forms.models, forms.widgets],
         "django.test": [test],
         "django.apps": [apps],
     }
@@ -74,10 +69,7 @@ def patch_django_for_autodoc():
             postgres_fields.array,
             postgres_fields.jsonb,
         ]
-        postgres_forms.array.__all__ = (
-            "SimpleArrayField",
-            "SplitArrayField",
-        )
+        postgres_forms.array.__all__ = ("SimpleArrayField", "SplitArrayField")
         postgres_forms.jsonb.__all__ = ("JSONString", "JSONField")
 
     # Add __all__ where missing
