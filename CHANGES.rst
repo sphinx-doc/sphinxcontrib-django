@@ -1,6 +1,14 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Add support for Python 3.10
+* Add support for Django 3.2
+* Drop support for Django 3.0
+
+
 Version 1.1.1 (2021-03-02)
 --------------------------
 
