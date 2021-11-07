@@ -44,7 +44,7 @@ exclude_patterns = ["_build"]
 # The theme to use for HTML and HTML Help pages.
 html_theme = "sphinx_rtd_theme"
 # The logos shown in the menu bar
-html_logo = "images/django-sphinx-logo.png"
+html_logo = "images/django-sphinx-logo-white.png"
 # The facivon of the html doc files
 html_favicon = "images/favicon.svg"
 # Do not include links to the documentation source (.rst files) in build

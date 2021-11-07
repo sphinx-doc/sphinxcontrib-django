@@ -3,7 +3,7 @@
     :target: https://github.com/timoludwig/sphinxcontrib-django2/actions?query=workflow%3ATests
 .. image:: https://img.shields.io/pypi/v/sphinxcontrib-django2.svg
     :alt: PyPi
-    :target: https://pypi.python.org/pypi/sphinxcontrib-django2/
+    :target: https://pypi.org/project/sphinxcontrib-django2/
 .. image:: https://codecov.io/gh/timoludwig/sphinxcontrib-django2/branch/develop/graph/badge.svg
     :alt: Code coverage
     :target: https://codecov.io/gh/timoludwig/sphinxcontrib-django2
@@ -17,6 +17,12 @@
     :alt: Documentation Status
     :target: https://sphinxcontrib-django2.readthedocs.io/en/latest/?badge=latest
 
+|
+
+.. image:: https://raw.githubusercontent.com/timoludwig/sphinxcontrib-django2/feature/table-names/docs/images/django-sphinx-logo-blue.png
+    :width: 500
+    :alt: logo
+    :target: https://pypi.org/project/sphinxcontrib-django2/
 
 sphinxcontrib-django2
 =====================
@@ -101,3 +107,5 @@ Build the documentation with:
 
     cd docs
     make html
+
+The documentation is automatically deployed to `Read the Docs <https://sphinxcontrib-django2.rtfd.io>`_.
