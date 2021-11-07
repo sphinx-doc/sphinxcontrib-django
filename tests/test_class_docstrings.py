@@ -44,6 +44,53 @@ def test_simple_model(app, do_autodoc):
     ]
 
 
+@pytest.mark.sphinx(
+    "html", testroot="docstrings", confoverrides={"django_show_db_tables": True}
+)
+def test_database_table(app, do_autodoc):
+    actual = do_autodoc(app, "class", "dummy_django_app.models.SimpleModel")
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:class:: SimpleModel(id, file, childA, dummy_field)",
+        "   :module: dummy_django_app.models",
+        "",
+        "   **Database table:** ``dummy_django_app_simplemodel``",
+        "",
+        "   :param id: Primary key: ID",
+        "   :type id: ~django.db.models.AutoField",
+        "   :param dummy_field: Very verbose name of dummy field. This should help you",
+        "   :type dummy_field: ~django.db.models.CharField",
+        "",
+        "   Relationship fields:",
+        "",
+        "   :param file: File "
+        "(related name: :attr:`~dummy_django_app.models.FileModel.simple_models`)",
+        "   :type file: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~dummy_django_app.models.FileModel`",
+        "   :param childA: ChildA "
+        "(related name: :attr:`~dummy_django_app.models.ChildModelA.simple_model`)",
+        "   :type childA: :class:`~django.db.models.OneToOneField` to "
+        ":class:`~dummy_django_app.models.ChildModelA`",
+        "   :param childrenB: ChildrenB "
+        "(related name: :attr:`~dummy_django_app.models.ChildModelB.simple_models`)",
+        "   :type childrenB: :class:`~django.db.models.ManyToManyField` to "
+        ":class:`~dummy_django_app.models.ChildModelB`",
+        "",
+        "   Reverse relationships:",
+        "",
+        "   :param childmodela: All child model as of this simple model "
+        "(related name of :attr:`~dummy_django_app.models.ChildModelA.simple_model`)",
+        "   :type childmodela: Reverse :class:`~django.db.models.ForeignKey` from "
+        ":class:`~dummy_django_app.models.ChildModelA`",
+        "   :param childmodelb: All child model bs of this simple model "
+        "(related name of :attr:`~dummy_django_app.models.ChildModelB.simple_model`)",
+        "   :type childmodelb: Reverse :class:`~django.db.models.ForeignKey` from "
+        ":class:`~dummy_django_app.models.ChildModelB`",
+        "",
+    ]
+
+
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_abstract_model(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.AbstractModel")

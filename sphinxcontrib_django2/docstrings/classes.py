@@ -42,6 +42,12 @@ def improve_model_docstring(app, model, lines):
     :param lines: The docstring lines
     :type lines: list [ str ]
     """
+
+    # Add database table name
+    if app.config.django_show_db_tables:
+        lines.insert(0, "")
+        lines.insert(0, f"**Database table:** ``{model._meta.db_table}``")
+
     # Get predefined params to exclude them from the automatically inserted params
     param_offset = len(":param ")
     predefined_params = [

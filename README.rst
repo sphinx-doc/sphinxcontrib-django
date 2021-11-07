@@ -79,6 +79,13 @@ Add the following to your Sphinx config file ``conf.py``:
     # Configure the path to the Django settings module
     django_settings = "myapp.settings"
 
+Optionally, you can include the table names of your models in their docstrings with:
+
+.. code-block:: python
+
+    # Include the database table names of Django models
+    django_show_db_tables = True
+
 
 Contributing
 ------------

@@ -55,6 +55,9 @@ def setup(app):
     app.add_config_value(
         "django_settings", os.environ.get("DJANGO_SETTINGS_MODULE"), True
     )
+
+    # Set default of django_show_db_tables to False
+    app.add_config_value("django_show_db_tables", False, True)
     # Setup Django after config is initialized
     app.connect("config-inited", setup_django)
 

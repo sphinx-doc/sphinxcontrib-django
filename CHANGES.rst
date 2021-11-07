@@ -7,6 +7,7 @@ UNRELEASED
 * Add support for Python 3.10
 * Add support for Django 3.2
 * Drop support for Django 3.0
+* Add option ``django_show_db_tables`` to list the database table names of Django models in their docstring
 
 
 Version 1.1.1 (2021-03-02)
