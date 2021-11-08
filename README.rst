@@ -19,7 +19,7 @@
 
 |
 
-.. image:: https://raw.githubusercontent.com/timoludwig/sphinxcontrib-django2/feature/table-names/docs/images/django-sphinx-logo-blue.png
+.. image:: https://raw.githubusercontent.com/timoludwig/sphinxcontrib-django2/main/docs/images/django-sphinx-logo-blue.png
     :width: 500
     :alt: logo
     :target: https://pypi.org/project/sphinxcontrib-django2/
