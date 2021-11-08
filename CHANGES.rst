@@ -1,8 +1,8 @@
 Changelog
 =========
 
-UNRELEASED
-----------
+Version 1.2 (2021-11-08)
+------------------------
 
 * Add support for Python 3.10
 * Add support for Django 3.2
