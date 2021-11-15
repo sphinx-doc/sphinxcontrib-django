@@ -84,7 +84,9 @@ def get_field_verbose_name(field):
             f" (related name of :attr:`~{field.remote_field.model.__module__}"
             f".{field.remote_field.model.__name__}.{field.remote_field.name}`)"
         )
-    elif isinstance(field, contenttypes.fields.GenericForeignKey):
+    elif hasattr(contenttypes, "fields") and isinstance(
+        field, contenttypes.fields.GenericForeignKey
+    ):
         # GenericForeignKey does not inherit from django.db.models.Field and has no verbose_name
         return (
             f"Generic foreign key to the :class:`~django.contrib.contenttypes.models.ContentType` "

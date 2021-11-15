@@ -1,6 +1,12 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Fix ``AttributeError`` when ``django.contrib.contenttypes`` is not in ``INSTALLED_APPS``
+
+
 Version 1.2 (2021-11-08)
 ------------------------
 
@@ -55,6 +61,7 @@ Version 1.0 (2021-01-24)
 * Return extension metadata in setup()
 * Move dev dependencies from Pipfile to setup.py
 * Add readthedocs.io integration
+
 
 Version 0.7 (2020-11-30)
 ------------------------
