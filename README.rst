@@ -87,6 +87,28 @@ Optionally, you can include the table names of your models in their docstrings w
     django_show_db_tables = True
 
 
+Advanced Usage
+--------------
+
+If you want to run custom code which depends on Django, e.g. to monkeypatch your application during documentation build,
+you might run into an `ImproperlyConfigured <https://docs.djangoproject.com/en/stable/ref/exceptions/#improperlyconfigured>`_ exception:
+
+    Requested setting INSTALLED_APPS, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+
+Therefore, this Sphinx extension emits the event ``django-configured`` after ``django.setup()`` is finished, so you can
+run your code the following way in ``conf.py``:
+
+.. code-block:: python
+
+    def patch_django(app):
+        """
+        Your custom code here
+        """
+
+    def setup(app):
+        app.connect("django-configured", patch_django)
+
+
 Contributing
 ------------
 

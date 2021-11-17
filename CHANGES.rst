@@ -5,6 +5,8 @@ UNRELEASED
 ----------
 
 * Fix ``AttributeError`` when ``django.contrib.contenttypes`` is not in ``INSTALLED_APPS``
+* Emit sphinx event ``django-configured`` after ``django.setup()`` is finished to allow monkeypatching django during
+  documentation build
 
 
 Version 1.2 (2021-11-08)

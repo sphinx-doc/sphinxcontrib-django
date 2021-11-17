@@ -103,3 +103,7 @@ if PHONENUMBER:
 
     class PhoneNumberModel(models.Model):
         phone_number = PhoneNumberField()
+
+
+class MonkeyPatched(models.Model):
+    pass

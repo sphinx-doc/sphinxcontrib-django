@@ -51,6 +51,9 @@ def setup(app):
     # Fix module paths for intersphinx mappings
     patch_django_for_autodoc()
 
+    # Register custom event which can be emitted after Django has been set up
+    app.add_event("django-configured")
+
     # Set default to environment variable to enable backwards compatibility
     app.add_config_value(
         "django_settings", os.environ.get("DJANGO_SETTINGS_MODULE"), True
@@ -108,6 +111,9 @@ def setup_django(app, config):
         ) from e
     os.environ["DJANGO_SETTINGS_MODULE"] = config.django_settings
     django.setup()
+
+    # Emit event to allow code which depends on Django to run
+    app.emit("django-configured")
 
 
 def autodoc_skip(app, what, name, obj, skip, options):

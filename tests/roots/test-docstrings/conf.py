@@ -11,3 +11,17 @@ extensions = ["sphinxcontrib_django2"]
 django_settings = "dummy_django_app.settings"
 
 nitpicky = True
+
+
+def patch_django_for_autodoc(app):
+    """
+    Monkeypatch application
+    """
+    from dummy_django_app.models import MonkeyPatched
+
+    MonkeyPatched.__doc__ = "Monkeypatched docstring"
+
+
+def setup(app):
+    # Run method after Django config is initialized
+    app.connect("django-configured", patch_django_for_autodoc)
