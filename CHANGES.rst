@@ -1,8 +1,8 @@
 Changelog
 =========
 
-UNRELEASED
-----------
+Version 1.3 (2021-11-20)
+------------------------
 
 * Fix ``AttributeError`` when ``django.contrib.contenttypes`` is not in ``INSTALLED_APPS``
 * Emit sphinx event ``django-configured`` after ``django.setup()`` is finished to allow monkeypatching django during
