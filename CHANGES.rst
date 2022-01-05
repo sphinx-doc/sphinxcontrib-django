@@ -5,6 +5,7 @@ UNRELEASED
 ----------
 
 * Do not reference related names of abstract models
+* Drop support for Python 3.6
 
 
 Version 1.3 (2021-11-20)
