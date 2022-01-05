@@ -1,6 +1,12 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Do not reference related names of abstract models
+
+
 Version 1.3 (2021-11-20)
 ------------------------
 

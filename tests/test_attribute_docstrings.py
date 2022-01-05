@@ -60,6 +60,23 @@ def test_foreignkey_id(app, do_autodoc):
 
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_foreignkey_string(app, do_autodoc):
+    actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file")
+    print(actual)
+    assert actual == [
+        "",
+        ".. py:attribute:: SimpleModel.file",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~dummy_django_app.models.FileModel`",
+        "",
+        "   File (related name: :attr:`~dummy_django_app.models.FileModel.simple_models`)",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_foreignkey_string_abstract_model(app, do_autodoc):
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.AbstractModel.simple_model"
     )
@@ -71,8 +88,7 @@ def test_foreignkey_string(app, do_autodoc):
         "",
         "   Type: :class:`~django.db.models.ForeignKey` to :class:`~SimpleModel`",
         "",
-        "   Simple model "
-        "(related name: :attr:`~dummy_django_app.models.SimpleModel.abstractmodel`)",
+        "   Simple model",
         "",
     ]
 

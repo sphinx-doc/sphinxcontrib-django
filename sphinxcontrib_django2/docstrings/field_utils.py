@@ -79,11 +79,12 @@ def get_field_verbose_name(field):
             verbose_name = (
                 f"All {related_name} of this {field.model._meta.verbose_name}"
             )
-        # Always link to the origin of the reverse related field
-        verbose_name += (
-            f" (related name of :attr:`~{field.remote_field.model.__module__}"
-            f".{field.remote_field.model.__name__}.{field.remote_field.name}`)"
-        )
+        # Link to the origin of the reverse related field if it's not from an abstract model
+        if not field.remote_field.model._meta.abstract:
+            verbose_name += (
+                f" (related name of :attr:`~{field.remote_field.model.__module__}"
+                f".{field.remote_field.model.__name__}.{field.remote_field.name}`)"
+            )
     elif hasattr(contenttypes, "fields") and isinstance(
         field, contenttypes.fields.GenericForeignKey
     ):
@@ -130,7 +131,10 @@ def get_field_verbose_name(field):
                 field.remote_field.related_name or field.model.__name__.lower()
             )
 
-        verbose_name += (
-            f" (related name: :attr:`~{to.__module__}.{to.__name__}.{related_name}`)"
-        )
+        # Link to the related field if it's not an abstract model
+        if not field.model._meta.abstract:
+            verbose_name += (
+                " (related name: "
+                f":attr:`~{to.__module__}.{to.__name__}.{related_name}`)"
+            )
     return verbose_name
