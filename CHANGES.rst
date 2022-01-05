@@ -1,6 +1,12 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Support string foreign keys of abstract models
+
+
 Version 1.4 (2022-01-05)
 ------------------------
 

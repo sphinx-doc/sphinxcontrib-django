@@ -1,5 +1,5 @@
 """
-This module contains utiliy functions for fields which are used by both the
+This module contains utility functions for fields which are used by both the
 :mod:`~sphinxcontrib_django2.docstrings.attributes` and
 :mod:`~sphinxcontrib_django2.docstrings.classes` modules.
 """
@@ -23,12 +23,14 @@ def get_field_type(field, include_role=True):
     :rtype: str
     """
     if isinstance(field, models.fields.related.RelatedField):
-        if isinstance(field.remote_field.model, str):
+        to = field.remote_field.model
+        if isinstance(to, str):
             # This happens with foreign keys of abstract models
-            to = field.remote_field.model
-        else:
-            to = f"{field.remote_field.model.__module__}.{field.remote_field.model.__name__}"
-        return f":class:`~{type(field).__module__}.{type(field).__name__}` to :class:`~{to}`"
+            to = get_model_from_string(field, to)
+        return (
+            f":class:`~{type(field).__module__}.{type(field).__name__}` to "
+            f":class:`~{to.__module__}.{to.__name__}`"
+        )
     elif isinstance(field, models.fields.reverse_related.ForeignObjectRel):
         to = field.remote_field.model
         return (
@@ -119,12 +121,7 @@ def get_field_verbose_name(field):
         to = field.remote_field.model
         if isinstance(to, str):
             # This happens with foreign keys of abstract models
-            if "." in to:
-                to = apps.get_model(to)
-            elif to == "self":
-                to = field.model
-            else:
-                to = apps.get_model(field.model._meta.app_label, to)
+            to = get_model_from_string(field, to)
         # If a related name is defined
         if hasattr(field.remote_field, "related_name"):
             related_name = (
@@ -138,3 +135,25 @@ def get_field_verbose_name(field):
                 f":attr:`~{to.__module__}.{to.__name__}.{related_name}`)"
             )
     return verbose_name
+
+
+def get_model_from_string(field, model_string):
+    """
+    Get a model class from a string
+
+    :param field: The field
+    :type field: ~django.db.models.Field
+
+    :param model_string: The string label of the model
+    :type model_string: str
+
+    :return: The class of the model
+    :rtype: type
+    """
+    if "." in model_string:
+        model = apps.get_model(model_string)
+    elif model_string == "self":
+        model = field.model
+    else:
+        model = apps.get_model(field.model._meta.app_label, model_string)
+    return model

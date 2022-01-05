@@ -104,11 +104,14 @@ def test_abstract_model(app, do_autodoc):
         "   Relationship fields:",
         "",
         "   :param simple_model: Simple model",
-        "   :type simple_model: :class:`~django.db.models.ForeignKey` to :class:`~SimpleModel`",
+        "   :type simple_model: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~dummy_django_app.models.SimpleModel`",
         "   :param user: User",
-        "   :type user: :class:`~django.db.models.ForeignKey` to :class:`~auth.User`",
+        "   :type user: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~django.contrib.auth.models.User`",
         "   :param foreignkey_self: Foreignkey self",
-        "   :type foreignkey_self: :class:`~django.db.models.ForeignKey` to :class:`~self`",
+        "   :type foreignkey_self: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~dummy_django_app.models.AbstractModel`",
         "",
     ]
 

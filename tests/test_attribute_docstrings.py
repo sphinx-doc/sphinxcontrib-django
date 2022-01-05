@@ -86,7 +86,8 @@ def test_foreignkey_string_abstract_model(app, do_autodoc):
         ".. py:attribute:: AbstractModel.simple_model",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: :class:`~django.db.models.ForeignKey` to :class:`~SimpleModel`",
+        "   Type: :class:`~django.db.models.ForeignKey` to "
+        ":class:`~dummy_django_app.models.SimpleModel`",
         "",
         "   Simple model",
         "",
