@@ -57,7 +57,6 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Framework :: Django",
         "Framework :: Django :: 2.2",
-        "Framework :: Django :: 3.1",
         "Framework :: Django :: 3.2",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
