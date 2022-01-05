@@ -1,8 +1,8 @@
 Changelog
 =========
 
-UNRELEASED
-----------
+Version 1.4 (2022-01-05)
+------------------------
 
 * Do not reference related names of abstract models
 * Drop support for Python 3.6
