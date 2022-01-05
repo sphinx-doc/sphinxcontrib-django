@@ -61,16 +61,19 @@ def patch_django_for_autodoc():
 
     # Support postgres fields if used
     if POSTGRES:
-        DJANGO_MODULE_PATHS["django.contrib.postgres.forms"] = [
-            postgres_forms.array,
-            postgres_forms.jsonb,
-        ]
-        DJANGO_MODULE_PATHS["django.contrib.postgres.fields"] = [
-            postgres_fields.array,
-            postgres_fields.jsonb,
-        ]
+        DJANGO_MODULE_PATHS["django.contrib.postgres.forms"] = [postgres_forms.array]
+        # Support django.contrib.postgres.forms.JSONField in Django <= 3.2
+        if hasattr(postgres_forms, "jsonb"):
+            DJANGO_MODULE_PATHS["django.contrib.postgres.forms"].append(
+                postgres_forms.jsonb
+            )
+            postgres_forms.jsonb.__all__ = ("JSONString", "JSONField")
+        DJANGO_MODULE_PATHS["django.contrib.postgres.fields"] = [postgres_fields.array]
+        if hasattr(postgres_fields, "jsonb"):
+            DJANGO_MODULE_PATHS["django.contrib.postgres.forms"].append(
+                postgres_fields.jsonb
+            )
         postgres_forms.array.__all__ = ("SimpleArrayField", "SplitArrayField")
-        postgres_forms.jsonb.__all__ = ("JSONString", "JSONField")
 
     # Add __all__ where missing
     models.base.__all__ = ("Model", "FilteredRelation")
