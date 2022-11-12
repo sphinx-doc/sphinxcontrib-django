@@ -10,3 +10,5 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "dummy_django_app",
 ]
+
+USE_TZ = False
