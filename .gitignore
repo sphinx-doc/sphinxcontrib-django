@@ -11,6 +11,7 @@
 .idea/workspace.xml
 .DS_Store
 .venv/
+.vscode/
 build/
 coverage.xml
 dist/
