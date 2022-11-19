@@ -1,14 +1,14 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 21.10b0
+    rev: 22.10.0
     hooks:
       - id: black
         args: [--skip-magic-trailing-comma]
   - repo: https://github.com/PyCQA/isort
-    rev: 5.7.0
+    rev: 5.10.1
     hooks:
       - id: isort
-  - repo: https://gitlab.com/PyCQA/flake8
-    rev: 3.8.4
+  - repo: https://github.com/pycqa/flake8
+    rev: 5.0.4
     hooks:
       - id: flake8
