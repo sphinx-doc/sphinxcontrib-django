@@ -10,7 +10,7 @@ def test_data(app, do_autodoc):
         "",
         ".. py:module:: dummy_django_app.settings",
         "",
-        "Dummy Django settings file",
+        "   Dummy Django settings file",
         "",
         "",
         ".. py:data:: INSTALLED_APPS",
