@@ -1,7 +1,22 @@
 name: Deployment
 on: [push, pull_request]
 jobs:
+  has:
+    name: Check Secrets
+    runs-on: ubuntu-latest
+    steps:
+    - id: secrets
+      env:
+        test_pypi_token: ${{ secrets.TEST_PYPI_TOKEN }}
+        pypi_token: ${{ secrets.PYPI_TOKEN }}
+      if: ${{ env.test_pypi_token != '' && env.pypi_token != '' }}
+      run:
+        echo "::set-output name=secrets::1"
+    outputs:
+      secrets: ${{ steps.secrets.outputs.secrets }}
   build-and-publish:
+    needs: has
+    if: ${{ needs.has.outputs.secrets }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
