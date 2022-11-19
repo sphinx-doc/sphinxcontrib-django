@@ -1,6 +1,13 @@
 Changelog
 =========
 
+UNRELEASED
+----------
+
+* Add support for Django 4.1
+* Drop support for Django 2.2
+
+
 Version 1.5 (2022-01-05)
 ------------------------
 
