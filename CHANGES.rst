@@ -4,6 +4,7 @@ Changelog
 UNRELEASED
 ----------
 
+* Add support for Python 3.11
 * Add support for Django 4.1
 * Drop support for Django 2.2
 
