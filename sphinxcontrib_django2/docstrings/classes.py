@@ -4,6 +4,7 @@ This module contains all functions which are used to improve the documentation o
 
 from django import forms
 from django.db import models
+from sphinx.pycode import ModuleAnalyzer
 
 from .field_utils import get_field_type, get_field_verbose_name
 
@@ -81,22 +82,30 @@ def improve_model_docstring(app, model, lines):
         if field not in related_fields + reverse_related_fields
     ]
 
+    # Analyze model to get inline field docstrings
+    analyzer = ModuleAnalyzer.for_module(model.__module__)
+    analyzer.analyze()
+    field_docs = {
+        field_name: ". " + " ".join(field_docstring).strip()
+        for (_, field_name), field_docstring in analyzer.attr_docs.items()
+    }
+
     # Add the normal fields to the docstring
-    add_model_parameters(non_related_fields, lines)
+    add_model_parameters(non_related_fields, lines, field_docs)
 
     # Add the related fields
     if related_fields:
         lines.append("")
         lines.append("Relationship fields:")
         lines.append("")
-        add_model_parameters(related_fields, lines)
+        add_model_parameters(related_fields, lines, field_docs)
 
     # Add the reverse related fields
     if reverse_related_fields:
         lines.append("")
         lines.append("Reverse relationships:")
         lines.append("")
-        add_model_parameters(reverse_related_fields, lines)
+        add_model_parameters(reverse_related_fields, lines, field_docs)
 
     # Add the inheritance diagram
     if (
@@ -107,7 +116,7 @@ def improve_model_docstring(app, model, lines):
         lines.append(".. inheritance-diagram::")  # pragma: no cover
 
 
-def add_model_parameters(fields, lines):
+def add_model_parameters(fields, lines, field_docs):
     """
     Add the given fields as model parameter with the ``:param:`` directive
 
@@ -116,10 +125,14 @@ def add_model_parameters(fields, lines):
 
     :param lines: The list of current docstring lines
     :type lines: list [ str ]
+
+    :param field_docs: The attribute docstrings of the model
+    :type field_docs: dict
     """
     for field in fields:
-        # Add verbose name
-        lines.append(f":param {field.name}: {get_field_verbose_name(field)}")
+        # Add docstrings if they are found
+        docstring = field_docs.get(field.name, "")
+        lines.append(f":param {field.name}: {get_field_verbose_name(field)}{docstring}")
 
         # Add type
         lines.append(f":type {field.name}: {get_field_type(field, include_role=False)}")
