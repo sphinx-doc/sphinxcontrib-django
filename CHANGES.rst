@@ -1,8 +1,8 @@
 Changelog
 =========
 
-UNRELEASED
-----------
+Version 1.6 (2022-11-24)
+------------------------
 
 * Add inline docstrings of model fields to parameter documentation of models
 * Add support for Python 3.11
