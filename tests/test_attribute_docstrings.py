@@ -24,6 +24,8 @@ def test_model_field(app, do_autodoc):
         "",
         "   Very verbose name of dummy field. This should help you",
         "",
+        "   Docstring of char field",
+        "",
     ]
 
 
@@ -40,6 +42,8 @@ def test_foreignkey(app, do_autodoc):
         ":class:`~dummy_django_app.models.FileModel`",
         "",
         "   File (related name: :attr:`~dummy_django_app.models.FileModel.simple_models`)",
+        "",
+        "   Docstring of foreign key",
         "",
     ]
 
@@ -71,6 +75,8 @@ def test_foreignkey_string(app, do_autodoc):
         ":class:`~dummy_django_app.models.FileModel`",
         "",
         "   File (related name: :attr:`~dummy_django_app.models.FileModel.simple_models`)",
+        "",
+        "   Docstring of foreign key",
         "",
     ]
 
@@ -130,6 +136,8 @@ def test_manytomany_field(app, do_autodoc):
         "",
         "   ChildrenB "
         "(related name: :attr:`~dummy_django_app.models.ChildModelB.simple_models`)",
+        "",
+        "   Docstring of many to many field",
         "",
     ]
 

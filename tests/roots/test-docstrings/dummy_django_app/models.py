@@ -22,20 +22,20 @@ class FileModel(models.Model):
 
 
 class SimpleModel(models.Model):
-    # Foreign Keys
+    #: Docstring of foreign key
     file = models.ForeignKey(
         "FileModel", related_name="simple_models", on_delete=models.CASCADE
     )
 
-    # One to one field
+    #: Docstring of one to one field
     childA = models.OneToOneField(
         "ChildModelA", related_name="simple_model", on_delete=models.CASCADE
     )
 
-    # Many to many field
+    #: Docstring of many to many field
     childrenB = models.ManyToManyField("ChildModelB", related_name="simple_models")
 
-    # Dummy field
+    #: Docstring of char field
     dummy_field = models.CharField(
         max_length=3,
         help_text="This should help you",
