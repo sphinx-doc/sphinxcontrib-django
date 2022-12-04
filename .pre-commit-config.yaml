@@ -3,7 +3,6 @@ repos:
     rev: 22.10.0
     hooks:
       - id: black
-        args: [--skip-magic-trailing-comma]
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
     hooks:
@@ -12,3 +11,5 @@ repos:
     rev: 5.0.4
     hooks:
       - id: flake8
+        additional_dependencies:
+          - flake8-pyproject

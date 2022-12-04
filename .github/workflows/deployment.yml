@@ -21,9 +21,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
       - name: Install dependencies
-        run: pip install setuptools wheel twine
+        run: pip install build twine
       - name: Build a binary wheel and a source tarball
-        run: python setup.py sdist bdist_wheel
+        run: python3 -m build
       - name: Publish distribution 📦 to Test PyPI
         if: ${{ needs.has.outputs.secrets }}
         uses: pypa/gh-action-pypi-publish@release/v1
