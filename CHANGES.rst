@@ -1,10 +1,16 @@
 Changelog
 =========
 
-Version 1.6 (2022-11-24)
+Version 2.0 (2023-01-02)
 ------------------------
 
-*Versions 0.6 until 1.6 were releases of the fork* `sphinxcontrib_django2 <https://pypi.org/project/sphinxcontrib-django2/>`_.
+Merge fork `sphinxcontrib_django2 <https://pypi.org/project/sphinxcontrib-django2/>`_ back into `sphinxcontrib_django <https://pypi.org/project/sphinxcontrib-django/>`_.
+
+*Versions 0.6 until 1.6 were releases of the fork. With version 2.0, the changes are included in the original package again.*
+
+
+Version 1.6 (2022-11-24)
+------------------------
 
 * Add inline docstrings of model fields to parameter documentation of models
 * Add support for Python 3.11
