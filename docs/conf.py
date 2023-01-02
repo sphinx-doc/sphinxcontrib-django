@@ -4,11 +4,11 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-from sphinxcontrib_django2 import __version__
+from sphinxcontrib_django import __version__
 
 # -- Project information -----------------------------------------------------
 
-project = "sphinxcontrib-django2"
+project = "sphinxcontrib-django"
 copyright = "2021"
 author = "Timo Ludwig"
 
@@ -25,7 +25,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx_rtd_theme",
     "sphinx_last_updated_by_git",
-    "sphinxcontrib_django2.roles",
+    "sphinxcontrib_django.roles",
 ]
 
 # Warn about all references where the target cannot be found

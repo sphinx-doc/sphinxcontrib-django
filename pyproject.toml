@@ -3,7 +3,10 @@
     requires      = ["setuptools"]
 
 [project]
-    authors = [{ name = "Timo Ludwig", email = "ti.ludwig@web.de" }]
+    authors = [
+        { name = "Diederik van der Boor", email = "opensource@edoburu.nl" },
+        { name = "Timo Ludwig", email = "ti.ludwig@web.de" }
+    ]
     classifiers = [
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
@@ -31,15 +34,15 @@
     dynamic = ["version"]
     keywords = ["django", "docstrings", "extension", "sphinx"]
     license = { text = "Apache2 2.0 License" }
-    name = "sphinxcontrib-django2"
+    name = "sphinxcontrib-django"
     readme = "README.rst"
     requires-python = ">=3.7"
 
     [project.urls]
-        "Bug Tracker"   = "https://github.com/timoludwig/sphinxcontrib-django2/issues"
-        "Documentation" = "https://sphinxcontrib-django2.readthedocs.io/"
-        "Release Notes" = "https://github.com/timoludwig/sphinxcontrib-django2/blob/develop/CHANGES.rst"
-        "Source Code"   = "https://github.com/timoludwig/sphinxcontrib-django2"
+        "Bug Tracker"   = "https://github.com/edoburu/sphinxcontrib-django/issues"
+        "Documentation" = "https://sphinxcontrib-django.readthedocs.io/"
+        "Release Notes" = "https://github.com/edoburu/sphinxcontrib-django/blob/main/CHANGES.rst"
+        "Source Code"   = "https://github.com/edoburu/sphinxcontrib-django"
 
     [project.optional-dependencies]
         dev = ["pre-commit"]
@@ -52,17 +55,17 @@
         test = ["coverage", "pytest", "requests-mock"]
 
 [tool.setuptools.dynamic]
-    version = { attr = "sphinxcontrib_django2.__version__" }
+    version = { attr = "sphinxcontrib_django.__version__" }
 
 [tool.setuptools.packages.find]
-    include = ["sphinxcontrib_django2*"]
+    include = ["sphinxcontrib_django*"]
 
 [tool.black]
     skip-magic-trailing-comma = true
 
 [tool.coverage.run]
     command_line = "-m pytest"
-    source       = ["sphinxcontrib_django2"]
+    source       = ["sphinxcontrib_django"]
 
 [tool.pytest.ini_options]
     addopts    = "-ra -q"
@@ -80,7 +83,7 @@
     max-line-length = 99
 
 [tool.isort]
-    known_first_party = "sphinxcontrib_django2"
+    known_first_party = "sphinxcontrib_django"
     # Approach Black compatibility (just run black after isort)
     include_trailing_comma = true
     line_length            = 88

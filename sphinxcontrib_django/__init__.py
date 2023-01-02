@@ -10,8 +10,8 @@ def setup(app):
     """
     Allow this module to be used as sphinx extension.
 
-    Setup the two sub-extensions :mod:`~sphinxcontrib_django2.docstrings` and
-    :mod:`~sphinxcontrib_django2.roles` which can also be imported separately.
+    Setup the two sub-extensions :mod:`~sphinxcontrib_django.docstrings` and
+    :mod:`~sphinxcontrib_django.roles` which can also be imported separately.
 
     :param app: The Sphinx application object
     :type app: ~sphinx.application.Sphinx

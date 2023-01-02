@@ -5,7 +5,7 @@ import sys
 sys.path.insert(0, os.path.abspath("."))
 
 project = "sphinx dummy Test"
-extensions = ["sphinxcontrib_django2"]
+extensions = ["sphinxcontrib_django"]
 
 # Configure Django settings module
 django_settings = "dummy_django_app.settings"

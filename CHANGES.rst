@@ -4,6 +4,8 @@ Changelog
 Version 1.6 (2022-11-24)
 ------------------------
 
+*Versions 0.6 until 1.6 were releases of the fork* `sphinxcontrib_django2 <https://pypi.org/project/sphinxcontrib-django2/>`_.
+
 * Add inline docstrings of model fields to parameter documentation of models
 * Add support for Python 3.11
 * Add support for Django 4.1
@@ -79,7 +81,7 @@ Version 1.0 (2021-01-24)
 * Refactor tests
 * Improve docstring output
 * Improve handling of related and reverse related fields
-* Add documentation for sphinxcontrib_django2 itself
+* Add documentation for sphinxcontrib_django itself
 * Improve docstrings of iterable data
 * Add config value for Django settings
 * Load autodoc and intersphinx extensions in setup()
@@ -97,7 +99,7 @@ Version 0.7 (2020-11-30)
 
 
 Version 0.6 (2020-11-16)
---------------------------
+------------------------
 
 * Fix deferred attribute for Django >=2.1, <3.0
 * Django: Drop support for [1.11, 2.0], add support for [2.2, 3.0, 3.1]

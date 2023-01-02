@@ -1,7 +1,7 @@
 """
 This module contains utility functions for fields which are used by both the
-:mod:`~sphinxcontrib_django2.docstrings.attributes` and
-:mod:`~sphinxcontrib_django2.docstrings.classes` modules.
+:mod:`~sphinxcontrib_django.docstrings.attributes` and
+:mod:`~sphinxcontrib_django.docstrings.classes` modules.
 """
 from django.apps import apps
 from django.contrib import contenttypes

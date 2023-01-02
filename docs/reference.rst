@@ -1,7 +1,7 @@
-sphinxcontrib_django2
+sphinxcontrib_django
 =====================
 
-.. automodule:: sphinxcontrib_django2
+.. automodule:: sphinxcontrib_django
    :members:
    :undoc-members:
    :show-inheritance:
@@ -17,7 +17,7 @@ sphinxcontrib_django2
 Roles
 -----
 
-.. automodule:: sphinxcontrib_django2.roles
+.. automodule:: sphinxcontrib_django.roles
    :members:
    :undoc-members:
    :show-inheritance:

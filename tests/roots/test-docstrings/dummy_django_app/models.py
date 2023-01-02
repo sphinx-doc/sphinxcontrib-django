@@ -2,7 +2,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from sphinxcontrib_django2.docstrings.config import CHOICES_LIMIT
+from sphinxcontrib_django.docstrings.config import CHOICES_LIMIT
 
 try:
     from phonenumber_field.modelfields import PhoneNumberField

@@ -18,7 +18,7 @@ Sphinx:
 This module can also be used separately in ``conf.py``::
 
     extensions = [
-        "sphinxcontrib_django2.roles",
+        "sphinxcontrib_django.roles",
     ]
 """
 import logging
@@ -34,7 +34,7 @@ def setup(app):
     """
     Allow this module to be used as Sphinx extension.
 
-    This is also called from the top-level :meth:`~sphinxcontrib_django2.setup`.
+    This is also called from the top-level :meth:`~sphinxcontrib_django.setup`.
 
     It adds cross-reference types via :meth:`~sphinx.application.Sphinx.add_crossref_type`.
 

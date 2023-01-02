@@ -1,7 +1,7 @@
 Docstrings
 ==========
 
-.. automodule:: sphinxcontrib_django2.docstrings
+.. automodule:: sphinxcontrib_django.docstrings
    :members:
    :undoc-members:
    :show-inheritance:
@@ -9,7 +9,7 @@ Docstrings
 Field Utilities
 ---------------
 
-.. automodule:: sphinxcontrib_django2.docstrings.field_utils
+.. automodule:: sphinxcontrib_django.docstrings.field_utils
    :members:
    :undoc-members:
    :show-inheritance:
@@ -17,7 +17,7 @@ Field Utilities
 Attributes
 ----------
 
-.. automodule:: sphinxcontrib_django2.docstrings.attributes
+.. automodule:: sphinxcontrib_django.docstrings.attributes
    :members:
    :undoc-members:
    :show-inheritance:
@@ -25,7 +25,7 @@ Attributes
 Classes
 -------
 
-.. automodule:: sphinxcontrib_django2.docstrings.classes
+.. automodule:: sphinxcontrib_django.docstrings.classes
    :members:
    :undoc-members:
    :show-inheritance:
@@ -33,7 +33,7 @@ Classes
 Data
 ----
 
-.. automodule:: sphinxcontrib_django2.docstrings.data
+.. automodule:: sphinxcontrib_django.docstrings.data
    :members:
    :undoc-members:
    :show-inheritance:
@@ -41,7 +41,7 @@ Data
 Methods
 -------
 
-.. automodule:: sphinxcontrib_django2.docstrings.methods
+.. automodule:: sphinxcontrib_django.docstrings.methods
    :members:
    :undoc-members:
    :show-inheritance:
@@ -49,7 +49,7 @@ Methods
 Patches
 -------
 
-.. automodule:: sphinxcontrib_django2.docstrings.patches
+.. automodule:: sphinxcontrib_django.docstrings.patches
    :members:
    :undoc-members:
    :show-inheritance:
@@ -57,7 +57,7 @@ Patches
 Config
 ------
 
-.. automodule:: sphinxcontrib_django2.docstrings.config
+.. automodule:: sphinxcontrib_django.docstrings.config
    :members:
    :undoc-members:
    :show-inheritance:

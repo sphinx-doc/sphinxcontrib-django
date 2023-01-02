@@ -1,30 +1,30 @@
-.. image:: https://github.com/timoludwig/sphinxcontrib-django2/workflows/Tests/badge.svg
+.. image:: https://github.com/edoburu/sphinxcontrib-django/workflows/Tests/badge.svg
     :alt: GitHub Workflow Status
-    :target: https://github.com/timoludwig/sphinxcontrib-django2/actions?query=workflow%3ATests
-.. image:: https://img.shields.io/pypi/v/sphinxcontrib-django2.svg
+    :target: https://github.com/edoburu/sphinxcontrib-django/actions?query=workflow%3ATests
+.. image:: https://img.shields.io/pypi/v/sphinxcontrib-django.svg
     :alt: PyPi
-    :target: https://pypi.org/project/sphinxcontrib-django2/
-.. image:: https://codecov.io/gh/timoludwig/sphinxcontrib-django2/branch/develop/graph/badge.svg
+    :target: https://pypi.org/project/sphinxcontrib-django/
+.. image:: https://codecov.io/gh/edoburu/sphinxcontrib-django/branch/main/graph/badge.svg
     :alt: Code coverage
-    :target: https://codecov.io/gh/timoludwig/sphinxcontrib-django2
+    :target: https://codecov.io/gh/edoburu/sphinxcontrib-django
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :alt: Black Code Style
     :target: https://github.com/psf/black
-.. image:: https://img.shields.io/github/license/timoludwig/sphinxcontrib-django2
+.. image:: https://img.shields.io/github/license/edoburu/sphinxcontrib-django
     :alt: GitHub license
-    :target: https://github.com/timoludwig/sphinxcontrib-django2/blob/develop/LICENSE
-.. image:: https://readthedocs.org/projects/sphinxcontrib-django2/badge/?version=latest
+    :target: https://github.com/edoburu/sphinxcontrib-django/blob/main/LICENSE
+.. image:: https://readthedocs.org/projects/sphinxcontrib-django/badge/?version=latest
     :alt: Documentation Status
-    :target: https://sphinxcontrib-django2.readthedocs.io/en/latest/?badge=latest
+    :target: https://sphinxcontrib-django.readthedocs.io/en/latest/?badge=latest
 
 |
 
-.. image:: https://raw.githubusercontent.com/timoludwig/sphinxcontrib-django2/main/docs/images/django-sphinx-logo-blue.png
+.. image:: https://raw.githubusercontent.com/edoburu/sphinxcontrib-django/main/docs/images/django-sphinx-logo-blue.png
     :width: 500
     :alt: logo
-    :target: https://pypi.org/project/sphinxcontrib-django2/
+    :target: https://pypi.org/project/sphinxcontrib-django/
 
-sphinxcontrib-django2
+sphinxcontrib-django
 =====================
 
 This is a sphinx extension which improves the documentation of Django apps.
@@ -46,10 +46,6 @@ Improvements for the output of Sphinx's autodoc for Django classes:
   ``:templatetag:``, ``:templatefilter:``, ``:fieldlookup:``) and Sphinx (``:event:``,
   ``:confval:``)
 
-This is a fork of `sphinxcontrib-django`_, which seems to be no longer maintained.
-
-.. _sphinxcontrib-django: https://github.com/edoburu/sphinxcontrib-django
-
 
 Installation
 ------------
@@ -58,7 +54,7 @@ Install the package via pip:
 
 .. code-block:: bash
 
-    pip install sphinxcontrib-django2
+    pip install sphinxcontrib-django
 
 
 Configuration
@@ -71,9 +67,9 @@ Add the following to your Sphinx config file ``conf.py``:
     # Add source directory to sys.path
     sys.path.insert(0, os.path.abspath("../src"))
 
-    # Add sphinxcontrib_django2 to installed extensions
+    # Add sphinxcontrib_django to installed extensions
     extensions = [
-        "sphinxcontrib_django2",
+        "sphinxcontrib_django",
     ]
 
     # Configure the path to the Django settings module
@@ -137,4 +133,4 @@ Build the documentation with:
     cd docs
     make html
 
-The documentation is automatically deployed to `Read the Docs <https://sphinxcontrib-django2.rtfd.io>`_.
+The documentation is automatically deployed to `Read the Docs <https://sphinxcontrib-django.rtfd.io>`_.
