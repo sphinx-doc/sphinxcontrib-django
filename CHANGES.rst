@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 2.2 (2023-03-01)
+------------------------
 
 * [ `#35 <https://github.com/edoburu/sphinxcontrib-django/issues/35>`_ ] Fix interference with other ``autodoc-skip-member`` signal handlers
 
