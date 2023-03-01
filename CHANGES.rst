@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 2.1 (2023-03-01)
+------------------------
 
 * [ `#32 <https://github.com/edoburu/sphinxcontrib-django/issues/32>`_ ] Fix rendering of nested directives in model parameter documentation
 
