@@ -26,6 +26,10 @@ def test_model_field(app, do_autodoc):
         "",
         "   Docstring of char field",
         "",
+        "   .. warning::",
+        "",
+        "       Inline directives should be preserved.",
+        "",
     ]
 
 
@@ -161,6 +165,10 @@ def test_manytomany_field(app, do_autodoc):
         ),
         "",
         "   Docstring of many to many field",
+        "",
+        "   .. note::",
+        "",
+        "       This syntax is also supported.",
         "",
     ]
 

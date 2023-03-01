@@ -32,10 +32,20 @@ class SimpleModel(models.Model):
         "ChildModelA", related_name="simple_model", on_delete=models.CASCADE
     )
 
-    #: Docstring of many to many field
     childrenB = models.ManyToManyField("ChildModelB", related_name="simple_models")
+    """
+    Docstring of many to many field
+
+    .. note::
+
+        This syntax is also supported.
+    """
 
     #: Docstring of char field
+    #:
+    #: .. warning::
+    #:
+    #:     Inline directives should be preserved.
     dummy_field = models.CharField(
         max_length=3,
         help_text="This should help you",

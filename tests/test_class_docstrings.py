@@ -12,37 +12,51 @@ def test_simple_model(app, do_autodoc):
         "",
         "   :param id: Primary key: ID",
         "   :type id: ~django.db.models.AutoField",
-        (
-            "   :param dummy_field: Very verbose name of dummy field. This should help"
-            " you. Docstring of char field"
-        ),
+        "   :param dummy_field: Very verbose name of dummy field. This should help you",
+        "",
+        "                       Docstring of char field",
+        "",
+        "                       .. warning::",
+        "",
+        "                           Inline directives should be preserved.",
+        "",
         "   :type dummy_field: ~django.db.models.CharField",
         "",
         "   Relationship fields:",
         "",
         (
             "   :param file: File (related name:"
-            " :attr:`~dummy_django_app.models.FileModel.simple_models`). Docstring of"
-            " foreign key"
+            " :attr:`~dummy_django_app.models.FileModel.simple_models`)"
         ),
+        "",
+        "                Docstring of foreign key",
+        "",
         (
             "   :type file: :class:`~django.db.models.ForeignKey` to"
             " :class:`~dummy_django_app.models.FileModel`"
         ),
         (
             "   :param childA: ChildA (related name:"
-            " :attr:`~dummy_django_app.models.ChildModelA.simple_model`). Docstring of"
-            " one to one field"
+            " :attr:`~dummy_django_app.models.ChildModelA.simple_model`)"
         ),
+        "",
+        "                  Docstring of one to one field",
+        "",
         (
             "   :type childA: :class:`~django.db.models.OneToOneField` to"
             " :class:`~dummy_django_app.models.ChildModelA`"
         ),
         (
             "   :param childrenB: ChildrenB (related name:"
-            " :attr:`~dummy_django_app.models.ChildModelB.simple_models`). Docstring of"
-            " many to many field"
+            " :attr:`~dummy_django_app.models.ChildModelB.simple_models`)"
         ),
+        "",
+        "                     Docstring of many to many field",
+        "",
+        "                     .. note::",
+        "",
+        "                         This syntax is also supported.",
+        "",
         (
             "   :type childrenB: :class:`~django.db.models.ManyToManyField` to"
             " :class:`~dummy_django_app.models.ChildModelB`"
@@ -85,37 +99,51 @@ def test_database_table(app, do_autodoc):
         "",
         "   :param id: Primary key: ID",
         "   :type id: ~django.db.models.AutoField",
-        (
-            "   :param dummy_field: Very verbose name of dummy field. This should help"
-            " you. Docstring of char field"
-        ),
+        "   :param dummy_field: Very verbose name of dummy field. This should help you",
+        "",
+        "                       Docstring of char field",
+        "",
+        "                       .. warning::",
+        "",
+        "                           Inline directives should be preserved.",
+        "",
         "   :type dummy_field: ~django.db.models.CharField",
         "",
         "   Relationship fields:",
         "",
         (
             "   :param file: File (related name:"
-            " :attr:`~dummy_django_app.models.FileModel.simple_models`). Docstring of"
-            " foreign key"
+            " :attr:`~dummy_django_app.models.FileModel.simple_models`)"
         ),
+        "",
+        "                Docstring of foreign key",
+        "",
         (
             "   :type file: :class:`~django.db.models.ForeignKey` to"
             " :class:`~dummy_django_app.models.FileModel`"
         ),
         (
             "   :param childA: ChildA (related name:"
-            " :attr:`~dummy_django_app.models.ChildModelA.simple_model`). Docstring of"
-            " one to one field"
+            " :attr:`~dummy_django_app.models.ChildModelA.simple_model`)"
         ),
+        "",
+        "                  Docstring of one to one field",
+        "",
         (
             "   :type childA: :class:`~django.db.models.OneToOneField` to"
             " :class:`~dummy_django_app.models.ChildModelA`"
         ),
         (
             "   :param childrenB: ChildrenB (related name:"
-            " :attr:`~dummy_django_app.models.ChildModelB.simple_models`). Docstring of"
-            " many to many field"
+            " :attr:`~dummy_django_app.models.ChildModelB.simple_models`)"
         ),
+        "",
+        "                     Docstring of many to many field",
+        "",
+        "                     .. note::",
+        "",
+        "                         This syntax is also supported.",
+        "",
         (
             "   :type childrenB: :class:`~django.db.models.ManyToManyField` to"
             " :class:`~dummy_django_app.models.ChildModelB`"
