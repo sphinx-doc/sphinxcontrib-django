@@ -144,7 +144,7 @@ def autodoc_skip(app, what, name, obj, skip, options):
     if name in INCLUDE_MEMBERS:
         return False
 
-    return skip
+    return None
 
 
 def improve_docstring(app, what, name, obj, options, lines):
