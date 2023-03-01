@@ -15,7 +15,7 @@ def test_model_field(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.SimpleModel.dummy_field"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: SimpleModel.dummy_field",
         "   :module: dummy_django_app.models",
@@ -33,7 +33,7 @@ def test_model_field(app, do_autodoc):
 def test_foreignkey(app, do_autodoc):
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: SimpleModel.file",
         "   :module: dummy_django_app.models",
@@ -52,7 +52,7 @@ def test_foreignkey(app, do_autodoc):
 def test_foreignkey_id(app, do_autodoc):
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file_id")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: SimpleModel.file_id",
         "   :module: dummy_django_app.models",
@@ -66,7 +66,7 @@ def test_foreignkey_id(app, do_autodoc):
 def test_foreignkey_string(app, do_autodoc):
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: SimpleModel.file",
         "   :module: dummy_django_app.models",
@@ -87,7 +87,7 @@ def test_foreignkey_string_abstract_model(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.AbstractModel.simple_model"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: AbstractModel.simple_model",
         "   :module: dummy_django_app.models",
@@ -106,7 +106,7 @@ def test_reverse_foreignkey(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.FileModel.simple_models"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: FileModel.simple_models",
         "   :module: dummy_django_app.models",
@@ -126,7 +126,7 @@ def test_manytomany_field(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.SimpleModel.childrenB"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: SimpleModel.childrenB",
         "   :module: dummy_django_app.models",
@@ -148,7 +148,7 @@ def test_reverse_manytomany_field(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.ChildModelB.simple_models"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: ChildModelB.simple_models",
         "   :module: dummy_django_app.models",
@@ -168,7 +168,7 @@ def test_reverse_onetoone_field(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.ChildModelA.simple_model"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: ChildModelA.simple_model",
         "   :module: dummy_django_app.models",
@@ -188,7 +188,7 @@ def test_generic_foreign_key(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.TaggedItem.content_object"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: TaggedItem.content_object",
         "   :module: dummy_django_app.models",
@@ -208,7 +208,7 @@ def test_model_manager_fields(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.SimpleModel.custom_objects"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: SimpleModel.custom_objects",
         "   :module: dummy_django_app.models",
@@ -226,7 +226,7 @@ def test_model_manager_fields(app, do_autodoc):
 def test_file_field(app, do_autodoc):
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.FileModel.upload")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: FileModel.upload",
         "   :module: dummy_django_app.models",
@@ -244,7 +244,7 @@ def test_choice_field(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_below"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: ChoiceModel.choice_limit_below",
         "   :module: dummy_django_app.models",
@@ -274,7 +274,7 @@ def test_choice_field_limit_exact(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_exact"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: ChoiceModel.choice_limit_exact",
         "   :module: dummy_django_app.models",
@@ -306,7 +306,7 @@ def test_choice_field_limit_above(app, do_autodoc):
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_above"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:attribute:: ChoiceModel.choice_limit_above",
         "   :module: dummy_django_app.models",
@@ -340,7 +340,7 @@ if PHONENUMBER:
             app, "attribute", "dummy_django_app.models.PhoneNumberModel.phone_number"
         )
         print(actual)
-        assert actual == [
+        assert list(actual) == [
             "",
             ".. py:attribute:: PhoneNumberModel.phone_number",
             "   :module: dummy_django_app.models",

@@ -7,7 +7,7 @@ def test_model_method_display(app, do_autodoc):
         app, "method", "dummy_django_app.models.SimpleModel.get_dummy_field_display"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:method:: SimpleModel.get_dummy_field_display()",
         "   :module: dummy_django_app.models",
@@ -24,7 +24,7 @@ def test_model_method_get_next_by(app, do_autodoc):
         app, "method", "dummy_django_app.models.SimpleModel.get_next_by_dummy_field"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:method:: SimpleModel.get_next_by_dummy_field()",
         "   :module: dummy_django_app.models",
@@ -41,7 +41,7 @@ def test_model_method_get_previous_by(app, do_autodoc):
         app, "method", "dummy_django_app.models.SimpleModel.get_previous_by_dummy_field"
     )
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:method:: SimpleModel.get_previous_by_dummy_field()",
         "   :module: dummy_django_app.models",

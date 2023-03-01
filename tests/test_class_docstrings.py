@@ -5,7 +5,7 @@ import pytest
 def test_simple_model(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.SimpleModel")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:class:: SimpleModel(id, file, childA, dummy_field)",
         "   :module: dummy_django_app.models",
@@ -54,7 +54,7 @@ def test_simple_model(app, do_autodoc):
 def test_database_table(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.SimpleModel")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:class:: SimpleModel(id, file, childA, dummy_field)",
         "   :module: dummy_django_app.models",
@@ -103,7 +103,7 @@ def test_database_table(app, do_autodoc):
 def test_abstract_model(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.AbstractModel")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:class:: AbstractModel(*args, **kwargs)",
         "   :module: dummy_django_app.models",
@@ -128,7 +128,7 @@ def test_abstract_model(app, do_autodoc):
 def test_file_model(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.FileModel")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:class:: FileModel(id, upload)",
         "   :module: dummy_django_app.models",
@@ -152,7 +152,7 @@ def test_file_model(app, do_autodoc):
 def test_tagged_item(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.TaggedItem")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:class:: TaggedItem(id, tag, content_type, object_id)",
         "   :module: dummy_django_app.models",
@@ -182,7 +182,7 @@ def test_tagged_item(app, do_autodoc):
 def test_form(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.forms.SimpleForm")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:class:: SimpleForm(*args, **kwargs)",
         "   :module: dummy_django_app.forms",

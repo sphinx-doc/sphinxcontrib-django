@@ -52,7 +52,7 @@
             "django-phonenumber-field[phonenumbers]",
             "psycopg2-binary",
         ]
-        test = ["coverage", "pytest", "requests-mock"]
+        test = ["coverage", "pytest", "pytest-icdiff", "requests-mock"]
 
 [tool.setuptools.dynamic]
     version = { attr = "sphinxcontrib_django.__version__" }
@@ -68,7 +68,7 @@
     source       = ["sphinxcontrib_django"]
 
 [tool.pytest.ini_options]
-    addopts    = "-ra -q"
+    addopts    = "-ra -vv --color=yes"
     minversion = "6.0"
     testpaths  = ["tests"]
 
