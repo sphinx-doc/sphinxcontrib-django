@@ -38,10 +38,15 @@ def test_foreignkey(app, do_autodoc):
         ".. py:attribute:: SimpleModel.file",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: :class:`~django.db.models.ForeignKey` to "
-        ":class:`~dummy_django_app.models.FileModel`",
+        (
+            "   Type: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~dummy_django_app.models.FileModel`"
+        ),
         "",
-        "   File (related name: :attr:`~dummy_django_app.models.FileModel.simple_models`)",
+        (
+            "   File (related name:"
+            " :attr:`~dummy_django_app.models.FileModel.simple_models`)"
+        ),
         "",
         "   Docstring of foreign key",
         "",
@@ -57,7 +62,10 @@ def test_foreignkey_id(app, do_autodoc):
         ".. py:attribute:: SimpleModel.file_id",
         "   :module: dummy_django_app.models",
         "",
-        "   Internal field, use :class:`~dummy_django_app.models.SimpleModel.file` instead.",
+        (
+            "   Internal field, use :class:`~dummy_django_app.models.SimpleModel.file`"
+            " instead."
+        ),
         "",
     ]
 
@@ -71,10 +79,15 @@ def test_foreignkey_string(app, do_autodoc):
         ".. py:attribute:: SimpleModel.file",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: :class:`~django.db.models.ForeignKey` to "
-        ":class:`~dummy_django_app.models.FileModel`",
+        (
+            "   Type: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~dummy_django_app.models.FileModel`"
+        ),
         "",
-        "   File (related name: :attr:`~dummy_django_app.models.FileModel.simple_models`)",
+        (
+            "   File (related name:"
+            " :attr:`~dummy_django_app.models.FileModel.simple_models`)"
+        ),
         "",
         "   Docstring of foreign key",
         "",
@@ -92,8 +105,10 @@ def test_foreignkey_string_abstract_model(app, do_autodoc):
         ".. py:attribute:: AbstractModel.simple_model",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: :class:`~django.db.models.ForeignKey` to "
-        ":class:`~dummy_django_app.models.SimpleModel`",
+        (
+            "   Type: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~dummy_django_app.models.SimpleModel`"
+        ),
         "",
         "   Simple model",
         "",
@@ -111,11 +126,15 @@ def test_reverse_foreignkey(app, do_autodoc):
         ".. py:attribute:: FileModel.simple_models",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: Reverse :class:`~django.db.models.ForeignKey` from "
-        ":class:`~dummy_django_app.models.SimpleModel`",
+        (
+            "   Type: Reverse :class:`~django.db.models.ForeignKey` from"
+            " :class:`~dummy_django_app.models.SimpleModel`"
+        ),
         "",
-        "   All simple models of this file model "
-        "(related name of :attr:`~dummy_django_app.models.SimpleModel.file`)",
+        (
+            "   All simple models of this file model (related name of"
+            " :attr:`~dummy_django_app.models.SimpleModel.file`)"
+        ),
         "",
     ]
 
@@ -131,11 +150,15 @@ def test_manytomany_field(app, do_autodoc):
         ".. py:attribute:: SimpleModel.childrenB",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: :class:`~django.db.models.ManyToManyField` to "
-        ":class:`~dummy_django_app.models.ChildModelB`",
+        (
+            "   Type: :class:`~django.db.models.ManyToManyField` to"
+            " :class:`~dummy_django_app.models.ChildModelB`"
+        ),
         "",
-        "   ChildrenB "
-        "(related name: :attr:`~dummy_django_app.models.ChildModelB.simple_models`)",
+        (
+            "   ChildrenB (related name:"
+            " :attr:`~dummy_django_app.models.ChildModelB.simple_models`)"
+        ),
         "",
         "   Docstring of many to many field",
         "",
@@ -153,11 +176,15 @@ def test_reverse_manytomany_field(app, do_autodoc):
         ".. py:attribute:: ChildModelB.simple_models",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: Reverse :class:`~django.db.models.ManyToManyField` from "
-        ":class:`~dummy_django_app.models.SimpleModel`",
+        (
+            "   Type: Reverse :class:`~django.db.models.ManyToManyField` from"
+            " :class:`~dummy_django_app.models.SimpleModel`"
+        ),
         "",
-        "   All simple models of this child model b "
-        "(related name of :attr:`~dummy_django_app.models.SimpleModel.childrenB`)",
+        (
+            "   All simple models of this child model b (related name of"
+            " :attr:`~dummy_django_app.models.SimpleModel.childrenB`)"
+        ),
         "",
     ]
 
@@ -173,11 +200,15 @@ def test_reverse_onetoone_field(app, do_autodoc):
         ".. py:attribute:: ChildModelA.simple_model",
         "   :module: dummy_django_app.models",
         "",
-        "   Type: Reverse :class:`~django.db.models.OneToOneField` from "
-        ":class:`~dummy_django_app.models.SimpleModel`",
+        (
+            "   Type: Reverse :class:`~django.db.models.OneToOneField` from"
+            " :class:`~dummy_django_app.models.SimpleModel`"
+        ),
         "",
-        "   The simple model of this child model a "
-        "(related name of :attr:`~dummy_django_app.models.SimpleModel.childA`)",
+        (
+            "   The simple model of this child model a (related name of"
+            " :attr:`~dummy_django_app.models.SimpleModel.childA`)"
+        ),
         "",
     ]
 

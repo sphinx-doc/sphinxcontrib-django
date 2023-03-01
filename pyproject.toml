@@ -62,6 +62,7 @@
 
 [tool.black]
     skip-magic-trailing-comma = true
+    preview = true
 
 [tool.coverage.run]
     command_line = "-m pytest"

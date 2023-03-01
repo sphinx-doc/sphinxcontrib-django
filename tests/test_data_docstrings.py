@@ -15,12 +15,18 @@ def test_data(app, do_autodoc):
         "",
         ".. py:data:: INSTALLED_APPS",
         "   :module: dummy_django_app.settings",
-        "   :value: ['django.contrib.auth', 'django.contrib.contenttypes', 'dummy_django_app']",
+        (
+            "   :value: ['django.contrib.auth', 'django.contrib.contenttypes',"
+            " 'dummy_django_app']"
+        ),
         "",
         "   These are the installed apps",
         "",
         "   .. code-block:: JavaScript",
         "",
-        "       ['django.contrib.auth', 'django.contrib.contenttypes', 'dummy_django_app']\n",
+        (
+            "       ['django.contrib.auth', 'django.contrib.contenttypes',"
+            " 'dummy_django_app']\n"
+        ),
         "",
     ]

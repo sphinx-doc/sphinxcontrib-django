@@ -98,16 +98,16 @@ def setup_django(app, config):
     """
     if not config.django_settings:
         raise ConfigError(
-            "Please specify your Django settings in the configuration 'django_settings' in your "
-            "conf.py"
+            "Please specify your Django settings in the configuration 'django_settings'"
+            " in your conf.py"
         )
     try:
         importlib.import_module(config.django_settings)
     except ModuleNotFoundError as e:
         raise ConfigError(
-            "The module you specified in the configuration 'django_settings' in your conf.py "
-            "cannot be imported. Make sure the module path is correct and the source directoy is "
-            "added to sys.path."
+            "The module you specified in the configuration 'django_settings' in your"
+            " conf.py cannot be imported. Make sure the module path is correct and the"
+            " source directoy is added to sys.path."
         ) from e
     os.environ["DJANGO_SETTINGS_MODULE"] = config.django_settings
     django.setup()
