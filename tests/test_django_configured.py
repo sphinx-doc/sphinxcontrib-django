@@ -5,7 +5,7 @@ import pytest
 def test_django_configured(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.MonkeyPatched")
     print(actual)
-    assert actual == [
+    assert list(actual) == [
         "",
         ".. py:class:: MonkeyPatched(*args, **kwargs)",
         "   :module: dummy_django_app.models",

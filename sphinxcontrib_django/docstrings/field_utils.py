@@ -28,14 +28,15 @@ def get_field_type(field, include_role=True):
             # This happens with foreign keys of abstract models
             to = get_model_from_string(field, to)
         return (
-            f":class:`~{type(field).__module__}.{type(field).__name__}` to "
-            f":class:`~{to.__module__}.{to.__name__}`"
+            f":class:`~{type(field).__module__}.{type(field).__name__}` to"
+            f" :class:`~{to.__module__}.{to.__name__}`"
         )
     elif isinstance(field, models.fields.reverse_related.ForeignObjectRel):
         to = field.remote_field.model
         return (
-            f"Reverse :class:`~{type(field.remote_field).__module__}."
-            f"{type(field.remote_field).__name__}` from :class:`~{to.__module__}.{to.__name__}`"
+            "Reverse"
+            f" :class:`~{type(field.remote_field).__module__}.{type(field.remote_field).__name__}`"
+            f" from :class:`~{to.__module__}.{to.__name__}`"
         )
     else:
         if include_role:
@@ -92,9 +93,9 @@ def get_field_verbose_name(field):
     ):
         # GenericForeignKey does not inherit from django.db.models.Field and has no verbose_name
         return (
-            f"Generic foreign key to the :class:`~django.contrib.contenttypes.models.ContentType` "
-            f"specified in "
-            f":attr:`~{field.model.__module__}.{field.model.__name__}.{field.ct_field}`"
+            "Generic foreign key to the"
+            " :class:`~django.contrib.contenttypes.models.ContentType` specified in"
+            f" :attr:`~{field.model.__module__}.{field.model.__name__}.{field.ct_field}`"
         )
     else:
         # This means the field is either a normal field or a forward related field
@@ -131,8 +132,8 @@ def get_field_verbose_name(field):
         # Link to the related field if it's not an abstract model
         if not field.model._meta.abstract:
             verbose_name += (
-                " (related name: "
-                f":attr:`~{to.__module__}.{to.__name__}.{related_name}`)"
+                " (related name:"
+                f" :attr:`~{to.__module__}.{to.__name__}.{related_name}`)"
             )
     return verbose_name
 

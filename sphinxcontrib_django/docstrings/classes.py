@@ -86,7 +86,7 @@ def improve_model_docstring(app, model, lines):
     analyzer = ModuleAnalyzer.for_module(model.__module__)
     analyzer.analyze()
     field_docs = {
-        field_name: ". " + " ".join(field_docstring).strip()
+        field_name: field_docstring
         for (_, field_name), field_docstring in analyzer.attr_docs.items()
     }
 
@@ -131,8 +131,15 @@ def add_model_parameters(fields, lines, field_docs):
     """
     for field in fields:
         # Add docstrings if they are found
-        docstring = field_docs.get(field.name, "")
-        lines.append(f":param {field.name}: {get_field_verbose_name(field)}{docstring}")
+        docstring_lines = field_docs.get(field.name, [])
+        # Add param doc line
+        param = f":param {field.name}: "
+        lines.append(param + get_field_verbose_name(field))
+        if docstring_lines:
+            # Separate from verbose name
+            lines.append("")
+        # Add and indent existing docstring lines
+        lines.extend([(" " * len(param)) + line for line in docstring_lines])
 
         # Add type
         lines.append(f":type {field.name}: {get_field_type(field, include_role=False)}")

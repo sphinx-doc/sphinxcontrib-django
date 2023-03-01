@@ -29,21 +29,23 @@ def improve_method_docstring(name, lines):
             if match is not None:
                 # Django get_..._display method
                 lines.append(
-                    f"Shows the label of the :attr:`{match.group('field')}`. "
-                    f"See :meth:`~django.db.models.Model.get_FOO_display` for more information."
+                    f"Shows the label of the :attr:`{match.group('field')}`. See"
+                    " :meth:`~django.db.models.Model.get_FOO_display` for more"
+                    " information."
                 )
         elif ".get_next_by_" in name:
             match = RE_GET_NEXT_BY.search(name)
             if match is not None:
                 lines.append(
-                    f"Finds next instance based on :attr:`{match.group('field')}`. "
-                    f"See :meth:`~django.db.models.Model.get_next_by_FOO` for more information."
+                    f"Finds next instance based on :attr:`{match.group('field')}`. See"
+                    " :meth:`~django.db.models.Model.get_next_by_FOO` for more"
+                    " information."
                 )
         elif ".get_previous_by_" in name:
             match = RE_GET_PREVIOUS_BY.search(name)
             if match is not None:
                 lines.append(
-                    f"Finds previous instance based on :attr:`{match.group('field')}`. "
-                    f"See :meth:`~django.db.models.Model.get_previous_by_FOO` for more "
-                    f"information."
+                    f"Finds previous instance based on :attr:`{match.group('field')}`."
+                    " See :meth:`~django.db.models.Model.get_previous_by_FOO` for more"
+                    " information."
                 )
