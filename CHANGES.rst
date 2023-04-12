@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 2.3 (2023-04-12)
+------------------------
 
 * Add support for Django 4.2
 * Drop support for Django 4.0
