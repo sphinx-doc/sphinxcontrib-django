@@ -11,25 +11,25 @@
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Django :: 3.2",
-        "Framework :: Django :: 4.0",
         "Framework :: Django :: 4.1",
+        "Framework :: Django :: 4.2",
         "Framework :: Django",
         "Framework :: Sphinx :: Extension",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Software Development :: Libraries :: Application Frameworks",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ]
-    dependencies = ["Django>=2.2", "Sphinx>=0.5", "pprintpp"]
+    dependencies = ["Django>=3.2", "Sphinx>=0.5", "pprintpp"]
     description = "Improve the Sphinx autodoc for Django classes."
     dynamic = ["version"]
     keywords = ["django", "docstrings", "extension", "sphinx"]
