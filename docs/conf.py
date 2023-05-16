@@ -45,7 +45,7 @@ exclude_patterns = ["_build"]
 html_theme = "sphinx_rtd_theme"
 # The logos shown in the menu bar
 html_logo = "images/django-sphinx-logo-white.png"
-# The facivon of the html doc files
+# The favicon of the html doc files
 html_favicon = "images/favicon.svg"
 # Do not include links to the documentation source (.rst files) in build
 html_show_sourcelink = False
