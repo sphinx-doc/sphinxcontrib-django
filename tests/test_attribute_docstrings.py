@@ -371,6 +371,64 @@ def test_choice_field_limit_above(app, do_autodoc):
     ]
 
 
+@pytest.mark.sphinx(
+    "html", testroot="docstrings", confoverrides={"django_choices_to_show": 15}
+)
+def test_choice_field_custom_limit(app, do_autodoc):
+    actual = do_autodoc(
+        app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_above"
+    )
+    print(actual)
+    assert list(actual) == [
+        "",
+        ".. py:attribute:: ChoiceModel.choice_limit_above",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: :class:`~django.db.models.IntegerField`",
+        "",
+        "   Choice limit above",
+        "",
+        "   Choices:",
+        "",
+        "   * ``0``",
+        "   * ``1``",
+        "   * ``2``",
+        "   * ``3``",
+        "   * ``4``",
+        "   * ``5``",
+        "   * ``6``",
+        "   * ``7``",
+        "   * ``8``",
+        "   * ``9``",
+        "   * ``10``",
+        "   * ``11``",
+        "",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_choice_field_empty(app, do_autodoc):
+    actual = do_autodoc(
+        app, "attribute", "dummy_django_app.models.ChoiceModel.choice_with_empty"
+    )
+    print(actual)
+    assert list(actual) == [
+        "",
+        ".. py:attribute:: ChoiceModel.choice_with_empty",
+        "   :module: dummy_django_app.models",
+        "",
+        "   Type: :class:`~django.db.models.CharField`",
+        "",
+        "   Choice with empty",
+        "",
+        "   Choices:",
+        "",
+        "   * ``''`` (Empty string)",
+        "   * ``Something``",
+        "",
+    ]
+
+
 if PHONENUMBER:
 
     @pytest.mark.sphinx("html", testroot="docstrings")
