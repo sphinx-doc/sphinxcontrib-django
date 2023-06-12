@@ -46,8 +46,7 @@ def improve_model_docstring(app, model, lines):
 
     # Add database table name
     if app.config.django_show_db_tables:
-        lines.insert(0, "")
-        lines.insert(0, f"**Database table:** ``{model._meta.db_table}``")
+        add_db_table_name(app, model, lines)
 
     # Get predefined params to exclude them from the automatically inserted params
     param_offset = len(":param ")
@@ -114,6 +113,27 @@ def improve_model_docstring(app, model, lines):
         and not any("inheritance-diagram::" in line for line in lines)
     ):
         lines.append(".. inheritance-diagram::")  # pragma: no cover
+
+
+def add_db_table_name(app, model, lines):
+    """
+    Format and add table name by extension configuration.
+
+    :param app: The Sphinx application object
+    :type app: ~sphinx.application.Sphinx
+
+    :param model: The instance of the model to document
+    :type model: ~django.db.models.Model
+
+    :param lines: The docstring lines
+    :type lines: list [ str ]
+    """
+    if model._meta.abstract and not app.config.django_show_db_tables_abstract:
+        return
+
+    table_name = None if model._meta.abstract else model._meta.db_table
+    lines.insert(0, "")
+    lines.insert(0, f"**Database table:** ``{table_name}``")
 
 
 def add_model_parameters(fields, lines, field_docs):

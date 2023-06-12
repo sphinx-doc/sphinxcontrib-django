@@ -80,7 +80,9 @@ Optionally, you can include the table names of your models in their docstrings w
 .. code-block:: python
 
     # Include the database table names of Django models
-    django_show_db_tables = True
+    django_show_db_tables = True                # Boolean, default: False
+    # Add abstract database tables names (only takes effect if django_show_db_tables is True)
+    django_show_db_tables_abstract = True       # Boolean, default: False
 
 
 Advanced Usage

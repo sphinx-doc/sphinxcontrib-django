@@ -202,6 +202,79 @@ def test_abstract_model(app, do_autodoc):
     ]
 
 
+@pytest.mark.sphinx(
+    "html", testroot="docstrings", confoverrides={"django_show_db_tables": True}
+)
+def test_abstract_model_with_tables_names_and_ignore_abstract(app, do_autodoc):
+    actual = do_autodoc(app, "class", "dummy_django_app.models.AbstractModel")
+    print(actual)
+    assert list(actual) == [
+        "",
+        ".. py:class:: AbstractModel(*args, **kwargs)",
+        "   :module: dummy_django_app.models",
+        "",
+        "",
+        "   Relationship fields:",
+        "",
+        "   :param simple_model: Simple model",
+        (
+            "   :type simple_model: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~dummy_django_app.models.SimpleModel`"
+        ),
+        "   :param user: User",
+        (
+            "   :type user: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~django.contrib.auth.models.User`"
+        ),
+        "   :param foreignkey_self: Foreignkey self",
+        (
+            "   :type foreignkey_self: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~dummy_django_app.models.AbstractModel`"
+        ),
+        "",
+    ]
+
+
+@pytest.mark.sphinx(
+    "html",
+    testroot="docstrings",
+    confoverrides={
+        "django_show_db_tables": True,
+        "django_show_db_tables_abstract": True,
+    },
+)
+def test_abstract_model_with_tables_names_and_abstract_show(app, do_autodoc):
+    actual = do_autodoc(app, "class", "dummy_django_app.models.AbstractModel")
+    print(actual)
+    assert list(actual) == [
+        "",
+        ".. py:class:: AbstractModel(*args, **kwargs)",
+        "   :module: dummy_django_app.models",
+        "",
+        "   **Database table:** ``None``",
+        "",
+        "",
+        "   Relationship fields:",
+        "",
+        "   :param simple_model: Simple model",
+        (
+            "   :type simple_model: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~dummy_django_app.models.SimpleModel`"
+        ),
+        "   :param user: User",
+        (
+            "   :type user: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~django.contrib.auth.models.User`"
+        ),
+        "   :param foreignkey_self: Foreignkey self",
+        (
+            "   :type foreignkey_self: :class:`~django.db.models.ForeignKey` to"
+            " :class:`~dummy_django_app.models.AbstractModel`"
+        ),
+        "",
+    ]
+
+
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_file_model(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.FileModel")
