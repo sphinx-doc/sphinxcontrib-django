@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+* [ `#39 <https://github.com/edoburu/sphinxcontrib-django/issues/39>`_ ] Fix table names of abstract models (`@insspb <https://github.com/insspb>`__)
+
+
 Version 2.3 (2023-04-12)
 ------------------------
 

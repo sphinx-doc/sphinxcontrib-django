@@ -59,8 +59,12 @@ def setup(app):
         "django_settings", os.environ.get("DJANGO_SETTINGS_MODULE"), True
     )
 
+    # Django models tables names configuration.
     # Set default of django_show_db_tables to False
     app.add_config_value("django_show_db_tables", False, True)
+    # Set default of django_show_db_tables_abstract to False
+    app.add_config_value("django_show_db_tables_abstract", False, True)
+
     # Setup Django after config is initialized
     app.connect("config-inited", setup_django)
 
