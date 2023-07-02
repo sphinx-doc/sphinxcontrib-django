@@ -23,7 +23,7 @@ from sphinx.errors import ConfigError
 from .. import __version__
 from .attributes import improve_attribute_docstring
 from .classes import improve_class_docstring
-from .config import EXCLUDE_MEMBERS, INCLUDE_MEMBERS
+from .config import CHOICES_LIMIT, EXCLUDE_MEMBERS, INCLUDE_MEMBERS
 from .data import improve_data_docstring
 from .methods import improve_method_docstring
 
@@ -64,7 +64,8 @@ def setup(app):
     app.add_config_value("django_show_db_tables", False, True)
     # Set default of django_show_db_tables_abstract to False
     app.add_config_value("django_show_db_tables_abstract", False, True)
-
+    # Integer amount of model field choices to show
+    app.add_config_value("django_choices_to_show", CHOICES_LIMIT, True)
     # Setup Django after config is initialized
     app.connect("config-inited", setup_django)
 
@@ -111,7 +112,7 @@ def setup_django(app, config):
         raise ConfigError(
             "The module you specified in the configuration 'django_settings' in your"
             " conf.py cannot be imported. Make sure the module path is correct and the"
-            " source directoy is added to sys.path."
+            " source directory is added to sys.path."
         ) from e
     os.environ["DJANGO_SETTINGS_MODULE"] = config.django_settings
     django.setup()
@@ -182,7 +183,7 @@ def improve_docstring(app, what, name, obj, options, lines):
     if what == "class":
         improve_class_docstring(app, obj, lines)
     elif what == "attribute":
-        improve_attribute_docstring(obj, name, lines)
+        improve_attribute_docstring(app, obj, name, lines)
     elif what == "method":
         improve_method_docstring(name, lines)
     elif what == "data":

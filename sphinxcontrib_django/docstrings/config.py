@@ -22,5 +22,6 @@ EXCLUDE_MEMBERS = {
     "polymorphic_super_sub_accessors_replaced",
 }
 
-#: How many choices should be shown for model fields
+#: How many choices should be shown for model fields by default,
+#: used as default for ``django_choices_to_show`` option
 CHOICES_LIMIT = 10

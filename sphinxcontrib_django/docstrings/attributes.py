@@ -9,7 +9,6 @@ from django.db.models.query_utils import DeferredAttribute
 from django.utils.module_loading import import_string
 from sphinx.util.docstrings import prepare_docstring
 
-from .config import CHOICES_LIMIT
 from .field_utils import get_field_type, get_field_verbose_name
 
 FIELD_DESCRIPTORS = (FileDescriptor, related_descriptors.ForwardManyToOneDescriptor)
@@ -23,11 +22,14 @@ except ImportError:
     PhoneNumberDescriptor = None
 
 
-def improve_attribute_docstring(attribute, name, lines):
+def improve_attribute_docstring(app, attribute, name, lines):
     """
     Improve the documentation of various model fields.
 
     This improves the navigation between related objects.
+
+    :param app: The Sphinx application object
+    :type app: ~sphinx.application.Sphinx
 
     :param attribute: The instance of the object to document
     :type attribute: object
@@ -56,21 +58,21 @@ def improve_attribute_docstring(attribute, name, lines):
                 f"Internal field, use :class:`~{cls_path}.{field.name}` instead."
             )
         else:
-            lines.extend(get_field_details(field))
+            lines.extend(get_field_details(app, field))
     elif isinstance(attribute, FIELD_DESCRIPTORS):
         # Display a reasonable output for forward descriptors (foreign key and one to one fields).
-        lines.extend(get_field_details(attribute.field))
+        lines.extend(get_field_details(app, attribute.field))
     elif isinstance(attribute, related_descriptors.ManyToManyDescriptor):
         # Check this case first since ManyToManyDescriptor inherits from ReverseManyToOneDescriptor
         # This descriptor is used for both forward and reverse relationships
         if attribute.reverse:
-            lines.extend(get_field_details(attribute.rel))
+            lines.extend(get_field_details(app, attribute.rel))
         else:
-            lines.extend(get_field_details(attribute.field))
+            lines.extend(get_field_details(app, attribute.field))
     elif isinstance(attribute, related_descriptors.ReverseManyToOneDescriptor):
-        lines.extend(get_field_details(attribute.rel))
+        lines.extend(get_field_details(app, attribute.rel))
     elif isinstance(attribute, related_descriptors.ReverseOneToOneDescriptor):
-        lines.extend(get_field_details(attribute.related))
+        lines.extend(get_field_details(app, attribute.related))
     elif isinstance(attribute, (models.Manager, ManagerDescriptor)):
         # Somehow the 'objects' manager doesn't pass through the docstrings.
         module, model_name, field_name = name.rsplit(".", 2)
@@ -92,10 +94,13 @@ def improve_attribute_docstring(attribute, name, lines):
             lines.extend(docstring_lines[:-1])
 
 
-def get_field_details(field):
+def get_field_details(app, field):
     """
     This function returns the detail docstring of a model field.
     It includes the field type and the verbose name of the field.
+
+    :param app: The Sphinx application object
+    :type app: ~sphinx.application.Sphinx
 
     :param field: The field
     :type field: ~django.db.models.Field
@@ -103,6 +108,8 @@ def get_field_details(field):
     :return: The field details as list of strings
     :rtype: list [ str ]
     """
+    choices_limit = app.config.django_choices_to_show
+
     field_details = [
         f"Type: {get_field_type(field)}",
         "",
@@ -111,13 +118,16 @@ def get_field_details(field):
     if hasattr(field, "choices") and field.choices:
         field_details.extend(["", "Choices:", ""])
         field_details.extend(
-            [f"* ``{key}``" for key, value in field.choices[:CHOICES_LIMIT]]
+            [
+                f"* ``{key}``" if key != "" else "* ``''`` (Empty string)"
+                for key, value in field.choices[:choices_limit]
+            ]
         )
         # Check if list has been truncated
-        if len(field.choices) > CHOICES_LIMIT:
+        if len(field.choices) > choices_limit:
             # If only one element has been truncated, just list it as well
-            if len(field.choices) == CHOICES_LIMIT + 1:
+            if len(field.choices) == choices_limit + 1:
                 field_details.append(f"* ``{field.choices[-1][0]}``")
             else:
-                field_details.append(f"* and {len(field.choices) - CHOICES_LIMIT} more")
+                field_details.append(f"* and {len(field.choices) - choices_limit} more")
     return field_details

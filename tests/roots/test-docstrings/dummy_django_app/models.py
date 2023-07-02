@@ -95,6 +95,9 @@ class ChoiceModel(models.Model):
     choice_limit_above = models.IntegerField(
         choices=[(i, i) for i in range(CHOICES_LIMIT + 2)]
     )
+    choice_with_empty = models.CharField(
+        choices=[("", "Empty"), ("Something", "Not empty")]
+    )
 
 
 class TaggedItem(models.Model):

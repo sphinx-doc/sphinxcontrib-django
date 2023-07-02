@@ -84,6 +84,12 @@ Optionally, you can include the table names of your models in their docstrings w
     # Add abstract database tables names (only takes effect if django_show_db_tables is True)
     django_show_db_tables_abstract = True       # Boolean, default: False
 
+Optionally, you can extend amount of displayed choices in model fields with them:
+
+.. code-block:: python
+
+    # Integer amount of model field choices to show, default 10
+    django_choices_to_show = 10
 
 Advanced Usage
 --------------
