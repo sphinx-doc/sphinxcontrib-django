@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 2.4 (2023-07-02)
+------------------------
 
 * [ `#39 <https://github.com/edoburu/sphinxcontrib-django/issues/39>`_ ] Fix table names of abstract models (`@insspb <https://github.com/insspb>`__)
 * [ `#41 <https://github.com/edoburu/sphinxcontrib-django/issues/41>`_ ] Fix rendering of iterable choices (`@insspb <https://github.com/insspb>`__)
