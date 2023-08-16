@@ -447,3 +447,28 @@ if PHONENUMBER:
             "   Phone number",
             "",
         ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_generic_relation_field(app, do_autodoc):
+    actual = do_autodoc(
+        app, "attribute", "dummy_django_app2.models.GenericRelationModel.relation_field"
+    )
+    print(actual)
+    assert list(actual) == [
+        "",
+        ".. py:attribute:: GenericRelationModel.relation_field",
+        "   :module: dummy_django_app2.models",
+        "",
+        (
+            "   Type: Reverse"
+            " :class:`~django.contrib.contenttypes.fields.GenericRelation` from"
+            " :class:`~dummy_django_app2.models.GenericRelationModel`"
+        ),
+        "",
+        (
+            "   All + of this tagged item (related name of"
+            " :attr:`~dummy_django_app2.models.GenericRelationModel.relation_field`)"
+        ),
+        "",
+    ]
