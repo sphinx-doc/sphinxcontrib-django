@@ -14,8 +14,11 @@ For example:
 * Fix the intersphinx mappings to the Django documentation
   (see :mod:`~sphinxcontrib_django.docstrings.patches`)
 """
+from __future__ import annotations
+
 import importlib
 import os
+from typing import TYPE_CHECKING
 
 import django
 from sphinx.errors import ConfigError
@@ -27,8 +30,13 @@ from .config import CHOICES_LIMIT, EXCLUDE_MEMBERS, INCLUDE_MEMBERS
 from .data import improve_data_docstring
 from .methods import improve_method_docstring
 
+if TYPE_CHECKING:
+    from sphinx.application import Sphinx
+    from sphinx.config import Config
+    from sphinx.ext.autodoc import Options
 
-def setup(app):
+
+def setup(app: Sphinx) -> dict:
     """
     Allow this package to be used as Sphinx extension.
 
@@ -43,7 +51,6 @@ def setup(app):
     :event:`config-inited` event.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
     """
     from .patches import patch_django_for_autodoc
 
@@ -86,7 +93,7 @@ def setup(app):
     }
 
 
-def setup_django(app, config):
+def setup_django(app: Sphinx, config: Config) -> None:
     """
     This function calls :func:`django.setup` so it doesn't have to be done in the app's
     ``conf.py``.
@@ -94,10 +101,8 @@ def setup_django(app, config):
     Called on the :event:`config-inited` event.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
 
     :param config: The Sphinx configuration
-    :type config: ~sphinx.config.Config
 
     :raises ~sphinx.errors.ConfigError: If setting ``django_settings`` is not set correctly
     """
@@ -121,7 +126,9 @@ def setup_django(app, config):
     app.emit("django-configured")
 
 
-def autodoc_skip(app, what, name, obj, skip, options):
+def autodoc_skip(
+    app: Sphinx, what: str, name: str, obj: object, options: Options, lines: list[str]
+) -> bool | None:
     """
     Hook to tell autodoc to include or exclude certain fields (see :event:`autodoc-skip-member`).
 
@@ -129,19 +136,10 @@ def autodoc_skip(app, what, name, obj, skip, options):
     so only the ``name`` can be used for referencing.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
-
     :param what: The parent type, ``class`` or ``module``
-    :type what: str
-
     :param name: The name of the child method/attribute.
-    :type name: str
-
     :param obj: The child value (e.g. a method, dict, or module reference)
-    :type obj: object
-
     :param options: The current autodoc settings.
-    :type options: dict
     """
     if name in EXCLUDE_MEMBERS:
         return True
@@ -152,33 +150,24 @@ def autodoc_skip(app, what, name, obj, skip, options):
     return None
 
 
-def improve_docstring(app, what, name, obj, options, lines):
+def improve_docstring(
+    app: Sphinx, what: str, name: str, obj: object, options: Options, lines: list[str]
+) -> list[str]:
     """
     Hook to improve the autodoc docstrings for Django models
     (see :event:`autodoc-process-docstring`).
 
     :param what: The type of the object which the docstring belongs to (one of ``module``,
                  ``class``, ``exception``, ``function``, ``method`` and ``attribute``)
-    :type what: str
-
     :param name: The fully qualified name of the object
-    :type name: str
-
     :param obj: The documented object
-    :type obj: object
-
     :param options: The options given to the directive: an object with attributes
                     ``inherited_members``, ``undoc_members``, ``show_inheritance`` and ``noindex``
                     that are ``True`` if the flag option of same name was given to the auto
                     directive
-    :type options: object
-
     :param lines: A list of strings – the lines of the processed docstring – that the event
                   handler can modify in place to change what Sphinx puts into the output.
-    :type lines: list [ str ]
-
     :return: The modified list of lines
-    :rtype: list [ str ]
     """
     if what == "class":
         improve_class_docstring(app, obj, lines)
