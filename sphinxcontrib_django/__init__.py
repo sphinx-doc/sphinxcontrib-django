@@ -6,12 +6,15 @@ from __future__ import annotations
 
 __version__ = "2.5"
 
-from sphinx.application import Sphinx
+from typing import TYPE_CHECKING
 
 from . import docstrings, roles
 
+if TYPE_CHECKING:
+    import sphinx
 
-def setup(app: Sphinx) -> dict:
+
+def setup(app: sphinx.application.Sphinx) -> dict:
     """
     Allow this module to be used as sphinx extension.
 

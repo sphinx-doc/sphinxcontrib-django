@@ -24,17 +24,19 @@ This module can also be used separately in ``conf.py``::
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
-from sphinx.application import Sphinx
-from sphinx.config import Config
 from sphinx.errors import ExtensionError
 
 from . import __version__
 
+if TYPE_CHECKING:
+    import sphinx
+
 logger = logging.getLogger(__name__)
 
 
-def setup(app: Sphinx) -> dict:
+def setup(app: sphinx.application.Sphinx) -> dict:
     """
     Allow this module to be used as Sphinx extension.
 
@@ -68,7 +70,9 @@ def setup(app: Sphinx) -> dict:
     }
 
 
-def add_default_intersphinx_mappings(app: Sphinx, config: Config) -> None:
+def add_default_intersphinx_mappings(
+    app: sphinx.application.Sphinx, config: sphinx.config.Config
+) -> None:
     """
     This function provides a default intersphinx mapping to the documentations of Python, Django
     and Sphinx if ``intersphinx_mapping`` is not given in ``conf.py``.

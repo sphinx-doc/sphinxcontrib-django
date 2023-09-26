@@ -31,12 +31,10 @@ from .data import improve_data_docstring
 from .methods import improve_method_docstring
 
 if TYPE_CHECKING:
-    from sphinx.application import Sphinx
-    from sphinx.config import Config
-    from sphinx.ext.autodoc import Options
+    import sphinx
 
 
-def setup(app: Sphinx) -> dict:
+def setup(app: sphinx.application.Sphinx) -> dict:
     """
     Allow this package to be used as Sphinx extension.
 
@@ -93,7 +91,7 @@ def setup(app: Sphinx) -> dict:
     }
 
 
-def setup_django(app: Sphinx, config: Config) -> None:
+def setup_django(app: sphinx.application.Sphinx, config: sphinx.config.Config) -> None:
     """
     This function calls :func:`django.setup` so it doesn't have to be done in the app's
     ``conf.py``.
@@ -127,7 +125,12 @@ def setup_django(app: Sphinx, config: Config) -> None:
 
 
 def autodoc_skip(
-    app: Sphinx, what: str, name: str, obj: object, options: Options, lines: list[str]
+    app: sphinx.application.Sphinx,
+    what: str,
+    name: str,
+    obj: object,
+    options: sphinx.ext.autodoc.Options,
+    lines: list[str],
 ) -> bool | None:
     """
     Hook to tell autodoc to include or exclude certain fields (see :event:`autodoc-skip-member`).
@@ -151,7 +154,12 @@ def autodoc_skip(
 
 
 def improve_docstring(
-    app: Sphinx, what: str, name: str, obj: object, options: Options, lines: list[str]
+    app: sphinx.application.Sphinx,
+    what: str,
+    name: str,
+    obj: object,
+    options: sphinx.ext.autodoc.Options,
+    lines: list[str],
 ) -> list[str]:
     """
     Hook to improve the autodoc docstrings for Django models

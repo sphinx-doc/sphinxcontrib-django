@@ -3,15 +3,22 @@ This module contains all functions which are used to improve the documentation o
 """
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from django import forms
 from django.db import models
-from sphinx.application import Sphinx
 from sphinx.pycode import ModuleAnalyzer
 
 from .field_utils import get_field_type, get_field_verbose_name
 
+if TYPE_CHECKING:
+    import django
+    import sphinx
 
-def improve_class_docstring(app: Sphinx, cls: type, lines: list[str]) -> None:
+
+def improve_class_docstring(
+    app: sphinx.application.Sphinx, cls: type, lines: list[str]
+) -> None:
     """
     Improve the documentation of a class if it's a Django model or form
 
@@ -25,7 +32,9 @@ def improve_class_docstring(app: Sphinx, cls: type, lines: list[str]) -> None:
         improve_form_docstring(cls, lines)
 
 
-def improve_model_docstring(app: Sphinx, model: models.Model, lines: list[str]) -> None:
+def improve_model_docstring(
+    app: sphinx.application.Sphinx, model: django.db.models.Model, lines: list[str]
+) -> None:
     """
     Improve the documentation of a Django :class:`~django.db.models.Model` subclass.
 
@@ -109,7 +118,9 @@ def improve_model_docstring(app: Sphinx, model: models.Model, lines: list[str]) 
         lines.append("")
 
 
-def add_db_table_name(app: Sphinx, model: models.Model, lines: list[str]) -> None:
+def add_db_table_name(
+    app: sphinx.application.Sphinx, model: django.db.models.Model, lines: list[str]
+) -> None:
     """
     Format and add table name by extension configuration.
 
@@ -126,7 +137,7 @@ def add_db_table_name(app: Sphinx, model: models.Model, lines: list[str]) -> Non
 
 
 def add_model_parameters(
-    fields: list[models.Field], lines: list[str], field_docs: dict
+    fields: list[django.db.models.Field], lines: list[str], field_docs: dict
 ) -> None:
     """
     Add the given fields as model parameter with the ``:param:`` directive
@@ -151,7 +162,7 @@ def add_model_parameters(
         lines.append(f":type {field.name}: {get_field_type(field, include_role=False)}")
 
 
-def improve_form_docstring(form: forms.Form, lines: list[str]) -> None:
+def improve_form_docstring(form: django.forms.Form, lines: list[str]) -> None:
     """
     Improve the documentation of a Django :class:`~django.forms.Form` class.
     This highlights the available fields in the form.

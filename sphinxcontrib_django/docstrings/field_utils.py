@@ -5,13 +5,18 @@ This module contains utility functions for fields which are used by both the
 """
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from django.apps import apps
 from django.contrib import contenttypes
 from django.db import models
 from django.utils.encoding import force_str
 
+if TYPE_CHECKING:
+    import django
 
-def get_field_type(field: models.Field, include_role: bool = True) -> str:
+
+def get_field_type(field: django.db.models.Field, include_role: bool = True) -> str:
     """
     Get the type of a field including the correct intersphinx mappings.
 
@@ -43,7 +48,7 @@ def get_field_type(field: models.Field, include_role: bool = True) -> str:
     return f"~{type(field).__module__}.{type(field).__name__}"
 
 
-def get_field_verbose_name(field: models.Field) -> str:
+def get_field_verbose_name(field: django.db.models.Field) -> str:
     """
     Get the verbose name of the field.
     If the field has a ``help_text``, it is also included.
@@ -133,7 +138,9 @@ def get_field_verbose_name(field: models.Field) -> str:
     return verbose_name
 
 
-def get_model_from_string(field: models.Field, model_string: str) -> type[models.Model]:
+def get_model_from_string(
+    field: django.db.models.Field, model_string: str
+) -> type[django.db.models.Model]:
     """
     Get a model class from a string
 

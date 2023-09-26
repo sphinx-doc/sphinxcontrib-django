@@ -31,6 +31,9 @@ extensions = [
 # Warn about all references where the target cannot be found
 nitpicky = True
 
+# A list of (type, target) tuples that should be ignored when :attr:`nitpicky` is ``True``
+nitpick_ignore = [("py:class", "sphinx.ext.autodoc.Options")]
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["templates"]
 
