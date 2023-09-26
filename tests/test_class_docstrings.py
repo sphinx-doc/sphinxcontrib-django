@@ -81,6 +81,8 @@ def test_simple_model(app, do_autodoc):
             " :class:`~dummy_django_app.models.ChildModelB`"
         ),
         "",
+        "   .. inheritance-diagram:: dummy_django_app.models.SimpleModel",
+        "",
     ]
 
 
@@ -168,6 +170,8 @@ def test_database_table(app, do_autodoc):
             " :class:`~dummy_django_app.models.ChildModelB`"
         ),
         "",
+        "   .. inheritance-diagram:: dummy_django_app.models.SimpleModel",
+        "",
     ]
 
 
@@ -198,6 +202,8 @@ def test_abstract_model(app, do_autodoc):
             "   :type foreignkey_self: :class:`~django.db.models.ForeignKey` to"
             " :class:`~dummy_django_app.models.AbstractModel`"
         ),
+        "",
+        "   .. inheritance-diagram:: dummy_django_app.models.AbstractModel",
         "",
     ]
 
@@ -231,6 +237,8 @@ def test_abstract_model_with_tables_names_and_ignore_abstract(app, do_autodoc):
             "   :type foreignkey_self: :class:`~django.db.models.ForeignKey` to"
             " :class:`~dummy_django_app.models.AbstractModel`"
         ),
+        "",
+        "   .. inheritance-diagram:: dummy_django_app.models.AbstractModel",
         "",
     ]
 
@@ -272,6 +280,8 @@ def test_abstract_model_with_tables_names_and_abstract_show(app, do_autodoc):
             " :class:`~dummy_django_app.models.AbstractModel`"
         ),
         "",
+        "   .. inheritance-diagram:: dummy_django_app.models.AbstractModel",
+        "",
     ]
 
 
@@ -299,6 +309,8 @@ def test_file_model(app, do_autodoc):
             "   :type simple_models: Reverse :class:`~django.db.models.ForeignKey` from"
             " :class:`~dummy_django_app.models.SimpleModel`"
         ),
+        "",
+        "   .. inheritance-diagram:: dummy_django_app.models.FileModel",
         "",
     ]
 
@@ -338,6 +350,8 @@ def test_tagged_item(app, do_autodoc):
             "   :type content_type: :class:`~django.db.models.ForeignKey` to"
             " :class:`~django.contrib.contenttypes.models.ContentType`"
         ),
+        "",
+        "   .. inheritance-diagram:: dummy_django_app.models.TaggedItem",
         "",
     ]
 

@@ -5,6 +5,7 @@ Unreleased
 ----------
 
 * Drop support for sphinx < 3.4.0
+* [ `#45 <https://github.com/edoburu/sphinxcontrib-django/issues/45>`_ ] Fix rendering of inheritance diagrams
 
 
 Version 2.4 (2023-07-02)
