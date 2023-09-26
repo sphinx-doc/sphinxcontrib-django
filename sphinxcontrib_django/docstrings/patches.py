@@ -1,6 +1,8 @@
 """
 This module contains patches for Django to improve its interaction with Sphinx.
 """
+import contextlib
+
 from django import apps, forms, test
 from django.db import models
 
@@ -84,10 +86,8 @@ def patch_django_for_autodoc():
     for parent_module_str, django_modules in DJANGO_MODULE_PATHS.items():
         for django_module in django_modules:
             for module_class in map(django_module.__dict__.get, django_module.__all__):
-                try:
+                with contextlib.suppress(AttributeError):
                     module_class.__module__ = parent_module_str
-                except AttributeError:
-                    pass
 
     # Fix module path of model manager
     models.manager.Manager.__module__ = "django.db.models"

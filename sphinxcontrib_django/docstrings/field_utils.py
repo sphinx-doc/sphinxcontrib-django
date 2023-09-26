@@ -31,20 +31,19 @@ def get_field_type(field, include_role=True):
             f":class:`~{type(field).__module__}.{type(field).__name__}` to"
             f" :class:`~{to.__module__}.{to.__name__}`"
         )
-    elif isinstance(field, models.fields.reverse_related.ForeignObjectRel):
+    if isinstance(field, models.fields.reverse_related.ForeignObjectRel):
         to = field.remote_field.model
         return (
             "Reverse"
             f" :class:`~{type(field.remote_field).__module__}.{type(field.remote_field).__name__}`"
             f" from :class:`~{to.__module__}.{to.__name__}`"
         )
-    else:
-        if include_role:
-            # For the docstrings of attributes, the :class: role is required
-            return f":class:`~{type(field).__module__}.{type(field).__name__}`"
-        else:
-            # For the :param: role in class docstrings, the :class: role is not required
-            return f"~{type(field).__module__}.{type(field).__name__}"
+    if include_role:
+        # For the docstrings of attributes, the :class: role is required
+        return f":class:`~{type(field).__module__}.{type(field).__name__}`"
+
+    # For the :param: role in class docstrings, the :class: role is not required
+    return f"~{type(field).__module__}.{type(field).__name__}"
 
 
 def get_field_verbose_name(field):

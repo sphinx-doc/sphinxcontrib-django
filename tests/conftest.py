@@ -43,8 +43,7 @@ def setup_app_with_different_config(app_params, make_app):
     def setup_app_with_different_config(**confoverrides):
         args, kwargs = app_params
         kwargs["confoverrides"] = confoverrides
-        _app = make_app(*args, **kwargs)
-        return _app
+        return make_app(*args, **kwargs)
 
     return setup_app_with_different_config
 
