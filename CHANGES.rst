@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+* Drop support for sphinx < 3.4.0
+
+
 Version 2.4 (2023-07-02)
 ------------------------
 
