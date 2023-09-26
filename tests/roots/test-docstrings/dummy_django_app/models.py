@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -108,7 +110,7 @@ class TaggedItem(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.tag
 
 

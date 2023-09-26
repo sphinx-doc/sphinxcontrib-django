@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django import forms
 
 from .models import SimpleModel
@@ -7,7 +9,7 @@ class SimpleForm(forms.ModelForm):
     test1 = forms.CharField(label="Test1")
     test2 = forms.CharField(help_text="Test2")
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         """
         This is a custom init method
         """
