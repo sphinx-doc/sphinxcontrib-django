@@ -1,26 +1,23 @@
 """
 This module contains all functions which are used to improve the documentation of classes.
 """
+from __future__ import annotations
 
 from django import forms
 from django.db import models
+from sphinx.application import Sphinx
 from sphinx.pycode import ModuleAnalyzer
 
 from .field_utils import get_field_type, get_field_verbose_name
 
 
-def improve_class_docstring(app, cls, lines):
+def improve_class_docstring(app: Sphinx, cls: type, lines: list[str]) -> None:
     """
     Improve the documentation of a class if it's a Django model or form
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
-
     :param cls: The instance of the class to document
-    :type cls: object
-
     :param lines: The docstring lines
-    :type lines: list [ str ]
     """
     if issubclass(cls, models.Model):
         improve_model_docstring(app, cls, lines)
@@ -28,20 +25,15 @@ def improve_class_docstring(app, cls, lines):
         improve_form_docstring(cls, lines)
 
 
-def improve_model_docstring(app, model, lines):
+def improve_model_docstring(app: Sphinx, model: models.Model, lines: list[str]) -> None:
     """
     Improve the documentation of a Django :class:`~django.db.models.Model` subclass.
 
     This adds all model fields as parameters to the ``__init__()`` method.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
-
     :param model: The instance of the model to document
-    :type model: ~django.db.models.Model
-
     :param lines: The docstring lines
-    :type lines: list [ str ]
     """
 
     # Add database table name
@@ -115,18 +107,13 @@ def improve_model_docstring(app, model, lines):
         lines.append(".. inheritance-diagram::")  # pragma: no cover
 
 
-def add_db_table_name(app, model, lines):
+def add_db_table_name(app: Sphinx, model: models.Model, lines: list[str]) -> None:
     """
     Format and add table name by extension configuration.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
-
     :param model: The instance of the model to document
-    :type model: ~django.db.models.Model
-
     :param lines: The docstring lines
-    :type lines: list [ str ]
     """
     if model._meta.abstract and not app.config.django_show_db_tables_abstract:
         return
@@ -136,18 +123,15 @@ def add_db_table_name(app, model, lines):
     lines.insert(0, f"**Database table:** ``{table_name}``")
 
 
-def add_model_parameters(fields, lines, field_docs):
+def add_model_parameters(
+    fields: list[models.Field], lines: list[str], field_docs: dict
+) -> None:
     """
     Add the given fields as model parameter with the ``:param:`` directive
 
     :param fields: The list of fields
-    :type fields: list [ ~django.db.models.Field ]
-
     :param lines: The list of current docstring lines
-    :type lines: list [ str ]
-
     :param field_docs: The attribute docstrings of the model
-    :type field_docs: dict
     """
     for field in fields:
         # Add docstrings if they are found
@@ -165,16 +149,13 @@ def add_model_parameters(fields, lines, field_docs):
         lines.append(f":type {field.name}: {get_field_type(field, include_role=False)}")
 
 
-def improve_form_docstring(form, lines):
+def improve_form_docstring(form: forms.Form, lines: list[str]) -> None:
     """
     Improve the documentation of a Django :class:`~django.forms.Form` class.
     This highlights the available fields in the form.
 
     :param form: The form object
-    :type form: ~django.forms.Form
-
     :param lines: The list of existing docstring lines
-    :type lines: list [ str ]
     """
     lines.append("**Form fields:**")
     lines.append("")

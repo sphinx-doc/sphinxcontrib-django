@@ -3,24 +3,21 @@ This module contains utility functions for fields which are used by both the
 :mod:`~sphinxcontrib_django.docstrings.attributes` and
 :mod:`~sphinxcontrib_django.docstrings.classes` modules.
 """
+from __future__ import annotations
+
 from django.apps import apps
 from django.contrib import contenttypes
 from django.db import models
 from django.utils.encoding import force_str
 
 
-def get_field_type(field, include_role=True):
+def get_field_type(field: models.Field, include_role: bool = True) -> str:
     """
     Get the type of a field including the correct intersphinx mappings.
 
     :param field: The field
-    :type field: ~django.db.models.Field
-
     :param include_directive: Whether or not the role :any:`py:class` should be included
-    :type include_directive: bool
-
     :return: The type of the field
-    :rtype: str
     """
     if isinstance(field, models.fields.related.RelatedField):
         to = field.remote_field.model
@@ -46,7 +43,7 @@ def get_field_type(field, include_role=True):
     return f"~{type(field).__module__}.{type(field).__name__}"
 
 
-def get_field_verbose_name(field):
+def get_field_verbose_name(field: models.Field) -> str:
     """
     Get the verbose name of the field.
     If the field has a ``help_text``, it is also included.
@@ -55,7 +52,6 @@ def get_field_verbose_name(field):
     For reverse related fields, the originating field is linked.
 
     :param field: The field
-    :type field: ~django.db.models.Field
     """
     help_text = ""
     # Check whether the field is a reverse related field
@@ -137,18 +133,13 @@ def get_field_verbose_name(field):
     return verbose_name
 
 
-def get_model_from_string(field, model_string):
+def get_model_from_string(field: models.Field, model_string: str) -> type[models.Model]:
     """
     Get a model class from a string
 
     :param field: The field
-    :type field: ~django.db.models.Field
-
     :param model_string: The string label of the model
-    :type model_string: str
-
     :return: The class of the model
-    :rtype: type
     """
     if "." in model_string:
         model = apps.get_model(model_string)

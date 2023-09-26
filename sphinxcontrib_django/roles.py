@@ -21,8 +21,12 @@ This module can also be used separately in ``conf.py``::
         "sphinxcontrib_django.roles",
     ]
 """
+from __future__ import annotations
+
 import logging
 
+from sphinx.application import Sphinx
+from sphinx.config import Config
 from sphinx.errors import ExtensionError
 
 from . import __version__
@@ -30,7 +34,7 @@ from . import __version__
 logger = logging.getLogger(__name__)
 
 
-def setup(app):
+def setup(app: Sphinx) -> dict:
     """
     Allow this module to be used as Sphinx extension.
 
@@ -39,7 +43,6 @@ def setup(app):
     It adds cross-reference types via :meth:`~sphinx.application.Sphinx.add_crossref_type`.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
     """
     # Load sphinx.ext.intersphinx extension
     app.setup_extension("sphinx.ext.intersphinx")
@@ -65,7 +68,7 @@ def setup(app):
     }
 
 
-def add_default_intersphinx_mappings(app, config):
+def add_default_intersphinx_mappings(app: Sphinx, config: Config) -> None:
     """
     This function provides a default intersphinx mapping to the documentations of Python, Django
     and Sphinx if ``intersphinx_mapping`` is not given in ``conf.py``.
@@ -73,10 +76,7 @@ def add_default_intersphinx_mappings(app, config):
     Called on the :event:`config-inited` event.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
-
     :param config: The Sphinx configuration
-    :type config: ~sphinx.config.Config
     """
     DEFAULT_INTERSPHINX_MAPPING = {
         "python": ("https://docs.python.org/", None),
@@ -87,4 +87,5 @@ def add_default_intersphinx_mappings(app, config):
         ),
     }
     if not config.intersphinx_mapping:
-        config.intersphinx_mapping = DEFAULT_INTERSPHINX_MAPPING
+        # TYPING: type hints are missing `.intersphinx_mapping` attribute.
+        config.intersphinx_mapping = DEFAULT_INTERSPHINX_MAPPING  # type: ignore[attr-defined ]

@@ -1,6 +1,8 @@
 """
 This module contains all functions which are used to improve the documentation of attributes.
 """
+from __future__ import annotations
+
 from django.db import models
 from django.db.models.fields import related_descriptors
 from django.db.models.fields.files import FileDescriptor
