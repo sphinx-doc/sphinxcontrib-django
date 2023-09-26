@@ -29,7 +29,7 @@
         "Topic :: Software Development :: Libraries :: Application Frameworks",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ]
-    dependencies = ["Django>=3.2", "Sphinx>=0.5", "pprintpp"]
+    dependencies = ["Django>=3.2", "Sphinx>=3.4.0", "pprintpp"]
     description = "Improve the Sphinx autodoc for Django classes."
     dynamic = ["version"]
     keywords = ["django", "docstrings", "extension", "sphinx"]
