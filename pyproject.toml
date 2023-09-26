@@ -5,7 +5,7 @@
 [project]
     authors = [
         { name = "Diederik van der Boor", email = "opensource@edoburu.nl" },
-        { name = "Timo Ludwig", email = "ti.ludwig@web.de" }
+        { name = "Timo Brembeck", email = "opensource@timo.brembeck.email" },
     ]
     classifiers = [
         "Development Status :: 5 - Production/Stable",
@@ -34,6 +34,9 @@
     dynamic = ["version"]
     keywords = ["django", "docstrings", "extension", "sphinx"]
     license = { text = "Apache2 2.0 License" }
+    maintainers = [
+        { name = "Timo Brembeck", email = "opensource@timo.brembeck.email" },
+    ]
     name = "sphinxcontrib-django"
     readme = "README.rst"
     requires-python = ">=3.7"
