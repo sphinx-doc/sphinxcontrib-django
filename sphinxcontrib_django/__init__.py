@@ -4,7 +4,7 @@ This is a sphinx extension which improves the documentation of Django apps.
 
 from __future__ import annotations
 
-__version__ = "2.4"
+__version__ = "2.5"
 
 from sphinx.application import Sphinx
 
