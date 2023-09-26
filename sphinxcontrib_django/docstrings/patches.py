@@ -1,6 +1,7 @@
 """
 This module contains patches for Django to improve its interaction with Sphinx.
 """
+from __future__ import annotations
 
 import contextlib
 
@@ -25,7 +26,7 @@ except ModuleNotFoundError:
     MPTT = False
 
 
-def patch_django_for_autodoc():
+def patch_django_for_autodoc() -> None:
     """
     Fix the appearance of some classes in autodoc.
     E.g. the absolute path to the base model class is ``django.db.models.base.Model``, but its
