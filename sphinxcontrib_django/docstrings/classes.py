@@ -104,7 +104,9 @@ def improve_model_docstring(app: Sphinx, model: models.Model, lines: list[str]) 
         and "sphinx.ext.graphviz" in app.extensions
         and not any("inheritance-diagram::" in line for line in lines)
     ):
-        lines.append(".. inheritance-diagram::")  # pragma: no cover
+        lines.append("")
+        lines.append(f".. inheritance-diagram:: {model.__module__}.{model.__name__}")
+        lines.append("")
 
 
 def add_db_table_name(app: Sphinx, model: models.Model, lines: list[str]) -> None:

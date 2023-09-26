@@ -15,4 +15,6 @@ def test_django_configured(app, do_autodoc):
         "   :param id: Primary key: ID",
         "   :type id: ~django.db.models.AutoField",
         "",
+        "   .. inheritance-diagram:: dummy_django_app.models.MonkeyPatched",
+        "",
     ]
