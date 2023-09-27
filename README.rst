@@ -1,25 +1,25 @@
-.. image:: https://github.com/edoburu/sphinxcontrib-django/workflows/Tests/badge.svg
+.. image:: https://github.com/sphinx-doc/sphinxcontrib-django/workflows/Tests/badge.svg
     :alt: GitHub Workflow Status
-    :target: https://github.com/edoburu/sphinxcontrib-django/actions?query=workflow%3ATests
+    :target: https://github.com/sphinx-doc/sphinxcontrib-django/actions?query=workflow%3ATests
 .. image:: https://img.shields.io/pypi/v/sphinxcontrib-django.svg
     :alt: PyPi
     :target: https://pypi.org/project/sphinxcontrib-django/
-.. image:: https://codecov.io/gh/edoburu/sphinxcontrib-django/branch/main/graph/badge.svg
+.. image:: https://codecov.io/gh/sphinx-doc/sphinxcontrib-django/branch/main/graph/badge.svg
     :alt: Code coverage
-    :target: https://codecov.io/gh/edoburu/sphinxcontrib-django
+    :target: https://codecov.io/gh/sphinx-doc/sphinxcontrib-django
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :alt: Black Code Style
     :target: https://github.com/psf/black
-.. image:: https://img.shields.io/github/license/edoburu/sphinxcontrib-django
+.. image:: https://img.shields.io/github/license/sphinx-doc/sphinxcontrib-django
     :alt: GitHub license
-    :target: https://github.com/edoburu/sphinxcontrib-django/blob/main/LICENSE
+    :target: https://github.com/sphinx-doc/sphinxcontrib-django/blob/main/LICENSE
 .. image:: https://readthedocs.org/projects/sphinxcontrib-django/badge/?version=latest
     :alt: Documentation Status
     :target: https://sphinxcontrib-django.readthedocs.io/en/latest/?badge=latest
 
 |
 
-.. image:: https://raw.githubusercontent.com/edoburu/sphinxcontrib-django/main/docs/images/django-sphinx-logo-blue.png
+.. image:: https://raw.githubusercontent.com/sphinx-doc/sphinxcontrib-django/main/docs/images/django-sphinx-logo-blue.png
     :width: 500
     :alt: logo
     :target: https://pypi.org/project/sphinxcontrib-django/
