@@ -9,8 +9,8 @@ from sphinxcontrib_django import __version__
 # -- Project information -----------------------------------------------------
 
 project = "sphinxcontrib-django"
-copyright = "2021"
-author = "Timo Ludwig"
+copyright = "2023"
+author = "Timo Brembeck"
 
 # The full version, including alpha/beta/rc tags
 release = __version__
