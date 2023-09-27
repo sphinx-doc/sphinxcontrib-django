@@ -81,19 +81,17 @@
     minversion = "6.0"
     testpaths  = ["tests"]
 
-[tool.flake8]
-    ignore = [
-        "D1",   # Missing docstrings
-        "E203", # whitespace before ':' in slice (incompatible with black)
-        "E731", # Allow lambdas
-        "F405", # name undefined due to star imports
-        "W503", # line break before binary operator (incompatible with black)
-    ]
-    max-line-length = 99
-
-[tool.isort]
-    known_first_party = "sphinxcontrib_django"
-    # Approach Black compatibility (just run black after isort)
-    include_trailing_comma = true
-    line_length            = 88
-    multi_line_output      = 3
+[tool.ruff]
+  select = [
+    "F",
+    "E",
+    "W",
+    "I",
+    # "D",
+    "RET",
+    "SIM",
+  ]
+  ignore = [
+    "D1",   # Missing docstrings
+  ]
+  line-length = 99

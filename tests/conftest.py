@@ -53,7 +53,7 @@ def do_autodoc():
     """
     This function simulates the autodoc functionality.
 
-    Taken from https://github.com/sphinx-doc/sphinx/blob/d635d94eebbca0ebb1a5402aa07ed58c0464c6d3/tests/test_ext_autodoc.py#L33-L45 # noqa: E501
+    Taken from https://github.com/sphinx-doc/sphinx/blob/d635d94eebbca0ebb1a5402aa07ed58c0464c6d3/tests/test_ext_autodoc.py#L33-L45
     """
 
     def do_autodoc(app, objtype, name, options=None):
