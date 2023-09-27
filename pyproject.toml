@@ -100,5 +100,8 @@
     "ANN101",  # Annotation for 'self'
   ]
 
+[tool.ruff.isort]
+  required-imports = ["from __future__ import annotations"]
+
 [tool.ruff.per-file-ignores]
   "tests/**/*.py" = ["ANN"] # TODO: tests are missing type annotations
