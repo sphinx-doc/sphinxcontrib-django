@@ -5,15 +5,15 @@ Version 2.5 (2023-09-26)
 ------------------------
 
 * Drop support for sphinx < 3.4.0
-* [ `#45 <https://github.com/edoburu/sphinxcontrib-django/issues/45>`_ ] Fix rendering of inheritance diagrams
+* [ `#45 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/45>`_ ] Fix rendering of inheritance diagrams
 * Drop support for Python 3.7
 
 
 Version 2.4 (2023-07-02)
 ------------------------
 
-* [ `#39 <https://github.com/edoburu/sphinxcontrib-django/issues/39>`_ ] Fix table names of abstract models (`@insspb <https://github.com/insspb>`__)
-* [ `#41 <https://github.com/edoburu/sphinxcontrib-django/issues/41>`_ ] Fix rendering of iterable choices (`@insspb <https://github.com/insspb>`__)
+* [ `#39 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/39>`_ ] Fix table names of abstract models (`@insspb <https://github.com/insspb>`__)
+* [ `#41 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/41>`_ ] Fix rendering of iterable choices (`@insspb <https://github.com/insspb>`__)
 
 
 Version 2.3 (2023-04-12)
@@ -26,13 +26,13 @@ Version 2.3 (2023-04-12)
 Version 2.2 (2023-03-01)
 ------------------------
 
-* [ `#35 <https://github.com/edoburu/sphinxcontrib-django/issues/35>`_ ] Fix interference with other ``autodoc-skip-member`` signal handlers
+* [ `#35 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/35>`_ ] Fix interference with other ``autodoc-skip-member`` signal handlers
 
 
 Version 2.1 (2023-03-01)
 ------------------------
 
-* [ `#32 <https://github.com/edoburu/sphinxcontrib-django/issues/32>`_ ] Fix rendering of nested directives in model parameter documentation
+* [ `#32 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/32>`_ ] Fix rendering of nested directives in model parameter documentation
 
 
 Version 2.0 (2023-01-02)

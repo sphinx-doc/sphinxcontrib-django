@@ -41,10 +41,10 @@
     requires-python = ">=3.8"
 
     [project.urls]
-        "Bug Tracker"   = "https://github.com/edoburu/sphinxcontrib-django/issues"
+        "Bug Tracker"   = "https://github.com/sphinx-doc/sphinxcontrib-django/issues"
         "Documentation" = "https://sphinxcontrib-django.readthedocs.io/"
-        "Release Notes" = "https://github.com/edoburu/sphinxcontrib-django/blob/main/CHANGES.rst"
-        "Source Code"   = "https://github.com/edoburu/sphinxcontrib-django"
+        "Release Notes" = "https://github.com/sphinx-doc/sphinxcontrib-django/blob/main/CHANGES.rst"
+        "Source Code"   = "https://github.com/sphinx-doc/sphinxcontrib-django"
 
     [project.optional-dependencies]
         dev = ["pre-commit"]
