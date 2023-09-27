@@ -3,6 +3,8 @@ The recommended setup for testing sphinx extension is undocumented (see issue #7
 https://github.com/sphinx-doc/sphinx/issues/7008), so this setup was created using the given code
 snippets and the existing test cases for the autodoc extension.
 """
+from __future__ import annotations
+
 from unittest.mock import Mock
 
 import pytest
