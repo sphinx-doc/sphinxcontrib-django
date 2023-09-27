@@ -29,6 +29,8 @@ jobs:
         run: coverage run
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           env_vars: OS,PYTHON,DJANGO
           name: codecov-umbrella
