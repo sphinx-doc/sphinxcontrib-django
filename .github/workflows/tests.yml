@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         django-version: ["django~=3.2", "django~=4.1", "django~=4.2"]
         optional-dependencies: ["optional-deps", "no-optional-deps"]
     env:
