@@ -78,10 +78,14 @@ def get_field_verbose_name(field: django.db.models.Field) -> str:
             related_name = (
                 related_name or field.remote_field.model._meta.verbose_name_plural
             )
-            # If field is a foreign key or a ManyToMany field, use the prefix "All"
-            verbose_name = (
-                f"All {related_name} of this {field.model._meta.verbose_name}"
+            # handle potential str-type deferred model names
+            forward_name = (
+                field.model
+                if isinstance(field.model, str)
+                else field.model._meta.verbose_name
             )
+            # If field is a foreign key or a ManyToMany field, use the prefix "All"
+            verbose_name = f"All {related_name} of this {forward_name}"
         # Link to the origin of the reverse related field if it's not from an abstract model
         if not field.remote_field.model._meta.abstract:
             verbose_name += (

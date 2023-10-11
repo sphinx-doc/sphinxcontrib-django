@@ -381,3 +381,30 @@ def test_form(app, do_autodoc):
         "   * ``test2``: Test2 (:class:`~django.forms.CharField`)",
         "",
     ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
+def test_relation_model(app, do_autodoc):
+    actual = do_autodoc(app, "class", "dummy_django_app2.models.GenericRelationModel")
+    print(actual)
+    assert list(actual) == [
+        "",
+        ".. py:class:: GenericRelationModel(id)",
+        "   :module: dummy_django_app2.models",
+        "",
+        "   :param id: Primary key: ID",
+        "   :type id: ~django.db.models.AutoField",
+        "",
+        "   Relationship fields:",
+        "",
+        (
+            "   :param relation_field: Relation field (related name:"
+            " :attr:`~dummy_django_app.models.TaggedItem.+`)"
+        ),
+        (
+            "   :type relation_field:"
+            " :class:`~django.contrib.contenttypes.fields.GenericRelation` to"
+            " :class:`~dummy_django_app.models.TaggedItem`"
+        ),
+        "",
+    ]

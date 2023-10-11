@@ -17,7 +17,7 @@ def test_data(app, do_autodoc):
         "   :module: dummy_django_app.settings",
         (
             "   :value: ['django.contrib.auth', 'django.contrib.contenttypes',"
-            " 'dummy_django_app']"
+            " 'dummy_django_app', 'dummy_django_app2']"
         ),
         "",
         "   These are the installed apps",
@@ -25,8 +25,8 @@ def test_data(app, do_autodoc):
         "   .. code-block:: JavaScript",
         "",
         (
-            "       ['django.contrib.auth', 'django.contrib.contenttypes',"
-            " 'dummy_django_app']\n"
+            "       [\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n"
+            "    'dummy_django_app',\n    'dummy_django_app2',\n]\n"
         ),
         "",
     ]
