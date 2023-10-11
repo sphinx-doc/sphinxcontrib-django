@@ -1,6 +1,8 @@
 """
 This module contains all functions which are used to improve the documentation of methods.
 """
+from __future__ import annotations
+
 import re
 
 RE_GET_FOO_DISPLAY = re.compile(r"\.get_(?P<field>[a-zA-Z0-9_]+)_display$")
@@ -8,7 +10,7 @@ RE_GET_NEXT_BY = re.compile(r"\.get_next_by_(?P<field>[a-zA-Z0-9_]+)$")
 RE_GET_PREVIOUS_BY = re.compile(r"\.get_previous_by_(?P<field>[a-zA-Z0-9_]+)$")
 
 
-def improve_method_docstring(name, lines):
+def improve_method_docstring(name: str, lines: list[str]) -> None:
     """
     Improve the documentation of methods automatically contributed to models by Django:
 
@@ -17,10 +19,7 @@ def improve_method_docstring(name, lines):
     * :meth:`~django.db.models.Model.get_previous_by_FOO`
 
     :param name: The full dotted path to the object.
-    :type name: str
-
     :param lines: The lines of docstring lines
-    :type lines: list [ str ]
     """
     if not lines:
         # Not doing obj.__module__ lookups to avoid performance issues.

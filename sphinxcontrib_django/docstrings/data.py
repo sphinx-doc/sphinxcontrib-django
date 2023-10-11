@@ -1,18 +1,17 @@
+from __future__ import annotations
+
 import io
 import sys
 
 from pprintpp import pprint as pp
 
 
-def improve_data_docstring(data, lines):
+def improve_data_docstring(data: object, lines: list[str]) -> None:
     """
     Improve the documentation of data by pretty-printing into in the docstring.
 
     :param data: The documented object
-    :type data: object
-
     :param lines: The lines of docstring lines
-    :type lines: list [ str ]
     """
     if isinstance(data, (list, tuple, dict, set)):
         # Redirect stdout to StringIO to catch print

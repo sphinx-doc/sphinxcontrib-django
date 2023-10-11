@@ -3,6 +3,8 @@ This module contains configuration of the members which should in-/excluded in s
 (see :event:`autodoc-skip-member`)
 """
 #: Ensure that the __init__ method gets documented (also see :confval:`autoclass_content` setting)
+from __future__ import annotations
+
 INCLUDE_MEMBERS = {"__init__"}
 
 #: Members to hide.

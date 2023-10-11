@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 def setup(app):
     """
     Sphinx extension which also registers a "setting" directive
