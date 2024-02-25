@@ -1,6 +1,7 @@
 """
 This module contains all functions which are used to improve the documentation of classes.
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

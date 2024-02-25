@@ -1,6 +1,7 @@
 """
 This module contains patches for Django to improve its interaction with Sphinx.
 """
+
 import contextlib
 
 from django import apps, forms, test

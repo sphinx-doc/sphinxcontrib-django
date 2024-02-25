@@ -14,6 +14,7 @@ For example:
 * Fix the intersphinx mappings to the Django documentation
   (see :mod:`~sphinxcontrib_django.docstrings.patches`)
 """
+
 from __future__ import annotations
 
 import importlib
