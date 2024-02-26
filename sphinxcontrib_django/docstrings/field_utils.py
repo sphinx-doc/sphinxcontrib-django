@@ -3,6 +3,7 @@ This module contains utility functions for fields which are used by both the
 :mod:`~sphinxcontrib_django.docstrings.attributes` and
 :mod:`~sphinxcontrib_django.docstrings.classes` modules.
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

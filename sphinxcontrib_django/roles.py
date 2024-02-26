@@ -21,6 +21,7 @@ This module can also be used separately in ``conf.py``::
         "sphinxcontrib_django.roles",
     ]
 """
+
 from __future__ import annotations
 
 import logging
