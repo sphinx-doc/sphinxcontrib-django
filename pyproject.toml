@@ -83,16 +83,88 @@
     testpaths  = ["tests"]
 
 [tool.ruff]
-  select = [
-    "F",
-    "E",
-    "W",
-    "I",
-    # "D",
-    "RET",
-    "SIM",
-  ]
-  ignore = [
-    "D1",   # Missing docstrings
-  ]
-  line-length = 99
+line-length = 99  # default is 88
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+  "A",      # flake8-builtins
+  "AIR",    # Airflow
+  "ARG",    # flake8-unused-arguments
+  "ASYNC",  # flake8-async
+  "B",      # flake8-bugbear
+  "BLE",    # flake8-blind-except
+  "C4",     # flake8-comprehensions
+  "C90",    # McCabe cyclomatic complexity
+  "DJ",     # flake8-django
+  "DTZ",    # flake8-datetimez
+  "E",      # pycodestyle
+  "EM",     # flake8-errmsg
+  "EXE",    # flake8-executable
+  "F",      # Pyflakes
+  "FA",     # flake8-future-annotations
+  "FIX",    # flake8-fixme
+  "FLY",    # flynt
+  "G",      # flake8-logging-format
+  "I",      # isort
+  "ICN",    # flake8-import-conventions
+  "INT",    # flake8-gettext
+  "ISC",    # flake8-implicit-str-concat
+  "LOG",    # flake8-logging
+  "N",      # pep8-naming
+  "NPY",    # NumPy-specific rules
+  "PD",     # pandas-vet
+  "PERF",   # Perflint
+  "PGH",    # pygrep-hooks
+  "PIE",    # flake8-pie
+  "PL",     # Pylint
+  "PT",     # flake8-pytest-style
+  "PTH",    # flake8-use-pathlib
+  "PYI",    # flake8-pyi
+  "RET",    # flake8-return
+  "RSE",    # flake8-raise
+  "RUF",    # Ruff-specific rules
+  "S",      # flake8-bandit
+  "SIM",    # flake8-simplify
+  "SLOT",   # flake8-slots
+  "T10",    # flake8-debugger
+  "TCH",    # flake8-type-checking
+  "TD",     # flake8-todos
+  "TID",    # flake8-tidy-imports
+  "TRIO",   # flake8-trio
+  "TRY",    # tryceratops
+  "UP",     # pyupgrade
+  "W",      # pycodestyle
+  "YTT",    # flake8-2020
+  # "ANN",  # flake8-annotations
+  # "COM",  # flake8-commas
+  # "CPY",  # flake8-copyright
+  # "D",    # pydocstyle
+  # "ERA",  # eradicate
+  # "FBT",  # flake8-boolean-trap
+  # "FURB", # refurb
+  # "INP",  # flake8-no-pep420
+  # "Q",    # flake8-quotes
+  # "SLF",  # flake8-self
+  # "T20",  # flake8-print
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 13  # default is 10
+
+[tool.ruff.lint.per-file-ignores]
+"docs/conf.py" = ["A001"]
+"sphinxcontrib_django/docstrings/__init__.py" = ["ARG001", "EM101", "RUF002", "TID252", "TRY003"]
+"sphinxcontrib_django/docstrings/patches.py" = ["ARG005", "N806"]
+"sphinxcontrib_django/roles.py" = ["ARG001", "N806", "PERF203"]
+"tests/*" = ["S101"]
+"tests/conftest.py" = ["ARG001", "PT003", "PT022"]
+"tests/roots/test-docstrings/conf.py" = ["ARG001", "PTH100"]
+"tests/roots/test-docstrings/dummy_django_app/models.py" = ["DJ008", "N815"]
+"tests/roots/test-docstrings/dummy_django_app/settings.py" = ["S105"]
+"tests/test_roles.py" = ["ARG001"]
+
+[tool.ruff.lint.pylint]
+max-args = 6  # default is 5
+max-branches = 14  # default is 12
+
