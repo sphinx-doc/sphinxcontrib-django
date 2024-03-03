@@ -1,6 +1,7 @@
 """
 This module contains all functions which are used to improve the documentation of methods.
 """
+
 import re
 
 RE_GET_FOO_DISPLAY = re.compile(r"\.get_(?P<field>[a-zA-Z0-9_]+)_display$")
