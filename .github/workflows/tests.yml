@@ -6,8 +6,13 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-        django-version: ["django~=3.2", "django~=4.1", "django~=4.2"]
+        django-version: ["django~=3.2", "django~=4.2", "django~=5.0"]
         optional-dependencies: ["optional-deps", "no-optional-deps"]
+        exclude:
+          - python-version: "3.8"
+            django-version: "django~=5.0"
+          - python-version: "3.9"
+            django-version: "django~=5.0"          
     env:
       OS: ubuntu-latest
       PYTHON: ${{ matrix.python-version }}
