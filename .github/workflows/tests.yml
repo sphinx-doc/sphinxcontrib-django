@@ -12,7 +12,7 @@ jobs:
           - python-version: "3.8"
             django-version: "django~=5.0"
           - python-version: "3.9"
-            django-version: "django~=5.0"          
+            django-version: "django~=5.0"
     env:
       OS: ubuntu-latest
       PYTHON: ${{ matrix.python-version }}
