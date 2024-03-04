@@ -55,7 +55,7 @@
             "django-phonenumber-field[phonenumbers]",
             "psycopg2-binary",
         ]
-        test = ["coverage", "pytest", "pytest-icdiff", "requests-mock"]
+        test = ["coverage", "pytest", "pytest-cov", "pytest-icdiff", "requests-mock"]
 
 [tool.setuptools.dynamic]
     version = { attr = "sphinxcontrib_django.__version__" }
