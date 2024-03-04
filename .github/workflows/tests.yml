@@ -31,13 +31,14 @@ jobs:
         if: matrix.optional-dependencies == 'optional-deps'
         run: pip install -e .[optional]
       - name: Run tests and generate coverage report
-        run: coverage run
+        run: pytest --cov=./ --cov-report=xml
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v4
         with:
           env_vars: OS,PYTHON,DJANGO
-          name: codecov-umbrella
+          exclude: ./setup.py
           fail_ci_if_error: true
+          files: ./coverage.xml
+          name: codecov-umbrella
+          token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
