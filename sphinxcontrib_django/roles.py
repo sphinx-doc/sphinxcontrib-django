@@ -84,7 +84,7 @@ def add_default_intersphinx_mappings(
     :param config: The Sphinx configuration
     """
     DEFAULT_INTERSPHINX_MAPPING = {
-        "python": ("https://docs.python.org/", None),
+        "python": ("https://docs.python.org/3/", None),
         "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
         "django": (
             "https://docs.djangoproject.com/en/stable/",
