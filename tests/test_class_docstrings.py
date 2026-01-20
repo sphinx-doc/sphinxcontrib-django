@@ -1,4 +1,14 @@
 import pytest
+from django.conf import settings
+from django.db.models import AutoField
+
+
+def autofield():
+    return getattr(
+        settings,
+        "DEFAULT_AUTO_FIELD",
+        f"{AutoField.__module__}.{AutoField.__qualname__}",
+    )
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
@@ -11,7 +21,7 @@ def test_simple_model(app, do_autodoc):
         "   :module: dummy_django_app.models",
         "",
         "   :param id: Primary key: ID",
-        "   :type id: ~django.db.models.AutoField",
+        f"   :type id: ~{autofield()}",
         "   :param dummy_field: Very verbose name of dummy field. This should help you",
         "",
         "                       Docstring of char field",
@@ -100,7 +110,7 @@ def test_database_table(app, do_autodoc):
         "   **Database table:** ``dummy_django_app_simplemodel``",
         "",
         "   :param id: Primary key: ID",
-        "   :type id: ~django.db.models.AutoField",
+        f"   :type id: ~{autofield()}",
         "   :param dummy_field: Very verbose name of dummy field. This should help you",
         "",
         "                       Docstring of char field",
@@ -295,7 +305,7 @@ def test_file_model(app, do_autodoc):
         "   :module: dummy_django_app.models",
         "",
         "   :param id: Primary key: ID",
-        "   :type id: ~django.db.models.AutoField",
+        f"   :type id: ~{autofield()}",
         "   :param upload: Upload",
         "   :type upload: ~django.db.models.FileField",
         "",
@@ -325,7 +335,7 @@ def test_tagged_item(app, do_autodoc):
         "   :module: dummy_django_app.models",
         "",
         "   :param id: Primary key: ID",
-        "   :type id: ~django.db.models.AutoField",
+        f"   :type id: ~{autofield()}",
         "   :param tag: Tag",
         "   :type tag: ~django.db.models.SlugField",
         "   :param object_id: Object id",

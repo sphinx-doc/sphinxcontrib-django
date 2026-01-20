@@ -4,11 +4,11 @@ https://github.com/sphinx-doc/sphinx/issues/7008), so this setup was created usi
 snippets and the existing test cases for the autodoc extension.
 """
 
+from pathlib import Path as path
 from unittest.mock import Mock
 
 import pytest
 from sphinx.ext.autodoc.directive import DocumenterBridge, process_documenter_options
-from sphinx.testing.path import path
 from sphinx.util.docutils import LoggingReporter
 
 pytest_plugins = "sphinx.testing.fixtures"
@@ -19,7 +19,7 @@ def rootdir():
     """
     Path to the root directory of the testing targets
     """
-    return path(__file__).parent.abspath() / "roots"
+    return path(__file__).parent.absolute() / "roots"
 
 
 @pytest.fixture(scope="function")
