@@ -52,3 +52,7 @@ html_logo = "images/django-sphinx-logo-white.png"
 html_favicon = "images/favicon.svg"
 # Do not include links to the documentation source (.rst files) in build
 html_show_sourcelink = False
+
+# On Sphinx > 9.0, toggle on the legacy class-based autodoc implementation for
+# compatibility
+autodoc_use_legacy_class_based = True

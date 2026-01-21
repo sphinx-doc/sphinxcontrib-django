@@ -29,6 +29,7 @@ sphinxcontrib-django
 
 This is a sphinx extension which improves the documentation of Django apps.
 
+**🚨 See** `Configuration`_ **for Sphinx 9+ compatibility 🚨**
 
 Features
 --------
@@ -74,6 +75,18 @@ Add the following to your Sphinx config file ``conf.py``:
 
     # Configure the path to the Django settings module
     django_settings = "myapp.settings"
+
+.. _sphinx_9_compat:
+
+**If you are using Sphinx >= 9 you must add the** `autodoc_use_legacy_class_based
+<https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_use_legacy_class_based>`_
+**setting:**
+
+.. code-block:: python
+
+    # Use legacy class-based autodoc implementation
+    autodoc_use_legacy_class_based = True
+
 
 Optionally, you can include the table names of your models in their docstrings with:
 

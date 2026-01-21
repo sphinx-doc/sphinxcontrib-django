@@ -14,6 +14,8 @@ extensions = [
 # Configure Django settings module
 django_settings = "dummy_django_app.settings"
 
+autodoc_use_legacy_class_based = True
+
 nitpicky = True
 
 
