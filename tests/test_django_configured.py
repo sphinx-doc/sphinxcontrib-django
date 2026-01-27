@@ -1,10 +1,17 @@
 import pytest
+from django.conf import settings
+from django.db.models import AutoField
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
 def test_django_configured(app, do_autodoc):
     actual = do_autodoc(app, "class", "dummy_django_app.models.MonkeyPatched")
     print(actual)
+    autofield = getattr(
+        settings,
+        "DEFAULT_AUTO_FIELD",
+        f"{AutoField.__module__}.{AutoField.__qualname__}",
+    )
     assert list(actual) == [
         "",
         ".. py:class:: MonkeyPatched(*args, **kwargs)",
@@ -13,7 +20,7 @@ def test_django_configured(app, do_autodoc):
         "   Monkeypatched docstring",
         "",
         "   :param id: Primary key: ID",
-        "   :type id: ~django.db.models.AutoField",
+        f"   :type id: ~{autofield}",
         "",
         "   .. inheritance-diagram:: dummy_django_app.models.MonkeyPatched",
         "",
