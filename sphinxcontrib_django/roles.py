@@ -54,7 +54,13 @@ def setup(app: sphinx.application.Sphinx) -> dict:
     app.connect("config-inited", add_default_intersphinx_mappings)
 
     # Allow intersphinx mappings to custom Django roles
-    django_crossref_types = ["setting", "templatetag", "templatefilter", "fieldlookup"]
+    django_crossref_types = [
+        "setting",
+        "templatetag",
+        "templatefilter",
+        "fieldlookup",
+        "django-admin",
+    ]
     # Allow intersphinx mappings to custom Sphinx roles
     sphinx_crossref_types = ["event", "confval"]
 
