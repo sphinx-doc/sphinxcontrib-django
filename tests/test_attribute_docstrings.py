@@ -1,4 +1,7 @@
 import pytest
+from django import VERSION as DJANGO_VERSION
+
+SUPPORT_CALLABLE_CHOICES = DJANGO_VERSION >= (5, 0)
 
 try:
     from phonenumber_field.modelfields import PhoneNumberField  # noqa: F401
@@ -427,6 +430,30 @@ def test_choice_field_empty(app, do_autodoc):
         "   * ``Something``",
         "",
     ]
+
+
+if SUPPORT_CALLABLE_CHOICES:
+
+    @pytest.mark.sphinx("html", testroot="docstrings")
+    def test_choice_field_callable(app, do_autodoc):
+        actual = do_autodoc(
+            app, "attribute", "dummy_django_app.models.ChoiceModel.choice_with_callable"
+        )
+        print(actual)
+        assert list(actual) == [
+            "",
+            ".. py:attribute:: ChoiceModel.choice_with_callable",
+            "   :module: dummy_django_app.models",
+            "",
+            "   Type: :class:`~django.db.models.CharField`",
+            "",
+            "   Choice with callable",
+            "",
+            "   Choices:",
+            "",
+            "   * ``Something``",
+            "",
+        ]
 
 
 if PHONENUMBER:

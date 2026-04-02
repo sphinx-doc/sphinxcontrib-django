@@ -120,17 +120,20 @@ def get_field_details(app, field):
     ]
     if hasattr(field, "choices") and field.choices:
         field_details.extend(["", "Choices:", ""])
+        # ensure choices are evaluated
+        choices = list(field.choices)
         field_details.extend(
             [
                 f"* ``{key}``" if key != "" else "* ``''`` (Empty string)"
-                for key, value in field.choices[:choices_limit]
+                for key, value in choices[:choices_limit]
             ]
         )
+
         # Check if list has been truncated
-        if len(field.choices) > choices_limit:
+        if len(choices) > choices_limit:
             # If only one element has been truncated, just list it as well
-            if len(field.choices) == choices_limit + 1:
-                field_details.append(f"* ``{field.choices[-1][0]}``")
+            if len(choices) == choices_limit + 1:
+                field_details.append(f"* ``{choices[-1][0]}``")
             else:
-                field_details.append(f"* and {len(field.choices) - choices_limit} more")
+                field_details.append(f"* and {len(choices) - choices_limit} more")
     return field_details
