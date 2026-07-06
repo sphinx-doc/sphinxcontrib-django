@@ -84,6 +84,9 @@
     testpaths  = ["tests"]
 
 [tool.ruff]
+  line-length = 99
+
+[tool.ruff.lint]
   select = [
     "F",
     "E",
@@ -96,4 +99,3 @@
   ignore = [
     "D1",   # Missing docstrings
   ]
-  line-length = 99
