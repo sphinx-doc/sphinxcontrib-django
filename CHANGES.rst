@@ -4,8 +4,12 @@ Changelog
 Unreleased
 ----------
 
-* Add support for Python 3.12
+* Add support for Python 3.12, 3.13 and 3.14
+* Add support for Django 5.2 and 6.0 (`@bckohan <https://github.com/bckohan>`__)
+* Add compatibility with Sphinx 9, which requires setting ``autodoc_use_legacy_class_based = True`` (`@bckohan <https://github.com/bckohan>`__)
+* [ `#75 <https://github.com/sphinx-doc/sphinxcontrib-django/pull/75>`_ ] Add ``:django-admin:`` cross-reference role (`@bckohan <https://github.com/bckohan>`__)
 * Derive the package version from git tags via ``setuptools-scm``
+* Migrate PyPI releases to Trusted Publishing
 * [ `#73 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/73>`_ ] Add support for callable choices (`@sevdog <https://github.com/sevdog>`__)
 * [ `#43 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/43>`_ ] Fix crash on lazy string references in ``GenericRelation`` fields (`@ntouran <https://github.com/ntouran>`__)
 * Hide reverse accessor names disabled via ``related_name="+"`` instead of rendering a literal ``+``
