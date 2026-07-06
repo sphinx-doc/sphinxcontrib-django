@@ -5,6 +5,7 @@ Unreleased
 ----------
 
 * Add support for Python 3.12
+* Derive the package version from git tags via ``setuptools-scm``
 
 
 Version 2.5 (2023-09-26)

@@ -4,9 +4,13 @@ This is a sphinx extension which improves the documentation of Django apps.
 
 from __future__ import annotations
 
-__version__ = "2.5"
-
+from importlib.metadata import PackageNotFoundError, version
 from typing import TYPE_CHECKING
+
+try:
+    __version__ = version("sphinxcontrib-django")
+except PackageNotFoundError:  # pragma: no cover
+    __version__ = "0.0.0.dev0"
 
 from . import docstrings, roles
 

@@ -1,6 +1,6 @@
 [build-system]
     build-backend = "setuptools.build_meta"
-    requires      = ["setuptools"]
+    requires      = ["setuptools>=80", "setuptools-scm>=8"]
 
 [project]
     authors = [
@@ -57,8 +57,9 @@
         ]
         test = ["coverage", "pytest", "pytest-icdiff", "requests-mock"]
 
-[tool.setuptools.dynamic]
-    version = { attr = "sphinxcontrib_django.__version__" }
+[tool.setuptools_scm]
+    local_scheme   = "no-local-version"
+    version_scheme = "no-guess-dev"
 
 [tool.setuptools.packages.find]
     include = ["sphinxcontrib_django*"]
