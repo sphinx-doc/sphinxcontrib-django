@@ -513,7 +513,7 @@ def test_generic_relation_field(app, do_autodoc):
         ),
         "",
         (
-            "   All + of this tagged item (related name of"
+            "   All generic relation models of this tagged item (related name of"
             " :attr:`~dummy_django_app2.models.GenericRelationModel.relation_field`)"
         ),
         "",

@@ -403,18 +403,17 @@ def test_relation_model(app, do_autodoc):
         "   :module: dummy_django_app2.models",
         "",
         "   :param id: Primary key: ID",
-        "   :type id: ~django.db.models.AutoField",
+        f"   :type id: ~{autofield()}",
         "",
         "   Relationship fields:",
         "",
-        (
-            "   :param relation_field: Relation field (related name:"
-            " :attr:`~dummy_django_app.models.TaggedItem.+`)"
-        ),
+        "   :param relation_field: Relation field",
         (
             "   :type relation_field:"
             " :class:`~django.contrib.contenttypes.fields.GenericRelation` to"
             " :class:`~dummy_django_app.models.TaggedItem`"
         ),
+        "",
+        "   .. inheritance-diagram:: dummy_django_app2.models.GenericRelationModel",
         "",
     ]
