@@ -92,6 +92,10 @@ def callable_choices():
     return [("Something", "Not empty")]
 
 
+def callable_choices_empty():
+    return []
+
+
 class ChoiceModel(models.Model):
     choice_limit_below = models.IntegerField(
         choices=[(i, i) for i in range(CHOICES_LIMIT - 1)]
@@ -107,6 +111,7 @@ class ChoiceModel(models.Model):
     )
     if VERSION >= (5, 0):
         choice_with_callable = models.CharField(choices=callable_choices)
+        choice_with_callable_empty = models.CharField(choices=callable_choices_empty)
 
 
 class TaggedItem(models.Model):

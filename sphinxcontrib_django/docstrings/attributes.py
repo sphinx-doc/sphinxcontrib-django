@@ -118,10 +118,10 @@ def get_field_details(app, field):
         "",
         f"{get_field_verbose_name(field)}",
     ]
-    if hasattr(field, "choices") and field.choices:
+    # ensure lazy choices (e.g. callables) are evaluated
+    choices = list(field.choices) if getattr(field, "choices", None) else []
+    if choices:
         field_details.extend(["", "Choices:", ""])
-        # ensure choices are evaluated
-        choices = list(field.choices)
         field_details.extend(
             [
                 f"* ``{key}``" if key != "" else "* ``''`` (Empty string)"

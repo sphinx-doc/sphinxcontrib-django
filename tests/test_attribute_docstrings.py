@@ -455,6 +455,25 @@ if SUPPORT_CALLABLE_CHOICES:
             "",
         ]
 
+    @pytest.mark.sphinx("html", testroot="docstrings")
+    def test_choice_field_callable_empty(app, do_autodoc):
+        actual = do_autodoc(
+            app,
+            "attribute",
+            "dummy_django_app.models.ChoiceModel.choice_with_callable_empty",
+        )
+        print(actual)
+        assert list(actual) == [
+            "",
+            ".. py:attribute:: ChoiceModel.choice_with_callable_empty",
+            "   :module: dummy_django_app.models",
+            "",
+            "   Type: :class:`~django.db.models.CharField`",
+            "",
+            "   Choice with callable empty",
+            "",
+        ]
+
 
 if PHONENUMBER:
 
