@@ -23,9 +23,9 @@ jobs:
       PYTHON: ${{ matrix.python-version }}
       DJANGO: ${{ matrix.django-version }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v7
       - name: Setup Python
-        uses: actions/setup-python@master
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
