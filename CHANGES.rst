@@ -5,6 +5,7 @@ Unreleased
 ----------
 
 * Add support for Python 3.12
+* [ `#73 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/73>`_ ] Add support for callable choices (`@sevdog <https://github.com/sevdog>`__)
 
 
 Version 2.5 (2023-09-26)
