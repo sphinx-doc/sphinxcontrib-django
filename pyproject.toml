@@ -16,7 +16,6 @@
         "Framework :: Django",
         "Framework :: Sphinx :: Extension",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
@@ -33,7 +32,7 @@
     description = "Improve the Sphinx autodoc for Django classes."
     dynamic = ["version"]
     keywords = ["django", "docstrings", "extension", "sphinx"]
-    license = { text = "Apache2 2.0 License" }
+    license = "Apache-2.0"
     maintainers = [
         { name = "Timo Brembeck", email = "opensource@timo.brembeck.email" },
     ]
