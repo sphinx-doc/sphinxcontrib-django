@@ -7,6 +7,8 @@ Unreleased
 * Add support for Python 3.12
 * Derive the package version from git tags via ``setuptools-scm``
 * [ `#73 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/73>`_ ] Add support for callable choices (`@sevdog <https://github.com/sevdog>`__)
+* [ `#43 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/43>`_ ] Fix crash on lazy string references in ``GenericRelation`` fields (`@ntouran <https://github.com/ntouran>`__)
+* Hide reverse accessor names disabled via ``related_name="+"`` instead of rendering a literal ``+``
 
 
 Version 2.5 (2023-09-26)
