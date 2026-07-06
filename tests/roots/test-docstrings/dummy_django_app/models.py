@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from django import VERSION
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -109,9 +108,8 @@ class ChoiceModel(models.Model):
     choice_with_empty = models.CharField(
         choices=[("", "Empty"), ("Something", "Not empty")]
     )
-    if VERSION >= (5, 0):
-        choice_with_callable = models.CharField(choices=callable_choices)
-        choice_with_callable_empty = models.CharField(choices=callable_choices_empty)
+    choice_with_callable = models.CharField(choices=callable_choices)
+    choice_with_callable_empty = models.CharField(choices=callable_choices_empty)
 
 
 class TaggedItem(models.Model):

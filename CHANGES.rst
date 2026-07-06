@@ -5,6 +5,7 @@ Unreleased
 ----------
 
 * Add support for Python 3.12, 3.13 and 3.14
+* Drop support for Django < 5.2 (Django 4.2 reached end of extended support in April 2026)
 * Add support for Django 5.2 and 6.0 (`@bckohan <https://github.com/bckohan>`__)
 * Add compatibility with Sphinx 9, which requires setting ``autodoc_use_legacy_class_based = True`` (`@bckohan <https://github.com/bckohan>`__)
 * [ `#75 <https://github.com/sphinx-doc/sphinxcontrib-django/pull/75>`_ ] Add ``:django-admin:`` cross-reference role (`@bckohan <https://github.com/bckohan>`__)

@@ -7,13 +7,9 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
-        django-version: ["django~=4.2", "django~=5.2", "django~=6.0"]
+        django-version: ["django~=5.2", "django~=6.0"]
         optional-dependencies: ["optional-deps", "no-optional-deps"]
         exclude:
-          - python-version: "3.13"
-            django-version: "django~=4.2"
-          - python-version: "3.14"
-            django-version: "django~=4.2"
           - python-version: "3.10"
             django-version: "django~=6.0"
           - python-version: "3.11"

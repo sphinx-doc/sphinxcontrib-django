@@ -10,7 +10,6 @@
     classifiers = [
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
-        "Framework :: Django :: 4.2",
         "Framework :: Django :: 5.2",
         "Framework :: Django :: 6.0",
         "Framework :: Django",
@@ -28,7 +27,7 @@
         "Topic :: Software Development :: Libraries :: Application Frameworks",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ]
-    dependencies = ["Django>=4.2", "Sphinx>=3.4.0", "pprintpp"]
+    dependencies = ["Django>=5.2", "Sphinx>=3.4.0", "pprintpp"]
     description = "Improve the Sphinx autodoc for Django classes."
     dynamic = ["version"]
     keywords = ["django", "docstrings", "extension", "sphinx"]
