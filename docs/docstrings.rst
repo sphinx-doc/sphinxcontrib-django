@@ -46,6 +46,14 @@ Methods
    :undoc-members:
    :show-inheritance:
 
+Views
+-----
+
+.. automodule:: sphinxcontrib_django.docstrings.views
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Patches
 -------
 

@@ -4,6 +4,8 @@ Dummy Django settings file
 
 SECRET_KEY = "dummy-key"
 
+ROOT_URLCONF = "dummy_django_app.urls"
+
 #: These are the installed apps
 INSTALLED_APPS = [
     "django.contrib.auth",
