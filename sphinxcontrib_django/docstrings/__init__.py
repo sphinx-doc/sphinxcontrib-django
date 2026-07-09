@@ -11,6 +11,8 @@ For example:
   (see :mod:`~sphinxcontrib_django.docstrings.methods`)
 * Improve the appearance of static iterable data
   (see :mod:`~sphinxcontrib_django.docstrings.data`)
+* Add the URL paths under which a view function is reachable
+  (see :mod:`~sphinxcontrib_django.docstrings.views`)
 * Fix the intersphinx mappings to the Django documentation
   (see :mod:`~sphinxcontrib_django.docstrings.patches`)
 """
@@ -30,6 +32,7 @@ from .classes import improve_class_docstring
 from .config import CHOICES_LIMIT, EXCLUDE_MEMBERS, INCLUDE_MEMBERS
 from .data import improve_data_docstring
 from .methods import improve_method_docstring
+from .views import improve_view_docstring
 
 if TYPE_CHECKING:
     import sphinx
@@ -86,7 +89,7 @@ def setup(app: sphinx.application.Sphinx) -> dict:
     app.connect("autodoc-skip-member", autodoc_skip)
 
     return {
-        "version:": __version__,
+        "version": __version__,
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
@@ -186,6 +189,8 @@ def improve_docstring(
         improve_method_docstring(name, lines)
     elif what == "data":
         improve_data_docstring(obj, lines)
+    elif what == "function":
+        improve_view_docstring(obj, lines)
 
     # Return the extended docstring
     return lines

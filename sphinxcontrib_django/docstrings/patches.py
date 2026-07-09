@@ -4,7 +4,7 @@ This module contains patches for Django to improve its interaction with Sphinx.
 
 import contextlib
 
-from django import apps, forms, test
+from django import apps, forms, http, test
 from django.db import models
 
 try:
@@ -56,6 +56,7 @@ def patch_django_for_autodoc():
         "django.forms": [forms.forms, forms.fields, forms.models, forms.widgets],
         "django.test": [test],
         "django.apps": [apps],
+        "django.http": [http],
     }
 
     # Support django.db.models.JSONField in Django >= 3.1
