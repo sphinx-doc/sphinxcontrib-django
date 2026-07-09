@@ -86,7 +86,7 @@ def setup(app: sphinx.application.Sphinx) -> dict:
     app.connect("autodoc-skip-member", autodoc_skip)
 
     return {
-        "version:": __version__,
+        "version": __version__,
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }

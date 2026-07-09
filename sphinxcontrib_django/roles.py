@@ -71,7 +71,7 @@ def setup(app: sphinx.application.Sphinx) -> dict:
             logger.warning("Unable to register cross-reference type: %s", e)
 
     return {
-        "version:": __version__,
+        "version": __version__,
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
