@@ -47,6 +47,8 @@ Improvements for the output of Sphinx's autodoc for Django classes:
 * Custom text roles to cross-reference the documentations of Django (``:setting:``,
   ``:templatetag:``, ``:templatefilter:``, ``:fieldlookup:``, ``:django-admin:``) and Sphinx (``:event:``,
   ``:confval:``)
+* Cross-reference Django models by their app label with ``:py:model:``, e.g.
+  ``:py:model:`auth.User``` — the same notation used by Django's admindocs
 
 
 Installation
