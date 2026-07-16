@@ -1,6 +1,7 @@
 """
 This module contains patches for Django to improve its interaction with Sphinx.
 """
+
 from __future__ import annotations
 
 import contextlib

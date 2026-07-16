@@ -1,6 +1,7 @@
 """
 This module contains all functions which are used to improve the documentation of methods.
 """
+
 from __future__ import annotations
 
 import re
