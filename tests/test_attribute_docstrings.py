@@ -1,6 +1,15 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pytest
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from docutils.statemachine import StringList
+    from sphinx.testing.util import SphinxTestApp
+
 
 try:
     from phonenumber_field.modelfields import PhoneNumberField  # noqa: F401
@@ -12,7 +21,7 @@ except ModuleNotFoundError:
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_model_field(app, do_autodoc):
+def test_model_field(app: SphinxTestApp, do_autodoc: Callable[..., StringList]) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.SimpleModel.dummy_field"
     )
@@ -36,7 +45,7 @@ def test_model_field(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_foreignkey(app, do_autodoc):
+def test_foreignkey(app: SphinxTestApp, do_autodoc: Callable[..., StringList]) -> None:
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file")
     print(actual)
     assert list(actual) == [
@@ -60,7 +69,9 @@ def test_foreignkey(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_foreignkey_id(app, do_autodoc):
+def test_foreignkey_id(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file_id")
     print(actual)
     assert list(actual) == [
@@ -77,7 +88,9 @@ def test_foreignkey_id(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_foreignkey_string(app, do_autodoc):
+def test_foreignkey_string(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.SimpleModel.file")
     print(actual)
     assert list(actual) == [
@@ -101,7 +114,9 @@ def test_foreignkey_string(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_foreignkey_string_abstract_model(app, do_autodoc):
+def test_foreignkey_string_abstract_model(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.AbstractModel.simple_model"
     )
@@ -122,7 +137,9 @@ def test_foreignkey_string_abstract_model(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_reverse_foreignkey(app, do_autodoc):
+def test_reverse_foreignkey(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.FileModel.simple_models"
     )
@@ -146,7 +163,9 @@ def test_reverse_foreignkey(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_manytomany_field(app, do_autodoc):
+def test_manytomany_field(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.SimpleModel.childrenB"
     )
@@ -176,7 +195,9 @@ def test_manytomany_field(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_reverse_manytomany_field(app, do_autodoc):
+def test_reverse_manytomany_field(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChildModelB.simple_models"
     )
@@ -200,7 +221,9 @@ def test_reverse_manytomany_field(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_reverse_onetoone_field(app, do_autodoc):
+def test_reverse_onetoone_field(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChildModelA.simple_model"
     )
@@ -224,7 +247,9 @@ def test_reverse_onetoone_field(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_generic_foreign_key(app, do_autodoc):
+def test_generic_foreign_key(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.TaggedItem.content_object"
     )
@@ -244,7 +269,9 @@ def test_generic_foreign_key(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_model_manager_fields(app, do_autodoc):
+def test_model_manager_fields(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.SimpleModel.custom_objects"
     )
@@ -264,7 +291,7 @@ def test_model_manager_fields(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_file_field(app, do_autodoc):
+def test_file_field(app: SphinxTestApp, do_autodoc: Callable[..., StringList]) -> None:
     actual = do_autodoc(app, "attribute", "dummy_django_app.models.FileModel.upload")
     print(actual)
     assert list(actual) == [
@@ -280,7 +307,9 @@ def test_file_field(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_choice_field(app, do_autodoc):
+def test_choice_field(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_below"
     )
@@ -310,7 +339,9 @@ def test_choice_field(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_choice_field_limit_exact(app, do_autodoc):
+def test_choice_field_limit_exact(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_exact"
     )
@@ -342,7 +373,9 @@ def test_choice_field_limit_exact(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_choice_field_limit_above(app, do_autodoc):
+def test_choice_field_limit_above(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_above"
     )
@@ -376,7 +409,9 @@ def test_choice_field_limit_above(app, do_autodoc):
 @pytest.mark.sphinx(
     "html", testroot="docstrings", confoverrides={"django_choices_to_show": 15}
 )
-def test_choice_field_custom_limit(app, do_autodoc):
+def test_choice_field_custom_limit(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_limit_above"
     )
@@ -409,7 +444,9 @@ def test_choice_field_custom_limit(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_choice_field_empty(app, do_autodoc):
+def test_choice_field_empty(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_with_empty"
     )
@@ -432,7 +469,9 @@ def test_choice_field_empty(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_choice_field_callable(app, do_autodoc):
+def test_choice_field_callable(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app.models.ChoiceModel.choice_with_callable"
     )
@@ -454,7 +493,9 @@ def test_choice_field_callable(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_choice_field_callable_empty(app, do_autodoc):
+def test_choice_field_callable_empty(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app,
         "attribute",
@@ -476,7 +517,9 @@ def test_choice_field_callable_empty(app, do_autodoc):
 if PHONENUMBER:
 
     @pytest.mark.sphinx("html", testroot="docstrings")
-    def test_phonenumber_field(app, do_autodoc):
+    def test_phonenumber_field(
+        app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+    ) -> None:
         actual = do_autodoc(
             app, "attribute", "dummy_django_app.models.PhoneNumberModel.phone_number"
         )
@@ -494,7 +537,9 @@ if PHONENUMBER:
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_generic_relation_field(app, do_autodoc):
+def test_generic_relation_field(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "attribute", "dummy_django_app2.models.GenericRelationModel.relation_field"
     )

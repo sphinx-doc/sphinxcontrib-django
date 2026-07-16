@@ -103,4 +103,6 @@
   required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]
-  "tests/**/*.py" = ["ANN"] # TODO: tests are missing type annotations
+  # The signatures of these autodoc targets are part of the expected test output,
+  # so adding annotations here would change what the tests assert on.
+  "tests/roots/**/*.py" = ["ANN"]

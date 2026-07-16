@@ -1,11 +1,19 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pytest
 from django.conf import settings
 from django.db.models import AutoField
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
-def autofield():
+    from docutils.statemachine import StringList
+    from sphinx.testing.util import SphinxTestApp
+
+
+def autofield() -> str:
     return getattr(
         settings,
         "DEFAULT_AUTO_FIELD",
@@ -14,7 +22,9 @@ def autofield():
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_simple_model(app, do_autodoc):
+def test_simple_model(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.SimpleModel")
     print(actual)
     assert list(actual) == [
@@ -101,7 +111,9 @@ def test_simple_model(app, do_autodoc):
 @pytest.mark.sphinx(
     "html", testroot="docstrings", confoverrides={"django_show_db_tables": True}
 )
-def test_database_table(app, do_autodoc):
+def test_database_table(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.SimpleModel")
     print(actual)
     assert list(actual) == [
@@ -188,7 +200,9 @@ def test_database_table(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_abstract_model(app, do_autodoc):
+def test_abstract_model(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.AbstractModel")
     print(actual)
     assert list(actual) == [
@@ -223,7 +237,9 @@ def test_abstract_model(app, do_autodoc):
 @pytest.mark.sphinx(
     "html", testroot="docstrings", confoverrides={"django_show_db_tables": True}
 )
-def test_abstract_model_with_tables_names_and_ignore_abstract(app, do_autodoc):
+def test_abstract_model_with_tables_names_and_ignore_abstract(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.AbstractModel")
     print(actual)
     assert list(actual) == [
@@ -263,7 +279,9 @@ def test_abstract_model_with_tables_names_and_ignore_abstract(app, do_autodoc):
         "django_show_db_tables_abstract": True,
     },
 )
-def test_abstract_model_with_tables_names_and_abstract_show(app, do_autodoc):
+def test_abstract_model_with_tables_names_and_abstract_show(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.AbstractModel")
     print(actual)
     assert list(actual) == [
@@ -298,7 +316,7 @@ def test_abstract_model_with_tables_names_and_abstract_show(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_file_model(app, do_autodoc):
+def test_file_model(app: SphinxTestApp, do_autodoc: Callable[..., StringList]) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.FileModel")
     print(actual)
     assert list(actual) == [
@@ -328,7 +346,7 @@ def test_file_model(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_tagged_item(app, do_autodoc):
+def test_tagged_item(app: SphinxTestApp, do_autodoc: Callable[..., StringList]) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.TaggedItem")
     print(actual)
     assert list(actual) == [
@@ -369,7 +387,7 @@ def test_tagged_item(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_form(app, do_autodoc):
+def test_form(app: SphinxTestApp, do_autodoc: Callable[..., StringList]) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.forms.SimpleForm")
     print(actual)
     assert list(actual) == [
@@ -396,7 +414,9 @@ def test_form(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_relation_model(app, do_autodoc):
+def test_relation_model(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app2.models.GenericRelationModel")
     print(actual)
     assert list(actual) == [

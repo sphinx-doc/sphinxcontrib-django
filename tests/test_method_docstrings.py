@@ -1,10 +1,20 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pytest
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from docutils.statemachine import StringList
+    from sphinx.testing.util import SphinxTestApp
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_model_method_display(app, do_autodoc):
+def test_model_method_display(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "method", "dummy_django_app.models.SimpleModel.get_dummy_field_display"
     )
@@ -23,7 +33,9 @@ def test_model_method_display(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_model_method_get_next_by(app, do_autodoc):
+def test_model_method_get_next_by(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "method", "dummy_django_app.models.SimpleModel.get_next_by_dummy_field"
     )
@@ -42,7 +54,9 @@ def test_model_method_get_next_by(app, do_autodoc):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_model_method_get_previous_by(app, do_autodoc):
+def test_model_method_get_previous_by(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
     actual = do_autodoc(
         app, "method", "dummy_django_app.models.SimpleModel.get_previous_by_dummy_field"
     )

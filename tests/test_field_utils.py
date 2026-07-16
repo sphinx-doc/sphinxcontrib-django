@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 import copy
+from typing import TYPE_CHECKING
 
 import pytest
 
 from sphinxcontrib_django.docstrings.field_utils import get_field_verbose_name
 
+if TYPE_CHECKING:
+    from sphinx.testing.util import SphinxTestApp
+
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_reverse_rel_with_lazy_reference(app):
+def test_reverse_rel_with_lazy_reference(app: SphinxTestApp) -> None:
     # Simulate an unresolved lazy reference (see issue #43)
     from dummy_django_app2.models import GenericRelationModel
 
@@ -21,7 +27,7 @@ def test_reverse_rel_with_lazy_reference(app):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_one_to_one_rel_with_lazy_reference(app):
+def test_one_to_one_rel_with_lazy_reference(app: SphinxTestApp) -> None:
     from dummy_django_app.models import SimpleModel
 
     field = copy.copy(SimpleModel._meta.get_field("childA").remote_field)
@@ -33,7 +39,7 @@ def test_one_to_one_rel_with_lazy_reference(app):
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
-def test_hidden_related_name_is_not_rendered(app):
+def test_hidden_related_name_is_not_rendered(app: SphinxTestApp) -> None:
     # related_name="+" disables the reverse accessor, so the literal "+" must
     # not appear in the docs
     from dummy_django_app2.models import GenericRelationModel
