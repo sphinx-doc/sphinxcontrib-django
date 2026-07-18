@@ -11,9 +11,10 @@ from django.urls import get_resolver
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+    from typing import Any
 
 
-def improve_view_docstring(obj: Callable, lines: list[str]) -> None:
+def improve_view_docstring(obj: Callable[..., Any], lines: list[str]) -> None:
     """
     Add the URL paths under which a view function is reachable to its docstring.
 

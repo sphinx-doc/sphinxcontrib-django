@@ -81,6 +81,23 @@
     minversion = "6.0"
     testpaths  = ["tests"]
 
+[tool.mypy]
+    exclude = "^tests/roots/"
+    files   = ["sphinxcontrib_django", "tests"]
+    strict  = true
+
+    [[tool.mypy.overrides]]
+        ignore_missing_imports = true
+        module = [
+            # Third-party packages which don't ship type information
+            "mptt.*",
+            "phonenumber_field.*",
+            "pprintpp",
+            # Autodoc target apps in tests/roots which are only importable at test runtime
+            "dummy_django_app.*",
+            "dummy_django_app2.*",
+        ]
+
 [tool.ruff]
   line-length = 99
 

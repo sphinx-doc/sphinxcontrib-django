@@ -16,9 +16,10 @@ from . import docstrings, roles
 
 if TYPE_CHECKING:
     import sphinx
+    from sphinx.util.typing import ExtensionMetadata
 
 
-def setup(app: sphinx.application.Sphinx) -> dict:
+def setup(app: sphinx.application.Sphinx) -> ExtensionMetadata:
     """
     Allow this module to be used as sphinx extension.
 

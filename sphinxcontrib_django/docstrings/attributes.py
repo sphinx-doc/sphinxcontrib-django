@@ -4,6 +4,8 @@ This module contains all functions which are used to improve the documentation o
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from django.db import models
 from django.db.models.fields import related_descriptors
 from django.db.models.fields.files import FileDescriptor
@@ -15,7 +17,15 @@ from sphinx.util.docstrings import prepare_docstring
 
 from .field_utils import get_field_type, get_field_verbose_name
 
-FIELD_DESCRIPTORS = (FileDescriptor, related_descriptors.ForwardManyToOneDescriptor)
+if TYPE_CHECKING:
+    from typing import Any
+
+    from django.db.models.fields.reverse_related import ForeignObjectRel
+
+FIELD_DESCRIPTORS: tuple[type[Any], ...] = (
+    FileDescriptor,
+    related_descriptors.ForwardManyToOneDescriptor,
+)
 
 # Support for some common third party fields
 try:
@@ -93,7 +103,9 @@ def improve_attribute_docstring(
             lines.extend(docstring_lines[:-1])
 
 
-def get_field_details(app: Sphinx, field: models.Field) -> list[str]:
+def get_field_details(
+    app: Sphinx, field: models.Field[Any, Any] | ForeignObjectRel
+) -> list[str]:
     """
     This function returns the detail docstring of a model field.
     It includes the field type and the verbose name of the field.
@@ -110,7 +122,8 @@ def get_field_details(app: Sphinx, field: models.Field) -> list[str]:
         f"{get_field_verbose_name(field)}",
     ]
     # ensure lazy choices (e.g. callables) are evaluated
-    choices = list(field.choices) if getattr(field, "choices", None) else []
+    raw_choices = getattr(field, "choices", None)
+    choices = list(raw_choices) if raw_choices else []
     if choices:
         field_details.extend(["", "Choices:", ""])
         field_details.extend(

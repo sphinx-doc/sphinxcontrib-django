@@ -36,12 +36,12 @@ def patch_django_for_autodoc() -> None:
     This also avoids query evaluation.
     """
     # Fix Django's manager appearance
-    models.manager.ManagerDescriptor.__get__ = (
+    models.manager.ManagerDescriptor.__get__ = (  # type: ignore[method-assign]
         lambda self, *args, **kwargs: self.manager
     )
 
     # Stop Django from executing DB queries
-    models.QuerySet.__repr__ = lambda self: self.__class__.__name__
+    models.QuerySet.__repr__ = lambda self: self.__class__.__name__  # type: ignore[method-assign]
 
     # Fix django-mptt TreeManager in Django >=3.1
     if MPTT:
@@ -73,12 +73,16 @@ def patch_django_for_autodoc() -> None:
             DJANGO_MODULE_PATHS["django.contrib.postgres.forms"].append(
                 postgres_fields.jsonb
             )
-        postgres_forms.array.__all__ = ("SimpleArrayField", "SplitArrayField")
+        postgres_forms.array.__all__ = ("SimpleArrayField", "SplitArrayField")  # type: ignore[attr-defined]
 
     # Add __all__ where missing
-    models.base.__all__ = ("Model", "FilteredRelation")
-    models.fields.files.__all__ = ("FileField", "ImageField")
-    models.fields.related.__all__ = ("ForeignKey", "OneToOneField", "ManyToManyField")
+    models.base.__all__ = ("Model", "FilteredRelation")  # type: ignore[attr-defined]
+    models.fields.files.__all__ = ("FileField", "ImageField")  # type: ignore[attr-defined]
+    models.fields.related.__all__ = (  # type: ignore[attr-defined]
+        "ForeignKey",
+        "OneToOneField",
+        "ManyToManyField",
+    )
 
     # Set the __module__ to the parent module to make sure intersphinx mappings work as expected
     for parent_module_str, django_modules in DJANGO_MODULE_PATHS.items():

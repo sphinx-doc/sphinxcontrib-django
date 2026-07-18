@@ -78,7 +78,10 @@ def do_autodoc() -> Callable[..., StringList]:
     """
 
     def do_autodoc(
-        app: SphinxTestApp, objtype: str, name: str, options: dict | None = None
+        app: SphinxTestApp,
+        objtype: str,
+        name: str,
+        options: dict[str, Any] | None = None,
     ) -> StringList:
         if options is None:
             options = {}
