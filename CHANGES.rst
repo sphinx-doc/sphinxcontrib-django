@@ -15,6 +15,7 @@ Unreleased
 * [ `#43 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/43>`_ ] Fix crash on lazy string references in ``GenericRelation`` fields (`@ntouran <https://github.com/ntouran>`__)
 * Hide reverse accessor names disabled via ``related_name="+"`` instead of rendering a literal ``+``
 * [ `#87 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/87>`_ ] List the URL paths under which a view function is reachable
+* [ `#90 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/90>`_ ] Add ``:py:model:`` role to cross-reference Django models by their app label (`@jmfederico <https://github.com/jmfederico>`__)
 * Fix intersphinx mappings for ``django.http`` classes (``HttpRequest``, ``HttpResponse``, ...)
 * Fix the extension version not being reported to Sphinx due to a typo in the setup return value
 * Add type annotations throughout the code base and enforce them via ruff (`@WhyNotHugo <https://github.com/WhyNotHugo>`__)

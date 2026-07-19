@@ -33,7 +33,13 @@ extensions = [
 nitpicky = True
 
 # A list of (type, target) tuples that should be ignored when :attr:`nitpicky` is ``True``
-nitpick_ignore = [("py:class", "sphinx.ext.autodoc.Options")]
+# (docutils provides no intersphinx inventory)
+nitpick_ignore = [
+    ("py:class", "sphinx.ext.autodoc.Options"),
+    ("py:class", "docutils.nodes.Element"),
+    ("py:class", "Element"),
+    ("py:class", "TextElement"),
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["templates"]
