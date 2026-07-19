@@ -7,3 +7,6 @@ from django.db import models
 class GenericRelationModel(models.Model):
     # specifically test deferred string-type argument
     relation_field = GenericRelation("dummy_django_app.TaggedItem")
+
+    def __str__(self) -> str:
+        return str(self.pk)

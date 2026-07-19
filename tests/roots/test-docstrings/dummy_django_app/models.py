@@ -22,6 +22,9 @@ class SimpleModelManager(models.Manager):
 class FileModel(models.Model):
     upload = models.FileField()
 
+    def __str__(self) -> str:
+        return str(self.pk)
+
 
 class SimpleModel(models.Model):
     #: Docstring of foreign key
@@ -57,6 +60,9 @@ class SimpleModel(models.Model):
     #: Custom model manager
     custom_objects = SimpleModelManager()
 
+    def __str__(self) -> str:
+        return str(self.pk)
+
     # Mock get_..._display method of Django models
     def get_dummy_field_display(self):
         pass
@@ -80,11 +86,13 @@ class AbstractModel(models.Model):
 
 
 class ChildModelA(AbstractModel):
-    pass
+    def __str__(self) -> str:
+        return str(self.pk)
 
 
 class ChildModelB(AbstractModel):
-    pass
+    def __str__(self) -> str:
+        return str(self.pk)
 
 
 def callable_choices():
@@ -111,6 +119,9 @@ class ChoiceModel(models.Model):
     choice_with_callable = models.CharField(choices=callable_choices)
     choice_with_callable_empty = models.CharField(choices=callable_choices_empty)
 
+    def __str__(self) -> str:
+        return str(self.pk)
+
 
 class TaggedItem(models.Model):
     # Test model taken from:
@@ -129,6 +140,10 @@ if PHONENUMBER:
     class PhoneNumberModel(models.Model):
         phone_number = PhoneNumberField()
 
+        def __str__(self) -> str:
+            return str(self.pk)
+
 
 class MonkeyPatched(models.Model):
-    pass
+    def __str__(self) -> str:
+        return str(self.pk)

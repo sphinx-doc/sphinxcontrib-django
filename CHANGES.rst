@@ -21,6 +21,7 @@ Unreleased
 * Fix the extension version not being reported to Sphinx due to a typo in the setup return value
 * Add type annotations throughout the code base and enforce them via ruff (`@WhyNotHugo <https://github.com/WhyNotHugo>`__)
 * Check the type annotations via mypy in strict mode
+* [ `#65 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/65>`_ ] Enable additional ruff lint rules, including ``DJ`` (flake8-django) (`@cclauss <https://github.com/cclauss>`__)
 
 
 Version 2.5 (2023-09-26)

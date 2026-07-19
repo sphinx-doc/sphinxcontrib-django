@@ -12,7 +12,6 @@ from django.db.models.fields.files import FileDescriptor
 from django.db.models.manager import ManagerDescriptor
 from django.db.models.query_utils import DeferredAttribute
 from django.utils.module_loading import import_string
-from sphinx.application import Sphinx
 from sphinx.util.docstrings import prepare_docstring
 
 from .field_utils import get_field_type, get_field_verbose_name
@@ -21,6 +20,7 @@ if TYPE_CHECKING:
     from typing import Any
 
     from django.db.models.fields.reverse_related import ForeignObjectRel
+    from sphinx.application import Sphinx
 
 FIELD_DESCRIPTORS: tuple[type[Any], ...] = (
     FileDescriptor,
@@ -84,7 +84,7 @@ def improve_attribute_docstring(
         lines.extend(get_field_details(app, attribute.related))
     elif isinstance(attribute, (models.Manager, ManagerDescriptor)):
         # Somehow the 'objects' manager doesn't pass through the docstrings.
-        module, model_name, field_name = name.rsplit(".", 2)
+        _module, model_name, _field_name = name.rsplit(".", 2)
         lines.append("Django manager to access the ORM")
         lines.append(f"Use ``{model_name}.objects.all()`` to fetch all objects.")
     # Check if there are initial docstrings to be appended
