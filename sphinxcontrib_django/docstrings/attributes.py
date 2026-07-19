@@ -4,17 +4,28 @@ This module contains all functions which are used to improve the documentation o
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from django.db import models
 from django.db.models.fields import related_descriptors
 from django.db.models.fields.files import FileDescriptor
 from django.db.models.manager import ManagerDescriptor
 from django.db.models.query_utils import DeferredAttribute
 from django.utils.module_loading import import_string
+from sphinx.application import Sphinx
 from sphinx.util.docstrings import prepare_docstring
 
 from .field_utils import get_field_type, get_field_verbose_name
 
-FIELD_DESCRIPTORS = (FileDescriptor, related_descriptors.ForwardManyToOneDescriptor)
+if TYPE_CHECKING:
+    from typing import Any
+
+    from django.db.models.fields.reverse_related import ForeignObjectRel
+
+FIELD_DESCRIPTORS: tuple[type[Any], ...] = (
+    FileDescriptor,
+    related_descriptors.ForwardManyToOneDescriptor,
+)
 
 # Support for some common third party fields
 try:
@@ -25,23 +36,18 @@ except ImportError:
     PhoneNumberDescriptor = None
 
 
-def improve_attribute_docstring(app, attribute, name, lines):
+def improve_attribute_docstring(
+    app: Sphinx, attribute: object, name: str, lines: list[str]
+) -> None:
     """
     Improve the documentation of various model fields.
 
     This improves the navigation between related objects.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
-
     :param attribute: The instance of the object to document
-    :type attribute: object
-
     :param name: The full dotted path to the object
-    :type name: str
-
     :param lines: The docstring lines
-    :type lines: list [ str ]
     """
     # Save initial docstring lines to append them to the modified lines
     docstring_lines = lines.copy()
@@ -97,19 +103,16 @@ def improve_attribute_docstring(app, attribute, name, lines):
             lines.extend(docstring_lines[:-1])
 
 
-def get_field_details(app, field):
+def get_field_details(
+    app: Sphinx, field: models.Field[Any, Any] | ForeignObjectRel
+) -> list[str]:
     """
     This function returns the detail docstring of a model field.
     It includes the field type and the verbose name of the field.
 
     :param app: The Sphinx application object
-    :type app: ~sphinx.application.Sphinx
-
     :param field: The field
-    :type field: ~django.db.models.Field
-
     :return: The field details as list of strings
-    :rtype: list [ str ]
     """
     choices_limit = app.config.django_choices_to_show
 
@@ -119,7 +122,8 @@ def get_field_details(app, field):
         f"{get_field_verbose_name(field)}",
     ]
     # ensure lazy choices (e.g. callables) are evaluated
-    choices = list(field.choices) if getattr(field, "choices", None) else []
+    raw_choices = getattr(field, "choices", None)
+    choices = list(raw_choices) if raw_choices else []
     if choices:
         field_details.extend(["", "Choices:", ""])
         field_details.extend(

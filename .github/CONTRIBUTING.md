@@ -25,9 +25,15 @@ coverage html
 
 ## Code style
 
-Formatting and linting are enforced by [black](https://github.com/psf/black)
-and [ruff](https://github.com/astral-sh/ruff) via pre-commit hooks, which run
+Formatting, linting and static type checking are enforced by
+[black](https://github.com/psf/black), [ruff](https://github.com/astral-sh/ruff)
+and [mypy](https://github.com/python/mypy) via pre-commit hooks, which run
 automatically on every commit after `pre-commit install`.
+
+Type annotations are required for all function signatures (enforced by ruff's
+`ANN` rules) and checked by mypy in strict mode. The autodoc target apps in
+`tests/roots/` are exempt, because their signatures are part of the expected
+test output.
 
 ## Documentation
 

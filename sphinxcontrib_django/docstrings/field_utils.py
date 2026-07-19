@@ -14,10 +14,17 @@ from django.db import models
 from django.utils.encoding import force_str
 
 if TYPE_CHECKING:
+    from typing import Any
+
     import django
+    from django.contrib.contenttypes.fields import GenericForeignKey
+    from django.db.models.fields.reverse_related import ForeignObjectRel
 
 
-def get_field_type(field: django.db.models.Field, include_role: bool = True) -> str:
+def get_field_type(
+    field: django.db.models.Field[Any, Any] | ForeignObjectRel,
+    include_role: bool = True,
+) -> str:
     """
     Get the type of a field including the correct intersphinx mappings.
 
@@ -49,7 +56,9 @@ def get_field_type(field: django.db.models.Field, include_role: bool = True) -> 
     return f"~{type(field).__module__}.{type(field).__name__}"
 
 
-def get_field_verbose_name(field: django.db.models.Field) -> str:
+def get_field_verbose_name(
+    field: django.db.models.Field[Any, Any] | ForeignObjectRel | GenericForeignKey,
+) -> str:
     """
     Get the verbose name of the field.
     If the field has a ``help_text``, it is also included.
@@ -76,14 +85,16 @@ def get_field_verbose_name(field: django.db.models.Field) -> str:
         )
         if isinstance(field, models.fields.reverse_related.OneToOneRel):
             # If a related name is given, use it, else use the verbose name of the remote model
-            related_name = related_name or field.remote_field.model._meta.verbose_name
+            related_name = related_name or force_str(
+                field.remote_field.model._meta.verbose_name
+            )
             # If field is a OneToOne field, use the prefix "The"
             verbose_name = f"The {related_name} of this {model._meta.verbose_name}"
         else:
             # This means field is an instance of ManyToOneRel or ManyToManyRel
             # If a related name is given, use it, else use the verbose name of the remote model
-            related_name = (
-                related_name or field.remote_field.model._meta.verbose_name_plural
+            related_name = related_name or force_str(
+                field.remote_field.model._meta.verbose_name_plural
             )
             # If field is a foreign key or a ManyToMany field, use the prefix "All"
             verbose_name = f"All {related_name} of this {model._meta.verbose_name}"
@@ -145,7 +156,7 @@ def get_field_verbose_name(field: django.db.models.Field) -> str:
 
 
 def get_model_from_string(
-    field: django.db.models.Field, model_string: str
+    field: django.db.models.Field[Any, Any], model_string: str
 ) -> type[django.db.models.Model]:
     """
     Get a model class from a string

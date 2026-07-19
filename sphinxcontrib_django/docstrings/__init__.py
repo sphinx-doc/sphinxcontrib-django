@@ -36,9 +36,11 @@ from .views import improve_view_docstring
 
 if TYPE_CHECKING:
     import sphinx
+    from sphinx.ext.autodoc import Options
+    from sphinx.util.typing import ExtensionMetadata
 
 
-def setup(app: sphinx.application.Sphinx) -> dict:
+def setup(app: sphinx.application.Sphinx) -> ExtensionMetadata:
     """
     Allow this package to be used as Sphinx extension.
 
@@ -65,16 +67,16 @@ def setup(app: sphinx.application.Sphinx) -> dict:
 
     # Set default to environment variable to enable backwards compatibility
     app.add_config_value(
-        "django_settings", os.environ.get("DJANGO_SETTINGS_MODULE"), True
+        "django_settings", os.environ.get("DJANGO_SETTINGS_MODULE"), "env"
     )
 
     # Django models tables names configuration.
     # Set default of django_show_db_tables to False
-    app.add_config_value("django_show_db_tables", False, True)
+    app.add_config_value("django_show_db_tables", False, "env")
     # Set default of django_show_db_tables_abstract to False
-    app.add_config_value("django_show_db_tables_abstract", False, True)
+    app.add_config_value("django_show_db_tables_abstract", False, "env")
     # Integer amount of model field choices to show
-    app.add_config_value("django_choices_to_show", CHOICES_LIMIT, True)
+    app.add_config_value("django_choices_to_show", CHOICES_LIMIT, "env")
     # Setup Django after config is initialized
     app.connect("config-inited", setup_django)
 
@@ -133,8 +135,8 @@ def autodoc_skip(
     what: str,
     name: str,
     obj: object,
-    options: sphinx.ext.autodoc.Options,
-    lines: list[str],
+    skip: bool,
+    options: Options,
 ) -> bool | None:
     """
     Hook to tell autodoc to include or exclude certain fields (see :event:`autodoc-skip-member`).
@@ -146,6 +148,7 @@ def autodoc_skip(
     :param what: The parent type, ``class`` or ``module``
     :param name: The name of the child method/attribute.
     :param obj: The child value (e.g. a method, dict, or module reference)
+    :param skip: Whether autodoc would skip this member on its own
     :param options: The current autodoc settings.
     """
     if name in EXCLUDE_MEMBERS:
@@ -162,7 +165,7 @@ def improve_docstring(
     what: str,
     name: str,
     obj: object,
-    options: sphinx.ext.autodoc.Options,
+    options: Options,
     lines: list[str],
 ) -> list[str]:
     """
@@ -181,7 +184,7 @@ def improve_docstring(
                   handler can modify in place to change what Sphinx puts into the output.
     :return: The modified list of lines
     """
-    if what == "class":
+    if what == "class" and isinstance(obj, type):
         improve_class_docstring(app, obj, lines)
     elif what == "attribute":
         improve_attribute_docstring(app, obj, name, lines)
@@ -189,7 +192,7 @@ def improve_docstring(
         improve_method_docstring(name, lines)
     elif what == "data":
         improve_data_docstring(obj, lines)
-    elif what == "function":
+    elif what == "function" and callable(obj):
         improve_view_docstring(obj, lines)
 
     # Return the extended docstring

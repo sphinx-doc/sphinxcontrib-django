@@ -13,8 +13,12 @@ from sphinx.pycode import ModuleAnalyzer
 from .field_utils import get_field_type, get_field_verbose_name
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from typing import Any
+
     import django
     import sphinx
+    from django.db.models.fields.reverse_related import ForeignObjectRel
 
 
 def improve_class_docstring(
@@ -34,7 +38,9 @@ def improve_class_docstring(
 
 
 def improve_model_docstring(
-    app: sphinx.application.Sphinx, model: django.db.models.Model, lines: list[str]
+    app: sphinx.application.Sphinx,
+    model: type[django.db.models.Model],
+    lines: list[str],
 ) -> None:
     """
     Improve the documentation of a Django :class:`~django.db.models.Model` subclass.
@@ -42,7 +48,7 @@ def improve_model_docstring(
     This adds all model fields as parameters to the ``__init__()`` method.
 
     :param app: The Sphinx application object
-    :param model: The instance of the model to document
+    :param model: The class of the model to document
     :param lines: The docstring lines
     """
 
@@ -120,13 +126,15 @@ def improve_model_docstring(
 
 
 def add_db_table_name(
-    app: sphinx.application.Sphinx, model: django.db.models.Model, lines: list[str]
+    app: sphinx.application.Sphinx,
+    model: type[django.db.models.Model],
+    lines: list[str],
 ) -> None:
     """
     Format and add table name by extension configuration.
 
     :param app: The Sphinx application object
-    :param model: The instance of the model to document
+    :param model: The class of the model to document
     :param lines: The docstring lines
     """
     if model._meta.abstract and not app.config.django_show_db_tables_abstract:
@@ -138,7 +146,9 @@ def add_db_table_name(
 
 
 def add_model_parameters(
-    fields: list[django.db.models.Field], lines: list[str], field_docs: dict
+    fields: Sequence[django.db.models.Field[Any, Any] | ForeignObjectRel],
+    lines: list[str],
+    field_docs: dict[str, list[str]],
 ) -> None:
     """
     Add the given fields as model parameter with the ``:param:`` directive
@@ -163,17 +173,18 @@ def add_model_parameters(
         lines.append(f":type {field.name}: {get_field_type(field, include_role=False)}")
 
 
-def improve_form_docstring(form: django.forms.Form, lines: list[str]) -> None:
+def improve_form_docstring(form: type[django.forms.BaseForm], lines: list[str]) -> None:
     """
     Improve the documentation of a Django :class:`~django.forms.Form` class.
     This highlights the available fields in the form.
 
-    :param form: The form object
+    :param form: The class of the form to document
     :param lines: The list of existing docstring lines
     """
     lines.append("**Form fields:**")
     lines.append("")
-    for name, field in form.base_fields.items():
+    # ``base_fields`` is set by the form metaclass, so it's invisible on ``type[BaseForm]``
+    for name, field in form.base_fields.items():  # type: ignore[attr-defined]
         field_type = f"{field.__class__.__module__}.{field.__class__.__name__}"
         label = field.label or name.replace("_", " ").title()
         lines.append(f"* ``{name}``: {label} (:class:`~{field_type}`)")

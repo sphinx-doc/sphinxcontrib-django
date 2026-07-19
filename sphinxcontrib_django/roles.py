@@ -33,11 +33,12 @@ from . import __version__
 
 if TYPE_CHECKING:
     import sphinx
+    from sphinx.util.typing import ExtensionMetadata
 
 logger = logging.getLogger(__name__)
 
 
-def setup(app: sphinx.application.Sphinx) -> dict:
+def setup(app: sphinx.application.Sphinx) -> ExtensionMetadata:
     """
     Allow this module to be used as Sphinx extension.
 
@@ -98,5 +99,4 @@ def add_default_intersphinx_mappings(
         ),
     }
     if not config.intersphinx_mapping:
-        # TYPING: type hints are missing `.intersphinx_mapping` attribute.
-        config.intersphinx_mapping = DEFAULT_INTERSPHINX_MAPPING  # type: ignore[attr-defined ]
+        config.intersphinx_mapping = DEFAULT_INTERSPHINX_MAPPING

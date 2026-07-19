@@ -17,6 +17,8 @@ Unreleased
 * [ `#87 <https://github.com/sphinx-doc/sphinxcontrib-django/issues/87>`_ ] List the URL paths under which a view function is reachable
 * Fix intersphinx mappings for ``django.http`` classes (``HttpRequest``, ``HttpResponse``, ...)
 * Fix the extension version not being reported to Sphinx due to a typo in the setup return value
+* Add type annotations throughout the code base and enforce them via ruff (`@WhyNotHugo <https://github.com/WhyNotHugo>`__)
+* Check the type annotations via mypy in strict mode
 
 
 Version 2.5 (2023-09-26)
