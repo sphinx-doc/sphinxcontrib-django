@@ -462,8 +462,8 @@ def test_choice_field_empty(
         "",
         "   Choices:",
         "",
-        "   * ``''`` (Empty string)",
-        "   * ``Something``",
+        "   * ``''`` (Empty string) — Empty",
+        "   * ``Something`` — Not empty",
         "",
     ]
 
@@ -487,7 +487,7 @@ def test_choice_field_callable(
         "",
         "   Choices:",
         "",
-        "   * ``Something``",
+        "   * ``Something`` — Not empty",
         "",
     ]
 
