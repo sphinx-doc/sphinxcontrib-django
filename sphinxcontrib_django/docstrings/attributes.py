@@ -127,17 +127,29 @@ def get_field_details(
     if choices:
         field_details.extend(["", "Choices:", ""])
         field_details.extend(
-            [
-                f"* ``{key}``" if key != "" else "* ``''`` (Empty string)"
-                for key, value in choices[:choices_limit]
-            ]
+            format_choice(key, value) for key, value in choices[:choices_limit]
         )
 
         # Check if list has been truncated
         if len(choices) > choices_limit:
             # If only one element has been truncated, just list it as well
             if len(choices) == choices_limit + 1:
-                field_details.append(f"* ``{choices[-1][0]}``")
+                field_details.append(format_choice(*choices[-1]))
             else:
                 field_details.append(f"* and {len(choices) - choices_limit} more")
     return field_details
+
+
+def format_choice(key: object, value: object) -> str:
+    """
+    Format a single field choice as a bullet point, including the human-readable
+    display name if it differs from the stored value.
+
+    :param key: The value stored in the database
+    :param value: The human-readable display name of the choice
+    :return: The formatted bullet point
+    """
+    bullet = f"* ``{key}``" if key != "" else "* ``''`` (Empty string)"
+    if str(value) != str(key):
+        bullet += f" — {value}"
+    return bullet
