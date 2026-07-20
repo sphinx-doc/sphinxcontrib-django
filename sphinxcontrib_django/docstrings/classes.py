@@ -31,7 +31,10 @@ def improve_class_docstring(
     :param cls: The instance of the class to document
     :param lines: The docstring lines
     """
-    if issubclass(cls, models.Model):
+    # Sphinx >= 9 also emits this event for the bare `models.Model` class itself, e.g. as
+    # the bound of a PEP 695 type parameter (``class Shadow[T: Model]``). That class has
+    # no `_meta`, unlike its concrete subclasses.
+    if issubclass(cls, models.Model) and hasattr(cls, "_meta"):
         improve_model_docstring(app, cls, lines)
     elif issubclass(cls, forms.BaseForm):
         improve_form_docstring(cls, lines)

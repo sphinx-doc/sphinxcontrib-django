@@ -316,6 +316,24 @@ def test_abstract_model_with_tables_names_and_abstract_show(
 
 
 @pytest.mark.sphinx("html", testroot="docstrings")
+def test_bare_model_class(
+    app: SphinxTestApp, do_autodoc: Callable[..., StringList]
+) -> None:
+    """
+    Regression test: Sphinx >= 9 emits ``autodoc-process-docstring`` for the bare
+    :class:`~django.db.models.Model` class itself (e.g. as the bound of a PEP 695 type
+    parameter), which has no ``_meta`` unlike its concrete subclasses.
+    """
+    actual = do_autodoc(app, "class", "django.db.models.Model")
+    print(actual)
+    assert list(actual)[:3] == [
+        "",
+        ".. py:class:: Model(*args, **kwargs)",
+        "   :module: django.db.models",
+    ]
+
+
+@pytest.mark.sphinx("html", testroot="docstrings")
 def test_file_model(app: SphinxTestApp, do_autodoc: Callable[..., StringList]) -> None:
     actual = do_autodoc(app, "class", "dummy_django_app.models.FileModel")
     print(actual)

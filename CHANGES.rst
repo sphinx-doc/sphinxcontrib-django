@@ -8,6 +8,7 @@ Unreleased
 * Drop support for Django < 5.2 (Django 4.2 reached end of extended support in April 2026)
 * Add support for Django 5.2 and 6.0 (`@bckohan <https://github.com/bckohan>`__)
 * Add compatibility with Sphinx 9, which requires setting ``autodoc_use_legacy_class_based = True`` (`@bckohan <https://github.com/bckohan>`__)
+* Fix a crash when Sphinx 9 emits ``autodoc-process-docstring`` for the bare ``django.db.models.Model`` class itself, e.g. as the bound of a PEP 695 type parameter
 * [ `#75 <https://github.com/sphinx-doc/sphinxcontrib-django/pull/75>`_ ] Add ``:django-admin:`` cross-reference role (`@bckohan <https://github.com/bckohan>`__)
 * Derive the package version from git tags via ``setuptools-scm``
 * Migrate PyPI releases to Trusted Publishing
