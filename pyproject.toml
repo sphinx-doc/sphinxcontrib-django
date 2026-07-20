@@ -102,55 +102,14 @@
   line-length = 99
 
 [tool.ruff.lint]
-  select = [
-    "A",      # flake8-builtins
-    "ANN",    # flake8-annotations
-    "ARG",    # flake8-unused-arguments
-    "ASYNC",  # flake8-async
-    "B",      # flake8-bugbear
-    "BLE",    # flake8-blind-except
-    "C4",     # flake8-comprehensions
-    "C90",    # McCabe cyclomatic complexity
-    "DJ",     # flake8-django
-    "DTZ",    # flake8-datetimez
-    "E",      # pycodestyle
-    "EM",     # flake8-errmsg
-    "EXE",    # flake8-executable
-    "F",      # Pyflakes
-    "FA",     # flake8-future-annotations
-    "FIX",    # flake8-fixme
-    "FLY",    # flynt
-    "G",      # flake8-logging-format
-    "I",      # isort
-    "ICN",    # flake8-import-conventions
-    "INT",    # flake8-gettext
-    "ISC",    # flake8-implicit-str-concat
-    "LOG",    # flake8-logging
-    "N",      # pep8-naming
-    "PERF",   # Perflint
-    "PGH",    # pygrep-hooks
-    "PIE",    # flake8-pie
-    "PL",     # Pylint
-    "PT",     # flake8-pytest-style
-    "PTH",    # flake8-use-pathlib
-    "PYI",    # flake8-pyi
-    "RET",    # flake8-return
-    "RSE",    # flake8-raise
-    "RUF",    # Ruff-specific rules
-    "S",      # flake8-bandit
-    "SIM",    # flake8-simplify
-    "SLOT",   # flake8-slots
-    "T10",    # flake8-debugger
-    "TC",     # flake8-type-checking
-    "TD",     # flake8-todos
-    "TID",    # flake8-tidy-imports
-    "TRY",    # tryceratops
-    "UP",     # pyupgrade
-    "W",      # pycodestyle
-    "YTT",    # flake8-2020
-  ]
+  select = ["ALL"]
   ignore = [
-    "D1",   # Missing docstrings
+    "D2",     # pydocstyle formatting conventions (only presence, D1, is enforced)
+    "D3",     # pydocstyle quoting conventions (only presence, D1, is enforced)
+    "D4",     # pydocstyle content conventions (only presence, D1, is enforced)
+    "COM812", # conflicts with the formatter
+    "ISC001", # conflicts with the formatter
+    "INP001", # tests/ and docs/ aren't meant to be importable packages
   ]
 
 [tool.ruff.lint.isort]
@@ -162,18 +121,21 @@
 [tool.ruff.lint.per-file-ignores]
   # The signatures of these autodoc targets are part of the expected test output,
   # so adding annotations here would change what the tests assert on.
-  "tests/roots/**/*.py" = ["ANN"]
+  "tests/roots/**/*.py" = ["ANN", "D1"]
   "docs/conf.py" = ["A001"]
-  "sphinxcontrib_django/docstrings/__init__.py" = ["ARG001", "EM101", "PLC0415", "RUF002", "TID252", "TRY003"]
+  "sphinxcontrib_django/docstrings/__init__.py" = ["ARG001", "EM101", "FBT001", "FBT003", "PLC0415", "RUF002", "TID252", "TRY003"]
+  "sphinxcontrib_django/docstrings/attributes.py" = ["SLF001"]
+  "sphinxcontrib_django/docstrings/classes.py" = ["SLF001"]
+  "sphinxcontrib_django/docstrings/field_utils.py" = ["SLF001"]
   "sphinxcontrib_django/docstrings/patches.py" = ["ARG005", "N806"]
-  "sphinxcontrib_django/roles.py" = ["ARG001", "N806", "PERF203"]
-  "tests/*" = ["S101"]
+  "sphinxcontrib_django/roles.py" = ["ARG001", "FBT001", "N806", "PERF203"]
+  "tests/*" = ["D1", "S101", "T201"]
   "tests/conftest.py" = ["ARG001", "N813", "PT003", "PT022"]
   "tests/roots/test-docstrings/conf.py" = ["ARG001", "PLC0415", "PTH100"]
   "tests/roots/test-docstrings/dummy_django_app/models.py" = ["N815"]
   "tests/roots/test-docstrings/dummy_django_app/settings.py" = ["S105"]
   "tests/roots/test-docstrings/dummy_django_app/views.py" = ["ARG001"]
-  "tests/test_field_utils.py" = ["ARG001", "PLC0415"]
+  "tests/test_field_utils.py" = ["ARG001", "PLC0415", "SLF001"]
   "tests/test_roles.py" = ["ARG001", "PLR2004"]
   "tests/test_view_docstrings.py" = ["ARG001"]
 

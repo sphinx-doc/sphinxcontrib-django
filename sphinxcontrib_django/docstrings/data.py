@@ -1,3 +1,5 @@
+"""Docstring improvements for autodoc'd data (module-level constants and similar)."""
+
 from __future__ import annotations
 
 import io

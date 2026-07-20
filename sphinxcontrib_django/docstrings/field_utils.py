@@ -23,6 +23,7 @@ if TYPE_CHECKING:
 
 def get_field_type(
     field: django.db.models.Field[Any, Any] | ForeignObjectRel,
+    *,
     include_role: bool = True,
 ) -> str:
     """
