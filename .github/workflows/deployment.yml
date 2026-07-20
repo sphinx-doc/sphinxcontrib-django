@@ -12,7 +12,7 @@ jobs:
           # Full history so setuptools-scm can derive the version from tags
           fetch-depth: 0
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
 
       - name: Install dependencies
         run: pip install build
